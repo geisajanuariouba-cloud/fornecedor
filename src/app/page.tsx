@@ -34,6 +34,8 @@ function useIsMobile() {
 const categorias = [
   { emoji: "👗", label: "ROUPAS" },
   { emoji: "👙", label: "LINGERIE" },
+  { emoji: "📱", label: "ELETRÔNICOS E CELULARES" },
+  { emoji: "💄", label: "MAQUIAGEM E COSMÉTICOS" },
   { emoji: "🌸", label: "PERFUMES" },
   { emoji: "💎", label: "BIJUTERIAS E SEMIJOIAS" },
   { emoji: "🧸", label: "BRINQUEDOS" },
@@ -49,8 +51,8 @@ const categorias = [
 const oquerecebes = [
   "180 fornecedores verificados — direto da fonte, no atacado",
   "Contato direto: site, WhatsApp e telefone de cada empresa",
-  "12 categorias: Roupas, Lingerie, Perfumes, Bijuterias, Games, Papelaria, Suplementos e mais",
-  "Marcas reais: Multilaser, Rovitex, Gimba, Inventa, Technos e muito mais",
+  "14 categorias: Roupas, Lingerie, Eletrônicos, Maquiagem, Perfumes, Bijuterias, Games e mais",
+  "Marcas reais: Multilaser, RCell, Rovitex, Gimba, Inventa, Technos e muito mais",
   "Não precisa de CNPJ — compre como pessoa física",
   "Comece com menos de R$100 — sem pedido mínimo alto",
   "Envio para todo o Brasil — fornecedores de SP, RS, SC e todo o país",
@@ -162,7 +164,7 @@ const faqs = [
   { q: "O que é a Lista de Fornecedores?", a: "É um arquivo digital com 180 fornecedores verificados, com contato direto, categorias de produtos, condições de compra e forma de pagamento. Tudo que você precisa para começar a revender hoje mesmo." },
   { q: "Preciso de CNPJ para comprar dos fornecedores?", a: "Não! A maioria dos fornecedores da lista vende para pessoa física. Você consegue comprar com CPF mesmo, sem burocracia." },
   { q: "Com quanto capital posso começar?", a: "Com menos de R$100! A maioria dos fornecedores aceita pedidos pequenos — perfeitos para quem está começando e quer testar antes de investir mais." },
-  { q: "Quais categorias têm na lista?", a: "Roupas, Lingerie, Perfumes, Bijuterias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 12 categorias." },
+  { q: "Quais categorias têm na lista?", a: "Roupas, Lingerie, Eletrônicos e Celulares, Maquiagem e Cosméticos, Perfumes, Bijuterias e Semijoias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 14 categorias." },
   { q: "Como recebo o acesso após a compra?", a: "Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício." },
   { q: "Tem garantia?", a: "Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia." },
   { q: "Posso vender nos marketplaces (Mercado Livre, Shopee, Amazon)?", a: "Com certeza! Os fornecedores da lista foram selecionados pensando nos marketplaces. Você consegue margem suficiente para cobrir taxas e ainda lucrar bem." },
@@ -313,7 +315,7 @@ export default function FornecedoresPage() {
                   <div style={{ fontSize: "11px", color: "#9ca3af", marginBottom: "4px" }}>OU EM ATÉ</div>
                   <div style={{ fontSize: "28px", fontWeight: 900, color: "#ea580c", marginBottom: "2px" }}>10X de R$1,99</div>
                   <div style={{ fontSize: "11px", color: "#ea580c", fontWeight: 700, marginBottom: "16px" }}>NO CARTÃO — VOCÊ QUEM ESCOLHE!</div>
-                  {["180 fornecedores em 12 categorias", "7 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
+                  {["180 fornecedores em 14 categorias", "7 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", marginBottom: "6px" }}>
                       <IconCheck size={14} /><span>{item}</span>
                     </div>
@@ -334,7 +336,7 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
           <PillLabel>O QUE VOCÊ ACESSA</PillLabel>
           <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "6px", textTransform: "uppercase" }}>
-            12 CATEGORIAS QUE VOCÊ PODE ACESSAR AINDA HOJE
+            14 CATEGORIAS QUE VOCÊ PODE ACESSAR AINDA HOJE
           </h2>
           <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "28px" }}>
             180 fornecedores verificados — de Roupas a Suplementos, do atacado direto para você
@@ -565,7 +567,7 @@ export default function FornecedoresPage() {
                 {/* Checklist */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px", borderBottom: "1px solid #f3f4f6", paddingBottom: "20px" }}>
                   {[
-                    { bold: "180 fornecedores verificados", rest: " em 12 categorias — contato direto" },
+                    { bold: "180 fornecedores verificados", rest: " em 14 categorias — contato direto" },
                     { bold: "Atacado real", rest: " — margem de 100% a 400% por produto" },
                     { bold: "Sem CNPJ", rest: " — pode comprar como pessoa física" },
                     { bold: "Bônus 01", rest: " — Calculadora de precificação" },
