@@ -32,64 +32,80 @@ function useIsMobile() {
 /* ─── dados ──────────────────────────────────────────────────── */
 
 const categorias = [
+  { emoji: "👗", label: "ROUPAS" },
   { emoji: "👙", label: "LINGERIE" },
-  { emoji: "👗", label: "MODA FEMININA" },
-  { emoji: "🧕", label: "MODA MODESTA" },
-  { emoji: "🏖️", label: "MODA PRAIA" },
-  { emoji: "🍼", label: "INFANTIL" },
-  { emoji: "➕", label: "PLUS SIZE" },
-  { emoji: "🏋️", label: "MODA FITNESS" },
-  { emoji: "👔", label: "MODA MASCULINA" },
-  { emoji: "🧵", label: "ALFAIATARIA" },
-  { emoji: "💍", label: "ACESSÓRIOS" },
-  { emoji: "👜", label: "BOLSAS E MOCHILAS" },
-  { emoji: "👖", label: "MODA JEANS" },
-  { emoji: "👕", label: "T-SHIRTS" },
-  { emoji: "🧶", label: "TRICOT" },
-  { emoji: "🌙", label: "PIJAMAS" },
+  { emoji: "🌸", label: "PERFUMES" },
+  { emoji: "💎", label: "BIJUTERIAS E SEMIJOIAS" },
+  { emoji: "🧸", label: "BRINQUEDOS" },
+  { emoji: "📦", label: "EMBALAGENS" },
+  { emoji: "🎮", label: "GAMES" },
+  { emoji: "📚", label: "PAPELARIA" },
+  { emoji: "🍎", label: "ALIMENTOS" },
+  { emoji: "🥤", label: "BEBIDAS" },
+  { emoji: "🧹", label: "PRODUTOS DE LIMPEZA" },
+  { emoji: "💊", label: "SUPLEMENTOS" },
 ];
 
 const oquerecebes = [
-  "+500 fornecedores verificados direto da fonte",
-  "Contato direto: WhatsApp, site e telefone de cada fornecedor",
+  "180 fornecedores verificados — direto da fonte, no atacado",
+  "Contato direto: site, WhatsApp e telefone de cada empresa",
+  "12 categorias: Roupas, Lingerie, Perfumes, Bijuterias, Games, Papelaria, Suplementos e mais",
+  "Marcas reais: Multilaser, Rovitex, Gimba, Inventa, Technos e muito mais",
+  "Não precisa de CNPJ — compre como pessoa física",
   "Comece com menos de R$100 — sem pedido mínimo alto",
-  "Não precisa de CNPJ — pode comprar como pessoa física",
-  "Todas as categorias: moda, calçados, acessórios, casa e muito mais",
-  "Fornecedores que enviam para todo o Brasil",
-  "Preços de atacado real — margem de 100% a 400%",
-  "Lista atualizada — fornecedores testados e aprovados",
+  "Envio para todo o Brasil — fornecedores de SP, RS, SC e todo o país",
+  "Preços de atacado real — margem de 100% a 400% por produto",
 ];
 
 const bonuses = [
   {
     n: "01",
-    title: "GUIA LOJA DE 10",
-    desc: "Aprenda a montar sua loja virtual do zero e faturar seus primeiros R$1.000 na primeira semana.",
+    emoji: "🧮",
+    title: "CALCULADORA DE PRECIFICAÇÃO",
+    desc: "Descubra o preço ideal para cada produto e nunca mais venda no prejuízo. Informe o custo, a margem desejada e as taxas do marketplace — a calculadora faz tudo por você.",
     valor: "R$47",
   },
   {
     n: "02",
-    title: "LISTA DOS PRODUTOS MAIS VENDIDOS",
-    desc: "Os produtos hot que mais vendem no Mercado Livre, Shopee e Amazon — já com fornecedor incluído.",
+    emoji: "🏪",
+    title: "GUIA LOJA DE 10",
+    desc: "Aprenda a montar sua loja virtual do zero e faturar seus primeiros R$1.000 na primeira semana, mesmo sem experiência em vendas online.",
     valor: "R$37",
   },
   {
     n: "03",
-    title: "PACOTE INFLUENCER PARA INSTAGRAM",
-    desc: "Templates prontos para vender no Instagram sem precisar aparecer. Ideal para iniciantes.",
-    valor: "R$57",
+    emoji: "🔥",
+    title: "LISTA DOS PRODUTOS MAIS VENDIDOS",
+    desc: "Os produtos que mais vendem agora no Mercado Livre, Shopee e Amazon — já com o fornecedor certo indicado dentro da lista.",
+    valor: "R$37",
   },
   {
     n: "04",
-    title: "CATÁLOGO DE TENDÊNCIAS",
-    desc: "Tendências da próxima temporada para você comprar antes de todo mundo e vender com mais margem.",
-    valor: "R$47",
+    emoji: "📱",
+    title: "PACOTE INFLUENCER PARA INSTAGRAM",
+    desc: "Templates prontos para vender no Instagram sem precisar aparecer. Artes, legendas e estratégias para iniciantes conseguirem suas primeiras vendas.",
+    valor: "R$57",
   },
   {
     n: "05",
+    emoji: "📊",
+    title: "CATÁLOGO DE TENDÊNCIAS",
+    desc: "As tendências da próxima temporada para você comprar do fornecedor antes de todo mundo e vender com margem muito maior.",
+    valor: "R$47",
+  },
+  {
+    n: "06",
+    emoji: "🤖",
     title: "COMO GERAR IMAGENS COM IA",
-    desc: "Crie fotos profissionais dos seus produtos com IA, sem fotógrafo e sem modelo.",
+    desc: "Crie fotos profissionais dos seus produtos usando inteligência artificial, sem fotógrafo, sem modelo e sem gastar nada.",
     valor: "R$37",
+  },
+  {
+    n: "07",
+    emoji: "💬",
+    title: "GRUPOS E COMUNIDADES NO WHATSAPP",
+    desc: "Acesso a grupos e comunidades no WhatsApp com contato direto de fornecedores — tire dúvidas, negocie preços e receba novidades dos atacadistas em tempo real.",
+    valor: "R$67",
   },
 ];
 
@@ -165,7 +181,7 @@ function OfferCard({ email, setEmail, loading, submitted, erro, handleSubmit }: 
 
       <h3 style={{ fontSize: "16px", fontWeight: 900, marginBottom: "4px" }}>
         ACESSO COMPLETO À LISTA VIP<br />
-        <span style={{ color: "#ea580c" }}>+ 5 BÔNUS EXCLUSIVOS</span>
+        <span style={{ color: "#ea580c" }}>+ 7 BÔNUS EXCLUSIVOS</span>
       </h3>
 
       <p style={{ fontSize: "12px", color: "#9ca3af", textDecoration: "line-through", margin: "12px 0 4px" }}>
@@ -194,7 +210,7 @@ function OfferCard({ email, setEmail, loading, submitted, erro, handleSubmit }: 
 
       {/* Inclusões */}
       <div style={{ textAlign: "left", marginBottom: "16px", display: "flex", flexDirection: "column", gap: "6px" }}>
-        {["Acesso imediato no seu e-mail", "Compra 100% segura"].map((item) => (
+        {["180 fornecedores em 12 categorias", "7 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no seu e-mail", "Compra 100% segura"].map((item) => (
           <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", color: "#555" }}>
             <IconCheck size={14} />
             <span>{item}</span>
@@ -294,8 +310,8 @@ export default function FornecedoresPage() {
             {/* Coluna esquerda — copy */}
             <div style={{ flex: isMobile ? undefined : "1 1 55%" }}>
               <h1 style={{ fontSize: isMobile ? "26px" : "38px", fontWeight: 900, lineHeight: 1.15, marginBottom: "16px", textAlign: isMobile ? "center" : "left" }}>
-                <span style={{ color: "#ea580c" }}>+500 FORNECEDORES</span>{" "}
-                DIRETO DA FONTE PARA VOCÊ REVENDER E LUCRAR DE VERDADE
+                <span style={{ color: "#ea580c" }}>180 FORNECEDORES VERIFICADOS</span>{" "}
+                DIRETO DO ATACADO PARA VOCÊ REVENDER E LUCRAR DE VERDADE
               </h1>
 
               <p style={{ fontSize: isMobile ? "15px" : "17px", color: "#555", lineHeight: 1.6, marginBottom: "28px", textAlign: isMobile ? "center" : "left" }}>
@@ -304,7 +320,7 @@ export default function FornecedoresPage() {
 
               {/* Trust numbers */}
               <div style={{ display: "flex", gap: "32px", marginBottom: "28px", justifyContent: isMobile ? "center" : "flex-start" }}>
-                {[{ n: "+500", label: "Fornecedores" }, { n: "+5mil", label: "Clientes" }, { n: "100%", label: "Verificados" }].map((item) => (
+                {[{ n: "180", label: "Fornecedores" }, { n: "12", label: "Categorias" }, { n: "100%", label: "Verificados" }].map((item) => (
                   <div key={item.label} style={{ textAlign: "center" }}>
                     <div style={{ fontSize: isMobile ? "22px" : "28px", fontWeight: 900, color: "#ea580c" }}>{item.n}</div>
                     <div style={{ fontSize: "11px", color: "#6b7280" }}>{item.label}</div>
@@ -347,13 +363,13 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
           <PillLabel>O QUE VOCÊ ACESSA</PillLabel>
           <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "6px", textTransform: "uppercase" }}>
-            VEJA AS CATEGORIAS QUE VOCÊ PODE ACESSAR AINDA HOJE
+            12 CATEGORIAS QUE VOCÊ PODE ACESSAR AINDA HOJE
           </h2>
           <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "28px", lineHeight: 1.5 }}>
-            Fornecedores em todas as categorias que mais vendem no Brasil
+            180 fornecedores verificados — de Roupas a Suplementos, do atacado direto para você
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(5, 1fr)", gap: isMobile ? "12px" : "16px", marginBottom: "28px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? "12px" : "16px", marginBottom: "28px" }}>
             {categorias.map((cat) => (
               <div key={cat.label} style={{ border: "2px solid #ea580c", borderRadius: "12px", padding: isMobile ? "16px 8px 12px" : "20px 8px 16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", background: "#fff7ed" }}>
                 <span style={{ fontSize: isMobile ? "28px" : "36px" }}>{cat.emoji}</span>
@@ -443,23 +459,39 @@ export default function FornecedoresPage() {
             ALÉM DA LISTA, VOCÊ AINDA RECEBE ESTES
           </h2>
           <h3 style={{ fontSize: isMobile ? "22px" : "30px", fontWeight: 900, color: "#ea580c", marginBottom: "28px" }}>
-            5 BÔNUS EXCLUSIVOS 🎁
+            7 BÔNUS EXCLUSIVOS 🎁
           </h3>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "12px" : "20px", marginBottom: "20px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? "16px" : "24px", marginBottom: "20px" }}>
             {bonuses.map((b) => (
-              <div key={b.n} style={{ border: "1.5px solid #fed7aa", borderRadius: "12px", padding: "20px 16px", textAlign: "left", background: "#fff", position: "relative" }}>
-                <div style={{ position: "absolute", top: "14px", right: "14px", fontSize: "11px", fontWeight: 700, color: "#9ca3af", textDecoration: "line-through" }}>{b.valor}</div>
-                <div style={{ fontSize: "11px", fontWeight: 800, color: "#ea580c", marginBottom: "4px", letterSpacing: "0.05em" }}>🎁 BÔNUS {b.n}</div>
-                <div style={{ fontSize: "14px", fontWeight: 800, color: "#111", marginBottom: "8px" }}>{b.title}</div>
-                <div style={{ fontSize: "12px", color: "#555", lineHeight: 1.5, marginBottom: "10px" }}>{b.desc}</div>
-                <div style={{ fontSize: "12px", fontWeight: 700, color: "#16a34a" }}>DE {b.valor} → GRÁTIS 🎉</div>
+              <div key={b.n} style={{ border: "1px solid #e5e7eb", borderRadius: "16px", overflow: "hidden", background: "#fff", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+                {/* Mockup visual */}
+                <div style={{ background: "linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%)", height: isMobile ? "110px" : "130px", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+                  <div style={{ fontSize: isMobile ? "52px" : "64px" }}>{b.emoji}</div>
+                  <div style={{ position: "absolute", top: "10px", right: "10px", background: "#ea580c", color: "#fff", fontSize: "10px", fontWeight: 800, padding: "3px 10px", borderRadius: "100px", letterSpacing: "0.05em" }}>
+                    GRÁTIS
+                  </div>
+                </div>
+                {/* Conteúdo */}
+                <div style={{ padding: "16px" }}>
+                  <div style={{ fontSize: "12px", fontWeight: 800, color: "#ea580c", marginBottom: "4px", letterSpacing: "0.05em" }}>
+                    🎁 BÔNUS {b.n}:
+                  </div>
+                  <div style={{ fontSize: "15px", fontWeight: 900, color: "#111", marginBottom: "10px", lineHeight: 1.3 }}>{b.title}</div>
+                  <div style={{ fontSize: "12px", color: "#555", lineHeight: 1.6, marginBottom: "14px" }}>{b.desc}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ fontSize: "12px", color: "#9ca3af" }}>De</span>
+                    <span style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", fontWeight: 600 }}>{b.valor}</span>
+                    <span style={{ fontSize: "13px", color: "#555", fontWeight: 600 }}>por</span>
+                    <span style={{ fontSize: "18px", fontWeight: 900, color: "#22c55e" }}>R$ 0,00</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
 
           <div style={{ background: "#ea580c", borderRadius: "12px", padding: "14px 20px", color: "#fff", fontSize: isMobile ? "13px" : "15px", fontWeight: 700, marginBottom: "20px" }}>
-            VALOR TOTAL DOS BÔNUS: R$225,00 — INCLUSO SEM CUSTO EXTRA 🎯
+            VALOR TOTAL DOS BÔNUS: R$329,00 — INCLUSO SEM CUSTO EXTRA 🎯
           </div>
 
           <button onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ background: "#ea580c", color: "#fff", border: "none", borderRadius: "12px", padding: isMobile ? "16px" : "18px 48px", fontSize: isMobile ? "15px" : "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit" }}>
