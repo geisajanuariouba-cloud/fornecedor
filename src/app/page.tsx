@@ -70,43 +70,37 @@ const compostoItems = [
 
 const bonuses = [
   {
-    n: "01", emoji: "🧮",
-    title: "CALCULADORA DE PRECIFICAÇÃO",
-    desc: "Descubra o preço ideal para cada produto e nunca mais venda no prejuízo. Informe o custo, a margem desejada e as taxas do marketplace — a calculadora faz tudo por você.",
-    valor: "R$47",
-  },
-  {
-    n: "02", emoji: "🏪",
+    n: "01", emoji: "🏪",
     title: "GUIA LOJA DE 10",
     desc: "Aprenda a montar sua loja virtual do zero e faturar seus primeiros R$1.000 na primeira semana, mesmo sem experiência em vendas online.",
     valor: "R$37",
   },
   {
-    n: "03", emoji: "🔥",
+    n: "02", emoji: "🔥",
     title: "LISTA DOS PRODUTOS MAIS VENDIDOS",
     desc: "Os produtos que mais vendem agora no Mercado Livre, Shopee e Amazon — já com o fornecedor certo indicado dentro da lista.",
     valor: "R$37",
   },
   {
-    n: "04", emoji: "📱",
+    n: "03", emoji: "📸",
     title: "PACOTE INFLUENCER PARA INSTAGRAM",
     desc: "Templates prontos para vender no Instagram sem precisar aparecer. Artes, legendas e estratégias para iniciantes conseguirem suas primeiras vendas.",
     valor: "R$57",
   },
   {
-    n: "05", emoji: "📊",
+    n: "04", emoji: "📊",
     title: "CATÁLOGO DE TENDÊNCIAS",
     desc: "As tendências da próxima temporada para você comprar do fornecedor antes de todo mundo e vender com margem muito maior.",
     valor: "R$47",
   },
   {
-    n: "06", emoji: "🤖",
+    n: "05", emoji: "🤖",
     title: "COMO GERAR IMAGENS COM IA",
     desc: "Crie fotos profissionais dos seus produtos usando inteligência artificial, sem fotógrafo, sem modelo e sem gastar nada.",
     valor: "R$37",
   },
   {
-    n: "07", emoji: "💬",
+    n: "06", emoji: "💬",
     title: "GRUPOS E COMUNIDADES NO WHATSAPP",
     desc: "Acesso a grupos e comunidades no WhatsApp com contato direto de fornecedores — tire dúvidas, negocie preços e receba novidades dos atacadistas em tempo real.",
     valor: "R$67",
@@ -315,7 +309,7 @@ export default function FornecedoresPage() {
                   <div style={{ fontSize: "11px", color: "#9ca3af", marginBottom: "4px" }}>OU EM ATÉ</div>
                   <div style={{ fontSize: "28px", fontWeight: 900, color: "#ea580c", marginBottom: "2px" }}>10X de R$1,99</div>
                   <div style={{ fontSize: "11px", color: "#ea580c", fontWeight: 700, marginBottom: "16px" }}>NO CARTÃO — VOCÊ QUEM ESCOLHE!</div>
-                  {["180 fornecedores em 14 categorias", "7 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
+                  {["180 fornecedores em 14 categorias", "6 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", marginBottom: "6px" }}>
                       <IconCheck size={14} /><span>{item}</span>
                     </div>
@@ -437,7 +431,7 @@ export default function FornecedoresPage() {
             ALÉM DA LISTA, VOCÊ AINDA RECEBE ESTES
           </h2>
           <h3 style={{ fontSize: isMobile ? "22px" : "30px", fontWeight: 900, color: "#ea580c", marginBottom: "28px" }}>
-            7 BÔNUS EXCLUSIVOS 🎁
+            6 BÔNUS EXCLUSIVOS 🎁
           </h3>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? "16px" : "24px", marginBottom: "20px" }}>
             {bonuses.map((b) => (
@@ -461,7 +455,7 @@ export default function FornecedoresPage() {
             ))}
           </div>
           <div style={{ background: "#ea580c", borderRadius: "12px", padding: "14px 20px", color: "#fff", fontSize: isMobile ? "13px" : "15px", fontWeight: 700, marginBottom: "20px" }}>
-            VALOR TOTAL DOS BÔNUS: R$329,00 — INCLUSO SEM CUSTO EXTRA 🎯
+            VALOR TOTAL DOS BÔNUS: R$282,00 — INCLUSO SEM CUSTO EXTRA 🎯
           </div>
           <CTAButton fullWidth={isMobile}>QUERO TUDO ISSO AGORA →</CTAButton>
         </div>
@@ -548,7 +542,7 @@ export default function FornecedoresPage() {
                 <div style={{ fontSize: "20px", fontWeight: 900, marginBottom: "4px" }}>LISTA VIP</div>
                 <div style={{ fontSize: "13px", opacity: 0.85 }}>180 Fornecedores Verificados</div>
                 <div style={{ fontSize: "13px", opacity: 0.85 }}>12 Categorias • Atacado direto</div>
-                <div style={{ marginTop: "16px", fontSize: "11px", opacity: 0.7, fontWeight: 700 }}>+ 7 BÔNUS EXCLUSIVOS</div>
+                <div style={{ marginTop: "16px", fontSize: "11px", opacity: 0.7, fontWeight: 700 }}>+ 6 BÔNUS EXCLUSIVOS</div>
               </div>
               <p style={{ fontSize: "12px", color: "#9ca3af" }}>Acesso imediato após a compra</p>
             </div>
@@ -560,7 +554,7 @@ export default function FornecedoresPage() {
                   <div style={{ display: "inline-block", background: "#ea580c", color: "#fff", fontSize: "11px", fontWeight: 800, padding: "5px 16px", borderRadius: "100px", marginBottom: "14px" }}>OFERTA EXCLUSIVA</div>
                   <h3 style={{ fontSize: isMobile ? "16px" : "18px", fontWeight: 900, marginBottom: "4px" }}>
                     ACESSO COMPLETO À LISTA VIP<br />
-                    <span style={{ color: "#ea580c" }}>+ 7 BÔNUS EXCLUSIVOS</span>
+                    <span style={{ color: "#ea580c" }}>+ 6 BÔNUS EXCLUSIVOS</span>
                   </h3>
                 </div>
 
