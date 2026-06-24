@@ -49,14 +49,14 @@ const categorias = [
 ];
 
 const oquerecebes = [
-  "180 fornecedores verificados — direto da fonte, no atacado",
+  "180 fornecedores verificados direto da fonte, no atacado",
   "Contato direto: site, WhatsApp e telefone de cada empresa",
   "14 categorias: Roupas, Lingerie, Eletrônicos, Maquiagem, Perfumes, Bijuterias, Games e mais",
   "Marcas reais: Multilaser, RCell, Rovitex, Gimba, Inventa, Technos e muito mais",
-  "Não precisa de CNPJ — compre como pessoa física",
-  "Comece com menos de R$100 — sem pedido mínimo alto",
-  "Envio para todo o Brasil — fornecedores de SP, RS, SC e todo o país",
-  "Preços de atacado real — margem de 100% a 400% por produto",
+  "Não precisa de CNPJ, compre como pessoa física",
+  "Comece com menos de R$100, sem pedido mínimo alto",
+  "Envio para todo o Brasil, fornecedores de SP, RS, SC e todo o país",
+  "Preços de atacado real com margem de 100% a 400% por produto",
 ];
 
 const compostoItems = [
@@ -288,7 +288,7 @@ export default function FornecedoresPage() {
               <div style={{ flex: "0 0 360px" }}>
                 <div style={{ border: "2px solid #ea580c", borderRadius: "16px", padding: "24px 20px", background: "#fff" }}>
                   <div style={{ display: "inline-block", background: "#ea580c", color: "#fff", fontSize: "11px", fontWeight: 800, padding: "4px 14px", borderRadius: "100px", marginBottom: "12px" }}>OFERTA EXCLUSIVA E LIMITADA</div>
-                  <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>DE R$97,00 POR APENAS</div>
+                  <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>DE R$397,00 POR APENAS</div>
                   <div style={{ fontSize: "46px", fontWeight: 900, color: "#ea580c", lineHeight: 1, marginBottom: "2px" }}>R$9,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginBottom: "16px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                   {["180 fornecedores em 14 categorias", "6 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
@@ -320,7 +320,7 @@ export default function FornecedoresPage() {
             14 CATEGORIAS QUE VOCÊ PODE ACESSAR AINDA HOJE
           </h2>
           <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "28px" }}>
-            180 fornecedores verificados — de Roupas a Suplementos, do atacado direto para você
+            180 fornecedores verificados, de Roupas a Suplementos, do atacado direto para você
           </p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? "12px" : "16px", marginBottom: "28px" }}>
             {categorias.map((cat) => (
@@ -439,7 +439,7 @@ export default function FornecedoresPage() {
             ))}
           </div>
           <div style={{ background: "#ea580c", borderRadius: "12px", padding: "14px 20px", color: "#fff", fontSize: isMobile ? "13px" : "15px", fontWeight: 700, marginBottom: "20px" }}>
-            VALOR TOTAL DOS BÔNUS: R$282,00 — INCLUSO SEM CUSTO EXTRA 🎯
+            VALOR TOTAL (LISTA + 6 BÔNUS): R$397,00 INCLUSO SEM CUSTO EXTRA 🎯
           </div>
           <CTAButton fullWidth={isMobile}>QUERO TUDO ISSO AGORA →</CTAButton>
         </div>
@@ -506,12 +506,12 @@ export default function FornecedoresPage() {
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px", borderBottom: "1px solid #f3f4f6", paddingBottom: "20px" }}>
                   {[
-                    { bold: "180 fornecedores verificados", rest: " em 14 categorias — contato direto" },
-                    { bold: "Atacado real", rest: " — margem de 100% a 400% por produto" },
-                    { bold: "Sem CNPJ", rest: " — pode comprar como pessoa física" },
-                    { bold: "Bônus 01–02", rest: " — Guia Loja de 10 + Produtos mais vendidos" },
-                    { bold: "Bônus 03–04", rest: " — Instagram + Catálogo de Tendências" },
-                    { bold: "Bônus 05–06", rest: " — Imagens com IA + Grupos WhatsApp" },
+                    { bold: "180 fornecedores verificados", rest: " em 14 categorias com contato direto" },
+                    { bold: "Atacado real", rest: " com margem de 100% a 400% por produto" },
+                    { bold: "Sem CNPJ", rest: " pode comprar como pessoa física" },
+                    { bold: "Bônus 01 e 02:", rest: " Guia Loja de 10 + Produtos mais vendidos" },
+                    { bold: "Bônus 03 e 04:", rest: " Instagram + Catálogo de Tendências" },
+                    { bold: "Bônus 05 e 06:", rest: " Imagens com IA + Grupos WhatsApp" },
                   ].map((item, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                       <IconCheck size={16} color="#ea580c" />
@@ -521,7 +521,7 @@ export default function FornecedoresPage() {
                 </div>
 
                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                  <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$197,00 por apenas:</div>
+                  <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$397,00 por apenas:</div>
                   <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$9,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
@@ -565,18 +565,25 @@ export default function FornecedoresPage() {
 
       {/* ── FAQ ── */}
       <div style={{ background: "#f9fafb", padding: `40px 20px ${isMobile ? "100px" : "80px"}` }}>
-        <div style={{ maxWidth: isMobile ? 480 : 800, margin: "0 auto" }}>
-          <h2 style={{ textAlign: "center", fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
-            Perguntas frequentes
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "8px", marginBottom: "32px" }}>
+        <div style={{ maxWidth: isMobile ? 480 : 860, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "32px" }}>
+            <PillLabel>DÚVIDAS FREQUENTES</PillLabel>
+            <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, textTransform: "uppercase" }}>
+              Perguntas Frequentes
+            </h2>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "40px" }}>
             {faqs.map((f, i) => (
-              <div key={i} style={{ border: "1px solid #e5e7eb", borderRadius: "10px", overflow: "hidden", background: "#fff", alignSelf: "start" }}>
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 16px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontWeight: 700, fontSize: "13px", color: "#111", gap: "8px", fontFamily: "inherit" }}>
+              <div key={i} style={{ border: `1.5px solid ${openFaq === i ? "#ea580c" : "#e5e7eb"}`, borderRadius: "12px", overflow: "hidden", background: "#fff", transition: "border-color 0.2s" }}>
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: isMobile ? "16px" : "18px 24px", background: openFaq === i ? "#fff7ed" : "none", border: "none", cursor: "pointer", textAlign: "left", fontWeight: 700, fontSize: isMobile ? "13px" : "15px", color: openFaq === i ? "#ea580c" : "#111", gap: "12px", fontFamily: "inherit", transition: "background 0.2s" }}>
                   <span>{f.q}</span>
                   <IconChevron open={openFaq === i} />
                 </button>
-                {openFaq === i && <div style={{ padding: "0 16px 14px", fontSize: "13px", color: "#555", lineHeight: 1.6 }}>{f.a}</div>}
+                {openFaq === i && (
+                  <div style={{ padding: isMobile ? "0 16px 16px" : "0 24px 20px", fontSize: isMobile ? "13px" : "15px", color: "#555", lineHeight: 1.7 }}>
+                    {f.a}
+                  </div>
+                )}
               </div>
             ))}
           </div>
