@@ -19,6 +19,11 @@ function readPdf(filename: string) {
 
 export async function POST(req: NextRequest) {
   try {
+    const token = req.nextUrl.searchParams.get("token") ?? "";
+    if (process.env.KIWIFY_WEBHOOK_TOKEN && token !== process.env.KIWIFY_WEBHOOK_TOKEN) {
+      return NextResponse.json({ ok: false }, { status: 401 });
+    }
+
     const body = await req.json().catch(() => ({}));
 
     const name: string = body?.data?.customer?.name ?? body?.customer?.name ?? "Cliente";
