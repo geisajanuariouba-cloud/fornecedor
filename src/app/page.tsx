@@ -6,18 +6,6 @@ const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.kiwify
 
 /* ─── hooks ─────────────────────────────────────────────────── */
 
-function useCountdown(totalSeconds: number) {
-  const [time, setTime] = useState(totalSeconds);
-  useEffect(() => {
-    const t = setInterval(() => setTime((s) => Math.max(0, s - 1)), 1000);
-    return () => clearInterval(t);
-  }, []);
-  const h = Math.floor(time / 3600).toString().padStart(2, "0");
-  const m = Math.floor((time % 3600) / 60).toString().padStart(2, "0");
-  const s = (time % 60).toString().padStart(2, "0");
-  return { h, m, s };
-}
-
 function useIsMobile() {
   const [mobile, setMobile] = useState(true);
   useEffect(() => {
@@ -168,24 +156,6 @@ function CTAButton({ children, large, fullWidth }: { children: React.ReactNode; 
 
 /* ─── Countdown box ─────────────────────────────────────────── */
 
-function CountdownBox({ h, m, s }: { h: string; m: string; s: string }) {
-  const boxStyle: React.CSSProperties = { background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "8px", padding: "8px 14px", textAlign: "center", minWidth: "52px" };
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: "6px", justifyContent: "center" }}>
-      {[{ v: h, l: "Horas" }, { v: m, l: "Minutos" }, { v: s, l: "Segundos" }].map((item, i) => (
-        <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <div style={boxStyle}>
-            <div style={{ fontSize: "24px", fontWeight: 900, color: "#ea580c", fontVariantNumeric: "tabular-nums" }}>{item.v}</div>
-            <div style={{ fontSize: "9px", color: "#9ca3af", fontWeight: 600 }}>{item.l}</div>
-          </div>
-          {i < 2 && <span style={{ fontSize: "20px", fontWeight: 900, color: "#ea580c" }}>:</span>}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-
 /* ─── Category Card ─────────────────────────────────────────── */
 
 function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boolean }) {
@@ -223,7 +193,6 @@ function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boole
 /* ─── Página ─────────────────────────────────────────────────── */
 
 export default function FornecedoresPage() {
-  const { h, m, s } = useCountdown(2 * 3600 + 47 * 60 + 33);
   const isMobile = useIsMobile();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -233,12 +202,9 @@ export default function FornecedoresPage() {
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", minHeight: "100vh", color: "#111" }}>
 
-      {/* ── Urgency bar ── */}
+      {/* ── Urgency bar — escassez real (preço de lançamento) ── */}
       <div style={{ background: "#ea580c", color: "#fff", textAlign: "center", padding: "10px 16px", fontSize: "13px", fontWeight: 700 }}>
-        🔥 OFERTA ESPECIAL ENCERRA EM:{" "}
-        <span style={{ background: "rgba(0,0,0,0.2)", borderRadius: "6px", padding: "2px 8px", marginLeft: "6px", fontVariantNumeric: "tabular-nums" }}>
-          {h}:{m}:{s}
-        </span>
+        ⚠️ Preço de lançamento: R$9,90 — sobe a cada atualização da lista
       </div>
 
       {/* ── HERO ── */}
@@ -253,37 +219,24 @@ export default function FornecedoresPage() {
           <div style={{ display: "flex", gap: "56px", alignItems: "flex-start", flexDirection: isMobile ? "column" : "row" }}>
             {/* Coluna esquerda */}
             <div style={{ flex: isMobile ? undefined : "1 1 55%" }}>
-              <h1 style={{ fontSize: isMobile ? "26px" : "40px", fontWeight: 900, lineHeight: 1.15, marginBottom: "16px", textAlign: isMobile ? "center" : "left" }}>
-                <span style={{ color: "#ea580c" }}>180 FORNECEDORES VERIFICADOS</span>{" "}
-                DIRETO DO ATACADO PARA VOCÊ REVENDER E LUCRAR DE VERDADE
+              <p style={{ fontStyle: "italic", fontSize: isMobile ? "13px" : "14px", color: "#9ca3af", lineHeight: 1.5, marginBottom: "16px", textAlign: isMobile ? "center" : "left" }}>
+                Se você já tentou revender e travou na hora de achar fornecedor, isso foi feito pra você.
+              </p>
+              <h1 style={{ fontSize: isMobile ? "28px" : "44px", fontWeight: 900, lineHeight: 1.1, marginBottom: "18px", textAlign: isMobile ? "center" : "left" }}>
+                As lojas não pagam o que você paga.{" "}
+                <span style={{ color: "#ea580c" }}>Elas compram aqui.</span>
               </h1>
-              <p style={{ fontSize: isMobile ? "15px" : "17px", color: "#555", lineHeight: 1.6, marginBottom: "28px", textAlign: isMobile ? "center" : "left" }}>
-                Acesse hoje a lista com os melhores fornecedores de roupas, perfumes, bijuterias, games, suplementos e muito mais — testados, verificados e prontos para você comprar sem CNPJ.
+              <p style={{ fontSize: isMobile ? "15px" : "18px", color: "#555", lineHeight: 1.6, marginBottom: "20px", textAlign: isMobile ? "center" : "left" }}>
+                Acesse os 180 fornecedores verificados que vendem direto do atacado, sem CNPJ, sem pedido mínimo alto e começando com menos de R$100.
               </p>
 
-              <div style={{ display: "flex", gap: "32px", marginBottom: "28px", justifyContent: isMobile ? "center" : "flex-start" }}>
-                {[{ n: "180", label: "Fornecedores" }, { n: "14", label: "Categorias" }, { n: "100%", label: "Verificados" }].map((item) => (
-                  <div key={item.label} style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: isMobile ? "22px" : "30px", fontWeight: 900, color: "#ea580c" }}>{item.n}</div>
-                    <div style={{ fontSize: "11px", color: "#6b7280" }}>{item.label}</div>
-                  </div>
-                ))}
-              </div>
-
-              {!isMobile && (
-                <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "28px" }}>
-                  {oquerecebes.slice(0, 5).map((item) => (
-                    <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                      <IconCheck size={18} />
-                      <span style={{ fontSize: "14px", fontWeight: 600 }}>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <p style={{ fontSize: isMobile ? "14px" : "15px", fontWeight: 700, color: "#111", marginBottom: "28px", textAlign: isMobile ? "center" : "left" }}>
+                <span style={{ color: "#ea580c" }}>+5.000 revendedoras</span> já compram direto da fonte com esta lista.
+              </p>
 
               <div style={{ textAlign: isMobile ? "center" : "left" }}>
-                <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO ACESSAR AGORA →</CTAButton>
-                <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Pagamento seguro • Acesso imediato • 7 dias de garantia</p>
+                <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO ACESSAR OS FORNECEDORES →</CTAButton>
+                <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único de R$9,90 • 7 dias de garantia</p>
               </div>
             </div>
 
@@ -542,9 +495,10 @@ export default function FornecedoresPage() {
                   Você ficará um passo mais perto de realizar seu sonho 🎯
                 </p>
 
-                <div style={{ textAlign: "center" }}>
-                  <p style={{ fontSize: "12px", color: "#ea580c", fontWeight: 700, marginBottom: "10px" }}>⏳ Esta oferta expira em:</p>
-                  <CountdownBox h={h} m={m} s={s} />
+                <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "10px", padding: "14px 16px" }}>
+                  <p style={{ fontSize: "12.5px", color: "#7c2d12", lineHeight: 1.6, textAlign: "center" }}>
+                    ⚠️ <strong>Preço de lançamento: R$9,90.</strong> A lista é atualizada com novos fornecedores. Quem entra agora paga esse valor uma vez e recebe todas as atualizações futuras sem pagar nada a mais. Quando o preço subir, sobe só para novos acessos.
+                  </p>
                 </div>
               </div>
             </div>
