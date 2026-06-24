@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
           },
         },
       ],
-      test_event_code: process.env.META_TEST_CODE ?? undefined,
+      test_event_code: process.env.META_TEST_CODE ?? "TEST79732",
     };
 
     const res = await fetch(
