@@ -26,12 +26,49 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json().catch(() => ({}));
 
-    const name: string = body?.data?.customer?.name ?? body?.customer?.name ?? "Cliente";
-    const email: string = body?.data?.customer?.email ?? body?.customer?.email ?? "";
-    const event: string = body?.event ?? body?.type ?? "";
+    // Kiwify payload: email em Customer.email (C maiúsculo), status em order_status
+    const email: string = (
+      body?.Customer?.email ||
+      body?.customer?.email ||
+      body?.data?.customer?.email ||
+      body?.email ||
+      ""
+    ).toLowerCase().trim();
 
-    if (!email || !event.includes("paid")) {
-      return NextResponse.json({ ok: false, reason: "not a paid event or no email" });
+    const name: string =
+      body?.Customer?.full_name ||
+      body?.customer?.full_name ||
+      body?.customer?.name ||
+      body?.data?.customer?.name ||
+      "Cliente";
+
+    const rawStatus = String(
+      body?.order_status ||
+        body?.status ||
+        body?.Order?.order_status ||
+        body?.webhook_event_type ||
+        body?.event ||
+        "unknown"
+    ).toLowerCase();
+
+    const isApproval = ["paid", "approved", "completed", "order_approved"].some((s) =>
+      rawStatus.includes(s)
+    );
+
+    console.log("[webhook/kiwify] received", {
+      email: email || "(empty)",
+      status: rawStatus,
+      isApproval,
+      body_keys: Object.keys(body || {}),
+    });
+
+    if (!email || !isApproval) {
+      return NextResponse.json({
+        ok: true,
+        handled: false,
+        reason: !email ? "no_email" : "not_approved",
+        status: rawStatus,
+      });
     }
 
     const attachments = [
@@ -44,7 +81,7 @@ export async function POST(req: NextRequest) {
       { filename: "Bônus 06 - Grupos WhatsApp.pdf", content: readPdf("bonus-06-grupos-whatsapp.pdf") },
     ];
 
-    await resend.emails.send({
+    const sendResult = await resend.emails.send({
       from: "FornecedorVip <contato@fornecedorvip.shop>",
       to: email,
       subject: "✅ Seu acesso chegou — Lista de Fornecedores VIP",
@@ -98,9 +135,15 @@ export async function POST(req: NextRequest) {
       })),
     });
 
-    return NextResponse.json({ ok: true });
+    if (sendResult.error) {
+      console.error("[webhook/kiwify] resend error:", sendResult.error);
+      return NextResponse.json({ ok: false, email_error: sendResult.error });
+    }
+
+    console.log("[webhook/kiwify] email sent to", email, "id=", sendResult.data?.id);
+    return NextResponse.json({ ok: true, email_sent: true, id: sendResult.data?.id });
   } catch (e) {
     console.error("[webhook/kiwify]", e);
-    return NextResponse.json({ ok: false });
+    return NextResponse.json({ ok: false, error: String(e) });
   }
 }
