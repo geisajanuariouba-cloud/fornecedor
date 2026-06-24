@@ -32,20 +32,20 @@ function useIsMobile() {
 /* ─── dados ──────────────────────────────────────────────────── */
 
 const categorias = [
-  { label: "ROUPAS", img: "1567401893014-76bce522b35d", emoji: "👗" },
-  { label: "LINGERIE", img: "1571513800374-841571dbcc4e", emoji: "👙" },
-  { label: "ELETRÔNICOS E CELULARES", img: "1592899677977-9c10ca588bbd", emoji: "📱" },
-  { label: "MAQUIAGEM E COSMÉTICOS", img: "1522335789203-aabd1fc54bc9", emoji: "💄" },
-  { label: "PERFUMES", img: "1588776814546-daab30f310f4", emoji: "🌸" },
-  { label: "BIJUTERIAS E SEMIJOIAS", img: "1515562141207-7a88fb7ce338", emoji: "💎" },
-  { label: "BRINQUEDOS", img: "1596461404969-9ae70f2830c1", emoji: "🧸" },
-  { label: "EMBALAGENS", img: "1586528116311-ad8dd3c8310d", emoji: "📦" },
-  { label: "GAMES", img: "1552820728-8b83bb6b773f", emoji: "🎮" },
-  { label: "PAPELARIA", img: "1456735190827-d1262f71b8a3", emoji: "📚" },
-  { label: "ALIMENTOS", img: "1498837167922-ddd27525d352", emoji: "🍎" },
-  { label: "BEBIDAS", img: "1544145945-f90425340c7e", emoji: "🥤" },
-  { label: "PRODUTOS DE LIMPEZA", img: "1563453392212-326f5e854473", emoji: "🧹" },
-  { label: "SUPLEMENTOS", img: "1517836357463-d25dfeac3438", emoji: "💊" },
+  { label: "ROUPAS", local: "/categorias/roupas.jpg", img: "", emoji: "👗" },
+  { label: "LINGERIE", local: "/categorias/lingerie.jpg", img: "", emoji: "👙" },
+  { label: "ELETRÔNICOS E CELULARES", local: "", img: "1592899677977-9c10ca588bbd", emoji: "📱" },
+  { label: "MAQUIAGEM E COSMÉTICOS", local: "", img: "1522335789203-aabd1fc54bc9", emoji: "💄" },
+  { label: "PERFUMES", local: "/categorias/perfumes.jpg", img: "", emoji: "🌸" },
+  { label: "BIJUTERIAS E SEMIJOIAS", local: "", img: "1515562141207-7a88fb7ce338", emoji: "💎" },
+  { label: "BRINQUEDOS", local: "", img: "1596461404969-9ae70f2830c1", emoji: "🧸" },
+  { label: "EMBALAGENS", local: "", img: "1586528116311-ad8dd3c8310d", emoji: "📦" },
+  { label: "GAMES", local: "", img: "1552820728-8b83bb6b773f", emoji: "🎮" },
+  { label: "PAPELARIA", local: "", img: "1456735190827-d1262f71b8a3", emoji: "📚" },
+  { label: "ALIMENTOS", local: "", img: "1498837167922-ddd27525d352", emoji: "🍎" },
+  { label: "BEBIDAS", local: "", img: "1544145945-f90425340c7e", emoji: "🥤" },
+  { label: "PRODUTOS DE LIMPEZA", local: "", img: "1563453392212-326f5e854473", emoji: "🧹" },
+  { label: "SUPLEMENTOS", local: "", img: "1517836357463-d25dfeac3438", emoji: "💊" },
 ];
 
 const oquerecebes = [
@@ -271,13 +271,14 @@ function WhatsAppCard({ dep }: { dep: typeof depoimentos[0] }) {
 function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boolean }) {
   const [failed, setFailed] = useState(false);
   const imgSize = isMobile ? 90 : 120;
+  const src = cat.local || `https://images.unsplash.com/photo-${cat.img}?w=${imgSize * 2}&h=${imgSize * 2}&fit=crop&auto=format&q=70`;
   return (
     <div style={{ border: "2.5px solid #e879a0", borderRadius: "14px", overflow: "hidden", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div style={{ width: "100%", height: isMobile ? 90 : 120, overflow: "hidden", position: "relative" }}>
+      <div style={{ width: "100%", height: isMobile ? 90 : 120, overflow: "hidden" }}>
         {!failed ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={`https://images.unsplash.com/photo-${cat.img}?w=${imgSize * 2}&h=${imgSize * 2}&fit=crop&auto=format&q=70`}
+            src={src}
             alt={cat.label}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             onError={() => setFailed(true)}
