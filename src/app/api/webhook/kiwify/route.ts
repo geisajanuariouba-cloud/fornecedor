@@ -17,6 +17,23 @@ function readPdf(filename: string) {
   return fs.readFileSync(filePath);
 }
 
+// Busca recursiva por uma chave em qualquer nível do payload (Kiwify aninha em order/Customer)
+function deepFind(obj: unknown, keys: string[]): string | undefined {
+  if (!obj || typeof obj !== "object") return undefined;
+  for (const [k, v] of Object.entries(obj as Record<string, unknown>)) {
+    if (keys.includes(k.toLowerCase()) && typeof v === "string" && v.trim()) {
+      return v.trim();
+    }
+  }
+  for (const v of Object.values(obj as Record<string, unknown>)) {
+    if (v && typeof v === "object") {
+      const found = deepFind(v, keys);
+      if (found) return found;
+    }
+  }
+  return undefined;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const token = req.nextUrl.searchParams.get("token") ?? "";
@@ -26,29 +43,11 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json().catch(() => ({}));
 
-    // Kiwify payload: email em Customer.email (C maiúsculo), status em order_status
-    const email: string = (
-      body?.Customer?.email ||
-      body?.customer?.email ||
-      body?.data?.customer?.email ||
-      body?.email ||
-      ""
-    ).toLowerCase().trim();
-
-    const name: string =
-      body?.Customer?.full_name ||
-      body?.customer?.full_name ||
-      body?.customer?.name ||
-      body?.data?.customer?.name ||
-      "Cliente";
-
-    const rawStatus = String(
-      body?.order_status ||
-        body?.status ||
-        body?.Order?.order_status ||
-        body?.webhook_event_type ||
-        body?.event ||
-        "unknown"
+    // Kiwify aninha tudo em "order"/"Customer" — busca recursiva é à prova de formato
+    const email = (deepFind(body, ["email"]) ?? "").toLowerCase().trim();
+    const name = deepFind(body, ["full_name", "name"]) ?? "Cliente";
+    const rawStatus = (
+      deepFind(body, ["order_status", "status", "webhook_event_type", "event"]) ?? "unknown"
     ).toLowerCase();
 
     const isApproval = ["paid", "approved", "completed", "order_approved"].some((s) =>
