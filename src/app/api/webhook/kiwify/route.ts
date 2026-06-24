@@ -1,9 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import fs from "fs";
 import path from "path";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Permite que o envio em segundo plano tenha tempo de concluir
+export const maxDuration = 60;
 
 const WHATSAPP_LINKS = `
 • Grupo VIP Revendedores: https://chat.whatsapp.com/IQiT9q9pC1CIe06TXwUEIy
@@ -70,17 +73,35 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const attachments = [
-      { filename: "Lista-Fornecedores-VIP.pdf", content: readPdf("lista-fornecedores.pdf") },
-      { filename: "Bônus 01 - Guia Loja de 10.pdf", content: readPdf("bonus-01-guia-loja-de-10.pdf") },
-      { filename: "Bônus 02 - Produtos Mais Vendidos.pdf", content: readPdf("bonus-02-produtos-mais-vendidos.pdf") },
-      { filename: "Bônus 03 - Pacote Influencer Instagram.pdf", content: readPdf("bonus-03-pacote-influencer-instagram.pdf") },
-      { filename: "Bônus 04 - Catálogo de Tendências.pdf", content: readPdf("bonus-04-catalogo-tendencias.pdf") },
-      { filename: "Bônus 05 - Imagens com IA.pdf", content: readPdf("bonus-05-imagens-com-ia.pdf") },
-      { filename: "Bônus 06 - Grupos WhatsApp.pdf", content: readPdf("bonus-06-grupos-whatsapp.pdf") },
-    ];
+    // Responde à Kiwify IMEDIATAMENTE e envia o email em segundo plano (evita timeout)
+    after(async () => {
+      try {
+        await sendDeliveryEmail(email, name);
+        console.log("[webhook/kiwify] email enviado em background para", email);
+      } catch (e) {
+        console.error("[webhook/kiwify] falha no envio em background:", e);
+      }
+    });
 
-    const sendResult = await resend.emails.send({
+    return NextResponse.json({ ok: true, queued: true });
+  } catch (e) {
+    console.error("[webhook/kiwify]", e);
+    return NextResponse.json({ ok: false, error: String(e) });
+  }
+}
+
+async function sendDeliveryEmail(email: string, name: string) {
+  const attachments = [
+    { filename: "Lista-Fornecedores-VIP.pdf", content: readPdf("lista-fornecedores.pdf") },
+    { filename: "Bônus 01 - Guia Loja de 10.pdf", content: readPdf("bonus-01-guia-loja-de-10.pdf") },
+    { filename: "Bônus 02 - Produtos Mais Vendidos.pdf", content: readPdf("bonus-02-produtos-mais-vendidos.pdf") },
+    { filename: "Bônus 03 - Pacote Influencer Instagram.pdf", content: readPdf("bonus-03-pacote-influencer-instagram.pdf") },
+    { filename: "Bônus 04 - Catálogo de Tendências.pdf", content: readPdf("bonus-04-catalogo-tendencias.pdf") },
+    { filename: "Bônus 05 - Imagens com IA.pdf", content: readPdf("bonus-05-imagens-com-ia.pdf") },
+    { filename: "Bônus 06 - Grupos WhatsApp.pdf", content: readPdf("bonus-06-grupos-whatsapp.pdf") },
+  ];
+
+  const sendResult = await resend.emails.send({
       from: "FornecedorVip <contato@fornecedorvip.shop>",
       to: email,
       subject: "✅ Seu acesso chegou — Lista de Fornecedores VIP",
@@ -134,15 +155,8 @@ export async function POST(req: NextRequest) {
       })),
     });
 
-    if (sendResult.error) {
-      console.error("[webhook/kiwify] resend error:", sendResult.error);
-      return NextResponse.json({ ok: false, email_error: sendResult.error });
-    }
-
-    console.log("[webhook/kiwify] email sent to", email, "id=", sendResult.data?.id);
-    return NextResponse.json({ ok: true, email_sent: true, id: sendResult.data?.id });
-  } catch (e) {
-    console.error("[webhook/kiwify]", e);
-    return NextResponse.json({ ok: false, error: String(e) });
+  if (sendResult.error) {
+    throw new Error(JSON.stringify(sendResult.error));
   }
+  console.log("[webhook/kiwify] resend id=", sendResult.data?.id);
 }
