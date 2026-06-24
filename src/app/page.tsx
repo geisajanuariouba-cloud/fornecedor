@@ -32,20 +32,20 @@ function useIsMobile() {
 /* ─── dados ──────────────────────────────────────────────────── */
 
 const categorias = [
-  { label: "ROUPAS", img: "1483985988-d76e2b2a7d1a", emoji: "👗" },
-  { label: "LINGERIE", img: "1619954388-05e86e2c6e31", emoji: "👙" },
+  { label: "ROUPAS", img: "1567401893014-76bce522b35d", emoji: "👗" },
+  { label: "LINGERIE", img: "1571513800374-841571dbcc4e", emoji: "👙" },
   { label: "ELETRÔNICOS E CELULARES", img: "1592899677977-9c10ca588bbd", emoji: "📱" },
   { label: "MAQUIAGEM E COSMÉTICOS", img: "1522335789203-aabd1fc54bc9", emoji: "💄" },
-  { label: "PERFUMES", img: "1541643600914-78b084683702", emoji: "🌸" },
+  { label: "PERFUMES", img: "1588776814546-daab30f310f4", emoji: "🌸" },
   { label: "BIJUTERIAS E SEMIJOIAS", img: "1515562141207-7a88fb7ce338", emoji: "💎" },
-  { label: "BRINQUEDOS", img: "1558618666-fcd25c85cd64", emoji: "🧸" },
-  { label: "EMBALAGENS", img: "1607082348910-9a56c69a7a88", emoji: "📦" },
+  { label: "BRINQUEDOS", img: "1596461404969-9ae70f2830c1", emoji: "🧸" },
+  { label: "EMBALAGENS", img: "1586528116311-ad8dd3c8310d", emoji: "📦" },
   { label: "GAMES", img: "1552820728-8b83bb6b773f", emoji: "🎮" },
   { label: "PAPELARIA", img: "1456735190827-d1262f71b8a3", emoji: "📚" },
   { label: "ALIMENTOS", img: "1498837167922-ddd27525d352", emoji: "🍎" },
   { label: "BEBIDAS", img: "1544145945-f90425340c7e", emoji: "🥤" },
   { label: "PRODUTOS DE LIMPEZA", img: "1563453392212-326f5e854473", emoji: "🧹" },
-  { label: "SUPLEMENTOS", img: "1577174881519-c4a77f0d0bb3", emoji: "💊" },
+  { label: "SUPLEMENTOS", img: "1517836357463-d25dfeac3438", emoji: "💊" },
 ];
 
 const oquerecebes = [
@@ -362,7 +362,7 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto" }}>
           <div style={{ textAlign: isMobile ? "center" : "left", marginBottom: "28px" }}>
             <span style={{ fontSize: "22px", fontWeight: 900, color: "#ea580c", letterSpacing: "-0.5px" }}>
-              FORNECEDORES<span style={{ color: "#111" }}>VIP</span>
+              Fornecedor<span style={{ color: "#111" }}>Vip</span>
             </span>
           </div>
 
@@ -410,10 +410,7 @@ export default function FornecedoresPage() {
                   <div style={{ display: "inline-block", background: "#ea580c", color: "#fff", fontSize: "11px", fontWeight: 800, padding: "4px 14px", borderRadius: "100px", marginBottom: "12px" }}>OFERTA EXCLUSIVA E LIMITADA</div>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>DE R$97,00 POR APENAS</div>
                   <div style={{ fontSize: "46px", fontWeight: 900, color: "#ea580c", lineHeight: 1, marginBottom: "2px" }}>R$9,90</div>
-                  <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginBottom: "10px" }}>À VISTA</div>
-                  <div style={{ fontSize: "11px", color: "#9ca3af", marginBottom: "4px" }}>OU EM ATÉ</div>
-                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#ea580c", marginBottom: "2px" }}>10X de R$0,99</div>
-                  <div style={{ fontSize: "11px", color: "#ea580c", fontWeight: 700, marginBottom: "16px" }}>NO CARTÃO — VOCÊ QUEM ESCOLHE!</div>
+                  <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginBottom: "16px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                   {["180 fornecedores em 14 categorias", "6 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", marginBottom: "6px" }}>
                       <IconCheck size={14} /><span>{item}</span>
@@ -638,9 +635,7 @@ export default function FornecedoresPage() {
                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$197,00 por apenas:</div>
                   <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$9,90</div>
-                  <div style={{ fontSize: "14px", color: "#555", margin: "8px 0 4px" }}>ou em até</div>
-                  <div style={{ fontSize: isMobile ? "28px" : "34px", fontWeight: 900, color: "#ea580c" }}>10X de R$0,99</div>
-                  <div style={{ fontSize: "11px", color: "#ea580c", fontWeight: 700, marginTop: "2px" }}>NO CARTÃO — VOCÊ QUEM ESCOLHE!</div>
+                  <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
                 <button onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
