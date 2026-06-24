@@ -6,6 +6,18 @@ const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.kiwify
 
 /* ─── hooks ─────────────────────────────────────────────────── */
 
+function useCountdown(totalSeconds: number) {
+  const [time, setTime] = useState(totalSeconds);
+  useEffect(() => {
+    const t = setInterval(() => setTime((s) => Math.max(0, s - 1)), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const h = Math.floor(time / 3600).toString().padStart(2, "0");
+  const m = Math.floor((time % 3600) / 60).toString().padStart(2, "0");
+  const s = (time % 60).toString().padStart(2, "0");
+  return { h, m, s };
+}
+
 function useIsMobile() {
   const [mobile, setMobile] = useState(true);
   useEffect(() => {
@@ -156,6 +168,23 @@ function CTAButton({ children, large, fullWidth }: { children: React.ReactNode; 
 
 /* ─── Countdown box ─────────────────────────────────────────── */
 
+function CountdownBox({ h, m, s }: { h: string; m: string; s: string }) {
+  const boxStyle: React.CSSProperties = { background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "8px", padding: "8px 14px", textAlign: "center", minWidth: "52px" };
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "6px", justifyContent: "center" }}>
+      {[{ v: h, l: "Horas" }, { v: m, l: "Minutos" }, { v: s, l: "Segundos" }].map((item, i) => (
+        <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <div style={boxStyle}>
+            <div style={{ fontSize: "24px", fontWeight: 900, color: "#ea580c", fontVariantNumeric: "tabular-nums" }}>{item.v}</div>
+            <div style={{ fontSize: "9px", color: "#9ca3af", fontWeight: 600 }}>{item.l}</div>
+          </div>
+          {i < 2 && <span style={{ fontSize: "20px", fontWeight: 900, color: "#ea580c" }}>:</span>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ─── Category Card ─────────────────────────────────────────── */
 
 function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boolean }) {
@@ -193,6 +222,7 @@ function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boole
 /* ─── Página ─────────────────────────────────────────────────── */
 
 export default function FornecedoresPage() {
+  const { h, m, s } = useCountdown(2 * 3600 + 47 * 60 + 33);
   const isMobile = useIsMobile();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -202,9 +232,12 @@ export default function FornecedoresPage() {
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", minHeight: "100vh", color: "#111" }}>
 
-      {/* ── Urgency bar — escassez real (preço de lançamento) ── */}
+      {/* ── Urgency bar ── */}
       <div style={{ background: "#ea580c", color: "#fff", textAlign: "center", padding: "10px 16px", fontSize: "13px", fontWeight: 700 }}>
-        ⚠️ Preço de lançamento: R$9,90 — sobe a cada atualização da lista
+        🔥 OFERTA ESPECIAL ENCERRA EM:{" "}
+        <span style={{ background: "rgba(0,0,0,0.2)", borderRadius: "6px", padding: "2px 8px", marginLeft: "6px", fontVariantNumeric: "tabular-nums" }}>
+          {h}:{m}:{s}
+        </span>
       </div>
 
       {/* ── HERO ── */}
@@ -495,10 +528,9 @@ export default function FornecedoresPage() {
                   Você ficará um passo mais perto de realizar seu sonho 🎯
                 </p>
 
-                <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "10px", padding: "14px 16px" }}>
-                  <p style={{ fontSize: "12.5px", color: "#7c2d12", lineHeight: 1.6, textAlign: "center" }}>
-                    ⚠️ <strong>Preço de lançamento: R$9,90.</strong> A lista é atualizada com novos fornecedores. Quem entra agora paga esse valor uma vez e recebe todas as atualizações futuras sem pagar nada a mais. Quando o preço subir, sobe só para novos acessos.
-                  </p>
+                <div style={{ textAlign: "center" }}>
+                  <p style={{ fontSize: "12px", color: "#ea580c", fontWeight: 700, marginBottom: "10px" }}>⏳ Esta oferta expira em:</p>
+                  <CountdownBox h={h} m={m} s={s} />
                 </div>
               </div>
             </div>
