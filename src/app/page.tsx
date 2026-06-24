@@ -158,7 +158,7 @@ function PillLabel({ children }: { children: React.ReactNode }) {
 function CTAButton({ children, large, fullWidth }: { children: React.ReactNode; large?: boolean; fullWidth?: boolean }) {
   return (
     <button
-      onClick={() => { window.location.href = CHECKOUT_URL; }}
+      onClick={() => { document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
       style={{ background: "#ea580c", color: "#fff", border: "none", borderRadius: "12px", padding: large ? "20px 56px" : "16px 32px", fontSize: large ? "18px" : "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", boxShadow: "0 4px 20px rgba(234,88,12,0.35)", fontFamily: "inherit", width: fullWidth ? "100%" : undefined }}
     >
       {children}
@@ -521,7 +521,7 @@ export default function FornecedoresPage() {
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
-                <button onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
+                <button id="cta-principal" onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
                   QUERO ACESSAR AGORA!
                 </button>
                 <p style={{ textAlign: "center", fontSize: "12px", color: "#6b7280", marginBottom: "16px" }}>
@@ -579,7 +579,7 @@ export default function FornecedoresPage() {
 
       {/* ── Barra fixa ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
-        <button onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
+        <button onClick={() => { document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "center" }); }} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
           ACESSAR FORNECEDORES — R$9,90
         </button>
       </div>
