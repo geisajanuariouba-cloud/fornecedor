@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "#";
+const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.kiwify.com.br/YrIickg";
 
 /* ─── hooks ─────────────────────────────────────────────────── */
 
