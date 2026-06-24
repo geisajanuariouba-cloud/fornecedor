@@ -296,7 +296,12 @@ export default function FornecedoresPage() {
                       <IconCheck size={14} /><span>{item}</span>
                     </div>
                   ))}
-                  <button onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(34,197,94,0.3)" }}>
+                  <button onClick={() => {
+                    const fbp = document.cookie.split(";").find(c => c.trim().startsWith("_fbp="))?.split("=")[1] ?? "";
+                    const fbc = document.cookie.split(";").find(c => c.trim().startsWith("_fbc="))?.split("=")[1] ?? "";
+                    fetch("/api/capi", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fbp, fbc, url: window.location.href }) }).catch(() => {});
+                    window.location.href = CHECKOUT_URL;
+                  }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(34,197,94,0.3)" }}>
                     LIBERAR MEU ACESSO →
                   </button>
                   <p style={{ textAlign: "center", fontSize: "10px", color: "#9ca3af", marginTop: "8px" }}>🔒 Kiwify • 100% seguro</p>
@@ -521,7 +526,12 @@ export default function FornecedoresPage() {
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
-                <button id="cta-principal" onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
+                <button id="cta-principal" onClick={() => {
+                  const fbp = document.cookie.split(";").find(c => c.trim().startsWith("_fbp="))?.split("=")[1] ?? "";
+                  const fbc = document.cookie.split(";").find(c => c.trim().startsWith("_fbc="))?.split("=")[1] ?? "";
+                  fetch("/api/capi", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fbp, fbc, url: window.location.href }) }).catch(() => {});
+                  window.location.href = CHECKOUT_URL;
+                }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
                   QUERO ACESSAR AGORA!
                 </button>
                 <p style={{ textAlign: "center", fontSize: "12px", color: "#6b7280", marginBottom: "16px" }}>
