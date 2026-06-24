@@ -32,11 +32,11 @@ function useIsMobile() {
 /* ─── dados ──────────────────────────────────────────────────── */
 
 const categorias = [
-  { label: "ROUPAS", local: "/categorias/roupas.jpg", img: "", emoji: "👗" },
-  { label: "LINGERIE", local: "/categorias/lingerie.jpg", img: "", emoji: "👙" },
+  { label: "ROUPAS", local: "/categorias/roupas.webp", img: "", emoji: "👗" },
+  { label: "LINGERIE", local: "/categorias/lingerie.webp", img: "", emoji: "👙" },
   { label: "ELETRÔNICOS E CELULARES", local: "", img: "1592899677977-9c10ca588bbd", emoji: "📱" },
   { label: "MAQUIAGEM E COSMÉTICOS", local: "", img: "1522335789203-aabd1fc54bc9", emoji: "💄" },
-  { label: "PERFUMES", local: "/categorias/perfumes.jpg", img: "", emoji: "🌸" },
+  { label: "PERFUMES", local: "/categorias/perfumes.webp", img: "", emoji: "🌸" },
   { label: "BIJUTERIAS E SEMIJOIAS", local: "", img: "1515562141207-7a88fb7ce338", emoji: "💎" },
   { label: "BRINQUEDOS", local: "", img: "1596461404969-9ae70f2830c1", emoji: "🧸" },
   { label: "EMBALAGENS", local: "", img: "1586528116311-ad8dd3c8310d", emoji: "📦" },
@@ -200,6 +200,10 @@ function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boole
           <img
             src={src}
             alt={cat.label}
+            width={imgSize}
+            height={imgSize}
+            loading="lazy"
+            decoding="async"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             onError={() => setFailed(true)}
           />
@@ -459,10 +463,10 @@ export default function FornecedoresPage() {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "16px" : "24px", marginBottom: "28px", alignItems: "start" }}>
-            {["/depoimentos/dep1.png", "/depoimentos/dep2.png", "/depoimentos/dep3.png"].map((src, i) => (
+            {["/depoimentos/dep1.webp", "/depoimentos/dep2.webp", "/depoimentos/dep3.webp"].map((src, i) => (
               <div key={i} style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Depoimento ${i + 1}`} style={{ width: "100%", display: "block" }} />
+                <img src={src} alt={`Depoimento ${i + 1}`} width={700} height={903} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
               </div>
             ))}
           </div>
