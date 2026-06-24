@@ -32,20 +32,20 @@ function useIsMobile() {
 /* ─── dados ──────────────────────────────────────────────────── */
 
 const categorias = [
-  { emoji: "👗", label: "ROUPAS" },
-  { emoji: "👙", label: "LINGERIE" },
-  { emoji: "📱", label: "ELETRÔNICOS E CELULARES" },
-  { emoji: "💄", label: "MAQUIAGEM E COSMÉTICOS" },
-  { emoji: "🌸", label: "PERFUMES" },
-  { emoji: "💎", label: "BIJUTERIAS E SEMIJOIAS" },
-  { emoji: "🧸", label: "BRINQUEDOS" },
-  { emoji: "📦", label: "EMBALAGENS" },
-  { emoji: "🎮", label: "GAMES" },
-  { emoji: "📚", label: "PAPELARIA" },
-  { emoji: "🍎", label: "ALIMENTOS" },
-  { emoji: "🥤", label: "BEBIDAS" },
-  { emoji: "🧹", label: "PRODUTOS DE LIMPEZA" },
-  { emoji: "💊", label: "SUPLEMENTOS" },
+  { label: "ROUPAS", img: "1483985988-d76e2b2a7d1a", emoji: "👗" },
+  { label: "LINGERIE", img: "1619954388-05e86e2c6e31", emoji: "👙" },
+  { label: "ELETRÔNICOS E CELULARES", img: "1592899677977-9c10ca588bbd", emoji: "📱" },
+  { label: "MAQUIAGEM E COSMÉTICOS", img: "1522335789203-aabd1fc54bc9", emoji: "💄" },
+  { label: "PERFUMES", img: "1541643600914-78b084683702", emoji: "🌸" },
+  { label: "BIJUTERIAS E SEMIJOIAS", img: "1515562141207-7a88fb7ce338", emoji: "💎" },
+  { label: "BRINQUEDOS", img: "1558618666-fcd25c85cd64", emoji: "🧸" },
+  { label: "EMBALAGENS", img: "1607082348910-9a56c69a7a88", emoji: "📦" },
+  { label: "GAMES", img: "1552820728-8b83bb6b773f", emoji: "🎮" },
+  { label: "PAPELARIA", img: "1456735190827-d1262f71b8a3", emoji: "📚" },
+  { label: "ALIMENTOS", img: "1498837167922-ddd27525d352", emoji: "🍎" },
+  { label: "BEBIDAS", img: "1544145945-f90425340c7e", emoji: "🥤" },
+  { label: "PRODUTOS DE LIMPEZA", img: "1563453392212-326f5e854473", emoji: "🧹" },
+  { label: "SUPLEMENTOS", img: "1577174881519-c4a77f0d0bb3", emoji: "💊" },
 ];
 
 const oquerecebes = [
@@ -110,46 +110,41 @@ const bonuses = [
 const depoimentos = [
   {
     tipo: "whatsapp",
+    nome: "Sabrina",
     msgs: [
-      { lado: "left", texto: "Acabei de acessar a lista! Já to preparando meu primeiro pedido 🥰", hora: "17:07" },
-      { lado: "right", texto: "Que ótimo! Boa sorte nas vendas! 😊", hora: "17:08" },
-      { lado: "left", texto: "Muito obrigada mesmo, me ajudou demais!", hora: "17:09" },
+      { lado: "left", texto: "Acabei de acessar 🙌", hora: "17:07" },
+      { lado: "left", texto: "Já tô preparando para fazer meu primeiro pedido, muito obrigada ✨✨", hora: "17:07" },
     ],
   },
   {
-    tipo: "comentario",
-    nome: "Maria Fernanda",
-    avatar: "MF",
-    texto: "Entrei em contato com os fornecedores que eu queria e já estou no processo de compra. Muito obrigada, me ajudou demaaais! 🙏 O melhor investimento que fiz esse mês!",
-    tempo: "2 dias atrás",
-  },
-  {
     tipo: "whatsapp",
+    nome: "Priscila",
     msgs: [
-      { lado: "left", texto: "Pedi várias peças e realmente são muito baratas, já vendi mais da metade 😍", hora: "19:03" },
-      { lado: "left", texto: "Obrigada pela lista, valeu muito a pena ✨", hora: "19:04" },
+      { lado: "left", texto: "Pedi vários peças e realmente são muito baratas, e já vendi mais da metade, obrigadas🙏", hora: "22:11" },
+      { lado: "right", texto: "Fico muito feliz por você 🙏🙏", hora: "22:12" },
     ],
   },
   {
-    tipo: "comentario",
-    nome: "Vanessa Brito",
-    avatar: "VB",
-    texto: "Esse material foi um divisor de águas na minha jornada de revendedora. Bem elaborado, objetivo e diferenciado. Sou grata por ter tido acesso! Continuem com esse projeto para que mais pessoas possam crescer!",
-    tempo: "4 dias atrás",
-  },
-  {
-    tipo: "comentario",
-    nome: "Guilherme Vargas",
-    avatar: "GV",
-    texto: "Material super objetivo e ótimo para quem deseja começar no atacado nos principais nichos em pouco tempo. RECOMENDO.",
-    tempo: "1 semana atrás",
+    tipo: "whatsapp",
+    nome: "Camila",
+    msgs: [
+      { lado: "right", texto: "Que achou da lista? Tenha você comprou?", hora: "18:47" },
+      { lado: "left", texto: "Oi Camila", hora: "18:48" },
+      { lado: "left", texto: "É amor viu?", hora: "18:48" },
+      { lado: "left", texto: "Já entrei em contato com os fornecedores que eu queria e já estou no processo de compra", hora: "18:49" },
+      { lado: "left", texto: "Muito obrigada, me ajudou demaaaaais 💗", hora: "18:49" },
+      { lado: "right", texto: "Nossas, fico muito feliz em saber 😊", hora: "18:50" },
+      { lado: "right", texto: "Qualquer dúvida pode me perguntar viu!", hora: "18:50" },
+    ],
   },
   {
     tipo: "whatsapp",
+    nome: "Cliente",
+    hasProductImage: true,
     msgs: [
-      { lado: "left", texto: "Tudo certinho Amei ✅", hora: "14:00" },
-      { lado: "left", texto: "Material perfeito", hora: "14:01" },
-      { lado: "left", texto: "Tudo lindo 🌸 Super indico!", hora: "14:01" },
+      { lado: "left", texto: "Tudo certinho amei 😍", hora: "13:01" },
+      { lado: "left", texto: "Material perfeito", hora: "14:08" },
+      { lado: "left", texto: "Tudo lindo", hora: "19:00" },
     ],
   },
 ];
@@ -231,6 +226,116 @@ function CountdownBox({ h, m, s }: { h: string; m: string; s: string }) {
   );
 }
 
+/* ─── WhatsApp Chat Card ────────────────────────────────────── */
+
+function WhatsAppCard({ dep }: { dep: typeof depoimentos[0] }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  return (
+    <div style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.18)", border: "1px solid #ccc" }}>
+      {/* status bar */}
+      <div style={{ background: "#128c7e", padding: "3px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ color: "#fff", fontSize: "10px", fontWeight: 700 }}>9:41</span>
+        <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+          <svg width="12" height="10" viewBox="0 0 12 10"><rect x="0" y="5" width="2" height="5" fill="white"/><rect x="3" y="3" width="2" height="7" fill="white"/><rect x="6" y="1" width="2" height="9" fill="white"/><rect x="9" y="0" width="2" height="10" fill="white" opacity="0.4"/></svg>
+          <svg width="14" height="10" viewBox="0 0 14 10"><rect x="1" y="2" width="10" height="7" rx="1" fill="none" stroke="white" strokeWidth="1.2"/><rect x="2" y="3" width="7" height="5" fill="white"/><rect x="11.5" y="4" width="1.5" height="3" rx="0.5" fill="white"/></svg>
+        </div>
+      </div>
+      {/* header */}
+      <div style={{ background: "#128c7e", padding: "8px 12px 10px", display: "flex", alignItems: "center", gap: "10px" }}>
+        <svg width="10" height="16" viewBox="0 0 10 16" fill="white"><path d="M8 1L2 8L8 15"/></svg>
+        <div style={{ width: "36px", height: "36px", background: "#7c9ea9", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ color: "#fff", fontSize: "13px", fontWeight: 700, lineHeight: 1.2 }}>{dep.nome}</div>
+          <div style={{ color: "#b2dfdb", fontSize: "10px" }}>online</div>
+        </div>
+        <div style={{ display: "flex", gap: "14px", alignItems: "center" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.87 9.87a19.79 19.79 0 01-3.07-8.67A2 2 0 012.78 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 8.55a16 16 0 006.29 6.29l.96-.95a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <svg width="18" height="12" viewBox="0 0 24 16" fill="white"><circle cx="5" cy="8" r="3"/><circle cx="12" cy="8" r="3"/><circle cx="19" cy="8" r="3"/></svg>
+        </div>
+      </div>
+      {/* chat area */}
+      <div style={{ background: "#e5ddd5", padding: "10px 10px 12px", display: "flex", flexDirection: "column", gap: "4px", minHeight: "120px" }}>
+        {dep.hasProductImage && (
+          <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "2px" }}>
+            <div style={{ background: "#fff", borderRadius: "8px", padding: "3px", boxShadow: "0 1px 2px rgba(0,0,0,0.2)", maxWidth: "65%" }}>
+              {!imgFailed ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src="https://images.unsplash.com/photo-1558618047-3c4ed15c5a9a?w=180&h=120&fit=crop&auto=format"
+                  alt="produto"
+                  style={{ width: "150px", height: "100px", objectFit: "cover", borderRadius: "6px", display: "block" }}
+                  onError={() => setImgFailed(true)}
+                />
+              ) : (
+                <div style={{ width: "150px", height: "100px", background: "#ddd", borderRadius: "6px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "28px" }}>📦</div>
+              )}
+            </div>
+          </div>
+        )}
+        {dep.msgs?.map((msg, j) => (
+          <div key={j} style={{ display: "flex", justifyContent: msg.lado === "right" ? "flex-end" : "flex-start" }}>
+            <div style={{
+              background: msg.lado === "right" ? "#dcf8c6" : "#fff",
+              borderRadius: msg.lado === "right" ? "8px 1px 8px 8px" : "1px 8px 8px 8px",
+              padding: "6px 8px 3px",
+              maxWidth: "82%",
+              boxShadow: "0 1px 1px rgba(0,0,0,0.13)",
+            }}>
+              <p style={{ fontSize: "12px", color: "#111", margin: 0, lineHeight: 1.45, wordBreak: "break-word" }}>{msg.texto}</p>
+              <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "3px", marginTop: "1px" }}>
+                <span style={{ fontSize: "9px", color: "#9ca3af", fontVariantNumeric: "tabular-nums" }}>{msg.hora}</span>
+                {msg.lado === "right" && (
+                  <svg width="14" height="9" viewBox="0 0 16 10" fill="#53bdeb">
+                    <path d="M1 5l3 3 5-6M6 5l3 3 5-6" strokeWidth="0.5" stroke="#53bdeb"/>
+                  </svg>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* input bar */}
+      <div style={{ background: "#f0f0f0", padding: "6px 10px", display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ flex: 1, background: "#fff", borderRadius: "20px", padding: "6px 14px", fontSize: "11px", color: "#aaa" }}>Mensagem</div>
+        <div style={{ width: "30px", height: "30px", background: "#25d366", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Category Card ─────────────────────────────────────────── */
+
+function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boolean }) {
+  const [failed, setFailed] = useState(false);
+  const imgSize = isMobile ? 90 : 120;
+  return (
+    <div style={{ border: "2.5px solid #e879a0", borderRadius: "14px", overflow: "hidden", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div style={{ width: "100%", height: isMobile ? 90 : 120, overflow: "hidden", position: "relative" }}>
+        {!failed ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={`https://images.unsplash.com/photo-${cat.img}?w=${imgSize * 2}&h=${imgSize * 2}&fit=crop&auto=format&q=70`}
+            alt={cat.label}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            onError={() => setFailed(true)}
+          />
+        ) : (
+          <div style={{ width: "100%", height: "100%", background: "#fff7ed", display: "flex", alignItems: "center", justifyContent: "center", fontSize: isMobile ? "36px" : "48px" }}>
+            {cat.emoji}
+          </div>
+        )}
+      </div>
+      <div style={{ padding: "6px 4px 8px", textAlign: "center" }}>
+        <span style={{ fontSize: isMobile ? "9px" : "10px", fontWeight: 800, color: "#111", letterSpacing: "0.02em", lineHeight: 1.3 }}>{cat.label}</span>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Página ─────────────────────────────────────────────────── */
 
 export default function FornecedoresPage() {
@@ -273,7 +378,7 @@ export default function FornecedoresPage() {
               </p>
 
               <div style={{ display: "flex", gap: "32px", marginBottom: "28px", justifyContent: isMobile ? "center" : "flex-start" }}>
-                {[{ n: "180", label: "Fornecedores" }, { n: "12", label: "Categorias" }, { n: "100%", label: "Verificados" }].map((item) => (
+                {[{ n: "180", label: "Fornecedores" }, { n: "14", label: "Categorias" }, { n: "100%", label: "Verificados" }].map((item) => (
                   <div key={item.label} style={{ textAlign: "center" }}>
                     <div style={{ fontSize: isMobile ? "22px" : "30px", fontWeight: 900, color: "#ea580c" }}>{item.n}</div>
                     <div style={{ fontSize: "11px", color: "#6b7280" }}>{item.label}</div>
@@ -304,10 +409,10 @@ export default function FornecedoresPage() {
                 <div style={{ border: "2px solid #ea580c", borderRadius: "16px", padding: "24px 20px", background: "#fff" }}>
                   <div style={{ display: "inline-block", background: "#ea580c", color: "#fff", fontSize: "11px", fontWeight: 800, padding: "4px 14px", borderRadius: "100px", marginBottom: "12px" }}>OFERTA EXCLUSIVA E LIMITADA</div>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>DE R$97,00 POR APENAS</div>
-                  <div style={{ fontSize: "46px", fontWeight: 900, color: "#ea580c", lineHeight: 1, marginBottom: "2px" }}>R$19,90</div>
+                  <div style={{ fontSize: "46px", fontWeight: 900, color: "#ea580c", lineHeight: 1, marginBottom: "2px" }}>R$9,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginBottom: "10px" }}>À VISTA</div>
                   <div style={{ fontSize: "11px", color: "#9ca3af", marginBottom: "4px" }}>OU EM ATÉ</div>
-                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#ea580c", marginBottom: "2px" }}>10X de R$1,99</div>
+                  <div style={{ fontSize: "28px", fontWeight: 900, color: "#ea580c", marginBottom: "2px" }}>10X de R$0,99</div>
                   <div style={{ fontSize: "11px", color: "#ea580c", fontWeight: 700, marginBottom: "16px" }}>NO CARTÃO — VOCÊ QUEM ESCOLHE!</div>
                   {["180 fornecedores em 14 categorias", "6 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", marginBottom: "6px" }}>
@@ -337,10 +442,7 @@ export default function FornecedoresPage() {
           </p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? "12px" : "16px", marginBottom: "28px" }}>
             {categorias.map((cat) => (
-              <div key={cat.label} style={{ border: "2px solid #ea580c", borderRadius: "12px", padding: isMobile ? "16px 8px 12px" : "20px 8px 16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", background: "#fff7ed" }}>
-                <span style={{ fontSize: isMobile ? "28px" : "36px" }}>{cat.emoji}</span>
-                <span style={{ fontSize: isMobile ? "9px" : "11px", fontWeight: 800, color: "#111", textAlign: "center", letterSpacing: "0.03em", lineHeight: 1.3 }}>{cat.label}</span>
-              </div>
+              <CatCard key={cat.label} cat={cat} isMobile={isMobile} />
             ))}
           </div>
           <CTAButton fullWidth={isMobile}>QUERO ACESSAR ESSAS CATEGORIAS</CTAButton>
@@ -374,7 +476,7 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
           <PillLabel>CONTEÚDO</PillLabel>
           <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
-            ISSO TUDO POR MENOS DE 20 REAIS 🤩
+            ISSO TUDO POR MENOS DE 10 REAIS 🤩
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
             {oquerecebes.map((item) => (
@@ -474,50 +576,10 @@ export default function FornecedoresPage() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "14px" : "20px", marginBottom: "28px" }}>
-            {depoimentos.map((dep, i) => {
-              if (dep.tipo === "whatsapp") {
-                return (
-                  <div key={i} style={{ border: "1px solid #e5e7eb", borderRadius: "16px", overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-                    {/* Header WhatsApp */}
-                    <div style={{ background: "#075e54", padding: "10px 14px", display: "flex", alignItems: "center", gap: "10px" }}>
-                      <div style={{ width: "32px", height: "32px", background: "#25d366", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "14px" }}>👤</div>
-                      <div>
-                        <div style={{ color: "#fff", fontSize: "13px", fontWeight: 700 }}>Cliente</div>
-                        <div style={{ color: "#b2dfdb", fontSize: "10px" }}>online</div>
-                      </div>
-                    </div>
-                    {/* Mensagens */}
-                    <div style={{ background: "#e5ddd5", padding: "12px", display: "flex", flexDirection: "column", gap: "6px", minHeight: "100px" }}>
-                      {dep.msgs?.map((msg, j) => (
-                        <div key={j} style={{ display: "flex", justifyContent: msg.lado === "right" ? "flex-end" : "flex-start" }}>
-                          <div style={{ background: msg.lado === "right" ? "#dcf8c6" : "#fff", borderRadius: msg.lado === "right" ? "12px 2px 12px 12px" : "2px 12px 12px 12px", padding: "8px 10px", maxWidth: "85%", boxShadow: "0 1px 2px rgba(0,0,0,0.1)" }}>
-                            <p style={{ fontSize: "12px", color: "#111", margin: 0, lineHeight: 1.4 }}>{msg.texto}</p>
-                            <p style={{ fontSize: "9px", color: "#9ca3af", margin: "2px 0 0", textAlign: "right" }}>{msg.hora}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              }
-              // comentário
-              return (
-                <div key={i} style={{ border: "1px solid #e5e7eb", borderRadius: "16px", padding: "18px", background: "#fff", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-                    <div style={{ width: "38px", height: "38px", background: "#ea580c", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: "13px", fontWeight: 800, flexShrink: 0 }}>
-                      {dep.avatar}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: "13px" }}>{dep.nome}</div>
-                      <div style={{ fontSize: "11px", color: "#9ca3af" }}>{dep.tempo}</div>
-                    </div>
-                    <div style={{ marginLeft: "auto", color: "#ea580c", fontSize: "16px" }}>❤️</div>
-                  </div>
-                  <p style={{ fontSize: "12px", color: "#333", lineHeight: 1.6, margin: 0 }}>{dep.texto}</p>
-                </div>
-              );
-            })}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? "16px" : "20px", marginBottom: "28px" }}>
+            {depoimentos.map((dep, i) => (
+              <WhatsAppCard key={i} dep={dep} />
+            ))}
           </div>
 
           <div style={{ textAlign: "center" }}>
@@ -536,12 +598,11 @@ export default function FornecedoresPage() {
               <h2 style={{ fontSize: isMobile ? "20px" : "26px", fontWeight: 900, lineHeight: 1.3, marginBottom: "28px", color: "#111" }}>
                 Quanto valeria para você ter acesso a 180 fornecedores verificados e nunca mais depender de preço de varejo?
               </h2>
-              {/* Mockup produto */}
               <div style={{ background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)", borderRadius: "20px", padding: "32px 24px", color: "#fff", marginBottom: "16px" }}>
                 <div style={{ fontSize: "48px", marginBottom: "12px" }}>📋</div>
                 <div style={{ fontSize: "20px", fontWeight: 900, marginBottom: "4px" }}>LISTA VIP</div>
                 <div style={{ fontSize: "13px", opacity: 0.85 }}>180 Fornecedores Verificados</div>
-                <div style={{ fontSize: "13px", opacity: 0.85 }}>12 Categorias • Atacado direto</div>
+                <div style={{ fontSize: "13px", opacity: 0.85 }}>14 Categorias • Atacado direto</div>
                 <div style={{ marginTop: "16px", fontSize: "11px", opacity: 0.7, fontWeight: 700 }}>+ 6 BÔNUS EXCLUSIVOS</div>
               </div>
               <p style={{ fontSize: "12px", color: "#9ca3af" }}>Acesso imediato após a compra</p>
@@ -558,15 +619,14 @@ export default function FornecedoresPage() {
                   </h3>
                 </div>
 
-                {/* Checklist */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px", borderBottom: "1px solid #f3f4f6", paddingBottom: "20px" }}>
                   {[
                     { bold: "180 fornecedores verificados", rest: " em 14 categorias — contato direto" },
                     { bold: "Atacado real", rest: " — margem de 100% a 400% por produto" },
                     { bold: "Sem CNPJ", rest: " — pode comprar como pessoa física" },
-                    { bold: "Bônus 01", rest: " — Calculadora de precificação" },
-                    { bold: "Bônus 02–06", rest: " — Guia Loja, Instagram, IA e mais" },
-                    { bold: "Bônus 07", rest: " — Grupos WhatsApp com fornecedores" },
+                    { bold: "Bônus 01–02", rest: " — Guia Loja de 10 + Produtos mais vendidos" },
+                    { bold: "Bônus 03–04", rest: " — Instagram + Catálogo de Tendências" },
+                    { bold: "Bônus 05–06", rest: " — Imagens com IA + Grupos WhatsApp" },
                   ].map((item, i) => (
                     <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                       <IconCheck size={16} color="#ea580c" />
@@ -575,16 +635,14 @@ export default function FornecedoresPage() {
                   ))}
                 </div>
 
-                {/* Preço */}
                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$197,00 por apenas:</div>
-                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$19,90</div>
+                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$9,90</div>
                   <div style={{ fontSize: "14px", color: "#555", margin: "8px 0 4px" }}>ou em até</div>
-                  <div style={{ fontSize: isMobile ? "28px" : "34px", fontWeight: 900, color: "#ea580c" }}>10X de R$1,99</div>
+                  <div style={{ fontSize: isMobile ? "28px" : "34px", fontWeight: 900, color: "#ea580c" }}>10X de R$0,99</div>
                   <div style={{ fontSize: "11px", color: "#ea580c", fontWeight: 700, marginTop: "2px" }}>NO CARTÃO — VOCÊ QUEM ESCOLHE!</div>
                 </div>
 
-                {/* CTA verde */}
                 <button onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
                   QUERO ACESSAR AGORA!
                 </button>
@@ -592,7 +650,6 @@ export default function FornecedoresPage() {
                   Você ficará um passo mais perto de realizar seu sonho 🎯
                 </p>
 
-                {/* Countdown */}
                 <div style={{ textAlign: "center" }}>
                   <p style={{ fontSize: "12px", color: "#ea580c", fontWeight: 700, marginBottom: "10px" }}>⏳ Esta oferta expira em:</p>
                   <CountdownBox h={h} m={m} s={s} />
@@ -636,7 +693,7 @@ export default function FornecedoresPage() {
             ))}
           </div>
           <div style={{ textAlign: "center" }}>
-            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA — R$19,90</CTAButton>
+            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA — R$9,90</CTAButton>
             <p style={{ marginTop: "12px", textAlign: "center", fontSize: "11px", color: "#9ca3af" }}>🔒 Compra 100% segura • Acesso imediato • 7 dias de garantia</p>
           </div>
         </div>
@@ -645,7 +702,7 @@ export default function FornecedoresPage() {
       {/* ── Barra fixa ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
         <button onClick={() => { window.location.href = CHECKOUT_URL; }} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
-          ACESSAR FORNECEDORES — R$19,90
+          ACESSAR FORNECEDORES — R$9,90
         </button>
       </div>
     </div>
