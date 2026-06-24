@@ -101,52 +101,43 @@ async function sendDeliveryEmail(email: string, name: string) {
     { filename: "Bônus 06 - Grupos WhatsApp.pdf", content: readPdf("bonus-06-grupos-whatsapp.pdf") },
   ];
 
+  const firstName = name.split(" ")[0] || name;
+
+  const text = `Olá, ${firstName}!
+
+Seu pagamento foi confirmado. Já anexei neste email a Lista de Fornecedores VIP e os 6 bônus (todos em PDF).
+
+Para acompanhar novidades e falar direto com fornecedores, entre nos grupos:
+
+- Grupo VIP Revendedores: https://chat.whatsapp.com/IQiT9q9pC1CIe06TXwUEIy
+- Canal BossStore Vencedor: https://whatsapp.com/channel/0029Vb7gouR5q08XX9EtgW24
+- Canal João Cleber JC Atacado: https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l
+- Grupo Exclusivo: https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq
+
+Se tiver qualquer dúvida, é só responder este email.
+
+Abraço,
+Equipe FornecedorVip`;
+
   const sendResult = await resend.emails.send({
-      from: "FornecedorVip <contato@fornecedorvip.shop>",
+      from: "Equipe FornecedorVip <contato@fornecedorvip.shop>",
       to: email,
-      subject: "✅ Seu acesso chegou — Lista de Fornecedores VIP",
+      replyTo: "contato@fornecedorvip.shop",
+      subject: `${firstName}, seu acesso à Lista de Fornecedores`,
+      text,
       html: `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#111;">
-          <div style="background:#ea580c;padding:24px;text-align:center;">
-            <h1 style="color:#fff;margin:0;font-size:24px;">FornecedorVip</h1>
-          </div>
-          <div style="padding:32px 24px;">
-            <h2 style="color:#111;">Olá, ${name}! 🎉</h2>
-            <p style="font-size:16px;line-height:1.6;">
-              Seu pagamento foi confirmado e aqui está tudo que você comprou, em anexo neste email.
-            </p>
-
-            <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:20px;margin:24px 0;">
-              <p style="margin:0 0 8px;font-weight:bold;color:#ea580c;">📦 O que você recebeu:</p>
-              <ul style="margin:0;padding-left:20px;line-height:2;">
-                <li>Lista de Fornecedores VIP (180 fornecedores)</li>
-                <li>Bônus 01 — Guia Loja de 10</li>
-                <li>Bônus 02 — Produtos Mais Vendidos</li>
-                <li>Bônus 03 — Pacote Influencer Instagram</li>
-                <li>Bônus 04 — Catálogo de Tendências</li>
-                <li>Bônus 05 — Imagens com IA</li>
-                <li>Bônus 06 — Grupos WhatsApp</li>
-              </ul>
-            </div>
-
-            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:20px;margin:24px 0;">
-              <p style="margin:0 0 12px;font-weight:bold;color:#16a34a;">💬 Entre nos grupos agora:</p>
-              <p style="margin:0;line-height:2.2;font-size:14px;">
-                • <a href="https://chat.whatsapp.com/IQiT9q9pC1CIe06TXwUEIy" style="color:#16a34a;">Grupo VIP Revendedores</a><br/>
-                • <a href="https://whatsapp.com/channel/0029Vb7gouR5q08XX9EtgW24" style="color:#16a34a;">Canal BossStore Vencedor</a><br/>
-                • <a href="https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l" style="color:#16a34a;">Canal João Cleber JC Atacado</a><br/>
-                • <a href="https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq" style="color:#16a34a;">Grupo Exclusivo</a>
-              </p>
-            </div>
-
-            <p style="font-size:14px;color:#666;">
-              Qualquer dúvida, responda este email.<br/>
-              Boas vendas! 🚀
-            </p>
-          </div>
-          <div style="background:#f3f4f6;padding:16px;text-align:center;font-size:12px;color:#999;">
-            FornecedorVip — fornecedorvip.shop
-          </div>
+        <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#222;font-size:15px;line-height:1.6;">
+          <p>Olá, ${firstName}!</p>
+          <p>Seu pagamento foi confirmado. Já anexei neste email a <strong>Lista de Fornecedores VIP</strong> e os <strong>6 bônus</strong> (todos em PDF).</p>
+          <p>Para acompanhar novidades e falar direto com fornecedores, entre nos grupos:</p>
+          <p>
+            • <a href="https://chat.whatsapp.com/IQiT9q9pC1CIe06TXwUEIy">Grupo VIP Revendedores</a><br/>
+            • <a href="https://whatsapp.com/channel/0029Vb7gouR5q08XX9EtgW24">Canal BossStore Vencedor</a><br/>
+            • <a href="https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l">Canal João Cleber JC Atacado</a><br/>
+            • <a href="https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq">Grupo Exclusivo</a>
+          </p>
+          <p>Se tiver qualquer dúvida, é só responder este email.</p>
+          <p>Abraço,<br/>Equipe FornecedorVip</p>
         </div>
       `,
       attachments: attachments.map((a) => ({
