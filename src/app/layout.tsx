@@ -13,11 +13,21 @@ export const metadata: Metadata = {
   title: "FornecedorVip | 180 Fornecedores Direto do Atacado",
   description:
     "Acesse a lista com 180 fornecedores direto da fonte, testados e aprovados. Comece a revender com menos de R$100, sem CNPJ e sem pedido mínimo.",
+  metadataBase: new URL("https://fornecedorvip.shop"),
   openGraph: {
     title: "FornecedorVip | 180 Fornecedores Direto do Atacado",
     description:
       "Acesse a lista com 180 fornecedores direto da fonte, testados e aprovados.",
     type: "website",
+    url: "https://fornecedorvip.shop",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "FornecedorVip — 180 Fornecedores Direto do Atacado" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FornecedorVip | 180 Fornecedores Direto do Atacado",
+    description:
+      "Acesse a lista com 180 fornecedores direto da fonte, testados e aprovados.",
+    images: ["/og.png"],
   },
 };
 
