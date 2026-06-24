@@ -107,47 +107,6 @@ const bonuses = [
   },
 ];
 
-const depoimentos = [
-  {
-    tipo: "whatsapp",
-    nome: "Sabrina",
-    msgs: [
-      { lado: "left", texto: "Acabei de acessar 🙌", hora: "17:07" },
-      { lado: "left", texto: "Já tô preparando para fazer meu primeiro pedido, muito obrigada ✨✨", hora: "17:07" },
-    ],
-  },
-  {
-    tipo: "whatsapp",
-    nome: "Priscila",
-    msgs: [
-      { lado: "left", texto: "Pedi vários peças e realmente são muito baratas, e já vendi mais da metade, obrigadas🙏", hora: "22:11" },
-      { lado: "right", texto: "Fico muito feliz por você 🙏🙏", hora: "22:12" },
-    ],
-  },
-  {
-    tipo: "whatsapp",
-    nome: "Camila",
-    msgs: [
-      { lado: "right", texto: "Que achou da lista? Tenha você comprou?", hora: "18:47" },
-      { lado: "left", texto: "Oi Camila", hora: "18:48" },
-      { lado: "left", texto: "É amor viu?", hora: "18:48" },
-      { lado: "left", texto: "Já entrei em contato com os fornecedores que eu queria e já estou no processo de compra", hora: "18:49" },
-      { lado: "left", texto: "Muito obrigada, me ajudou demaaaaais 💗", hora: "18:49" },
-      { lado: "right", texto: "Nossas, fico muito feliz em saber 😊", hora: "18:50" },
-      { lado: "right", texto: "Qualquer dúvida pode me perguntar viu!", hora: "18:50" },
-    ],
-  },
-  {
-    tipo: "whatsapp",
-    nome: "Cliente",
-    hasProductImage: true,
-    msgs: [
-      { lado: "left", texto: "Tudo certinho amei 😍", hora: "13:01" },
-      { lado: "left", texto: "Material perfeito", hora: "14:08" },
-      { lado: "left", texto: "Tudo lindo", hora: "19:00" },
-    ],
-  },
-];
 
 const faqs = [
   { q: "O que é a Lista de Fornecedores?", a: "É um arquivo digital com 180 fornecedores verificados, com contato direto, categorias de produtos, condições de compra e forma de pagamento. Tudo que você precisa para começar a revender hoje mesmo." },
@@ -573,9 +532,12 @@ export default function FornecedoresPage() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: isMobile ? "16px" : "20px", marginBottom: "28px" }}>
-            {depoimentos.map((dep, i) => (
-              <WhatsAppCard key={i} dep={dep} />
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "16px" : "24px", marginBottom: "28px", alignItems: "start" }}>
+            {["/depoimentos/dep1.png", "/depoimentos/dep2.png", "/depoimentos/dep3.png"].map((src, i) => (
+              <div key={i} style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt={`Depoimento ${i + 1}`} style={{ width: "100%", display: "block" }} />
+              </div>
             ))}
           </div>
 
