@@ -19,7 +19,35 @@ const PRODUCT_DATA = {
   currency: "BRL",
 };
 
-// Dispara InitiateCheckout no navegador + CAPI (server) com o MESMO event_id (deduplicação) e vai pro checkout
+// Parâmetros de rastreamento que a Kiwify lê e repassa no webhook (UTMify)
+const TRACK_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "src", "sck", "fbclid", "gclid"];
+const UTM_STORE = "fv_utms";
+
+// Salva os UTMs do anúncio no navegador assim que a pessoa chega (persiste se ela navegar)
+function persistUTMs() {
+  try {
+    const sp = new URLSearchParams(window.location.search);
+    const stored: Record<string, string> = {};
+    let found = false;
+    TRACK_KEYS.forEach((k) => { const v = sp.get(k); if (v) { stored[k] = v; found = true; } });
+    if (found) localStorage.setItem(UTM_STORE, JSON.stringify(stored));
+  } catch { /* ignore */ }
+}
+
+// Monta a URL do checkout já com os UTMs anexados (URL atual tem prioridade sobre o salvo)
+function buildCheckoutUrl() {
+  let params: Record<string, string> = {};
+  try { params = JSON.parse(localStorage.getItem(UTM_STORE) ?? "{}"); } catch { /* ignore */ }
+  try {
+    const sp = new URLSearchParams(window.location.search);
+    TRACK_KEYS.forEach((k) => { const v = sp.get(k); if (v) params[k] = v; });
+  } catch { /* ignore */ }
+  const qs = new URLSearchParams(params).toString();
+  if (!qs) return CHECKOUT_URL;
+  return `${CHECKOUT_URL}${CHECKOUT_URL.includes("?") ? "&" : "?"}${qs}`;
+}
+
+// Dispara InitiateCheckout no navegador + CAPI (server) com o MESMO event_id (deduplicação) e vai pro checkout COM UTMs
 function goToCheckout() {
   const eventId = `ic_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
   try {
@@ -34,7 +62,7 @@ function goToCheckout() {
     body: JSON.stringify({ fbp, fbc, url: window.location.href, event_id: eventId }),
   }).catch(() => {});
 
-  window.location.href = CHECKOUT_URL;
+  window.location.href = buildCheckoutUrl();
 }
 
 /* ─── hooks ─────────────────────────────────────────────────── */
@@ -258,6 +286,9 @@ export default function FornecedoresPage() {
   const { h, m, s } = useCountdown(2 * 3600 + 47 * 60 + 33);
   const isMobile = useIsMobile();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // Captura os UTMs do anúncio assim que a página carrega
+  useEffect(() => { persistUTMs(); }, []);
 
   // ViewContent quando a landing carrega (espera o fbq do pixel estar disponível)
   useEffect(() => {
