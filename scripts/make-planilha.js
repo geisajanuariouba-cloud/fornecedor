@@ -1,186 +1,231 @@
 const ExcelJS = require("exceljs");
 const fs = require("fs");
 
-const ORANGE = "FFEA580C", ORANGE_LT = "FFFFF7ED", GREEN = "FF16A34A", GREY = "FF6B7280";
-const INPUT = "FFFEF3C7", WHITE = "FFFFFFFF", DARK = "FF111111", BLUE = "FF1D4ED8", GREEN_LT = "FFF0FDF4";
+// Paleta conforme especificação
+const HEADER = "FF166534";      // verde escuro
+const HEADER_TXT = "FFFFFFFF";
+const INPUT = "FFFEF9C3";        // amarelo claro (campos de digitar)
+const CALC = "FFF3F4F6";         // cinza claro (cálculo automático)
+const GREEN = "FF15803D";
+const DARK = "FF111111";
+const GREY = "FF6B7280";
+const BLUE = "FF1D4ED8";
 const FONT = "Calibri";
 const BRL = '"R$" #,##0.00';
 const PCT = "0.0%";
 
-const thin = { style: "thin", color: { argb: "FFE5E7EB" } };
+const thin = { style: "thin", color: { argb: "FFD1D5DB" } };
 const border = { top: thin, left: thin, right: thin, bottom: thin };
+const fill = (argb) => ({ type: "pattern", pattern: "solid", fgColor: { argb } });
 
 const wb = new ExcelJS.Workbook();
 
-function fill(argb) { return { type: "pattern", pattern: "solid", fgColor: { argb } }; }
-
-// ───────── ABA 1: INÍCIO
-let ws = wb.addWorksheet("Início", { views: [{ showGridLines: false }] });
-ws.getColumn(1).width = 2; ws.getColumn(2).width = 95;
-ws.getCell("B2").value = "FORNECEDORVIP";
-ws.getCell("B2").font = { name: FONT, bold: true, size: 20, color: { argb: ORANGE } };
-ws.getCell("B3").value = "Planilha de Controle + Precificação";
-ws.getCell("B3").font = { name: FONT, bold: true, size: 14, color: { argb: DARK } };
-ws.getCell("B4").value = "Sua revenda organizada e lucrativa, sem precisar entender de planilha.";
-ws.getCell("B4").font = { name: FONT, size: 11, color: { argb: GREY }, italic: true };
-
-const guide = [
-  ["", ""],
-  ["COMO USAR (leva 2 minutos):", "h"],
-  ["As células em amarelo são as únicas que você preenche. O resto a planilha calcula sozinha.", "t"],
-  ["", ""],
-  ["1)  Aba PRECIFICAÇÃO", "b"],
-  ["Coloque o custo do produto, o frete e a taxa do marketplace. A planilha te diz o preço de venda ideal e o lucro de cada produto. Nunca mais venda no prejuízo.", "t"],
-  ["", ""],
-  ["2)  Aba CONTROLE DE VENDAS", "b"],
-  ["Anote cada venda. A planilha calcula faturamento, taxas e lucro automaticamente.", "t"],
-  ["", ""],
-  ["3)  Aba CONTROLE DE ESTOQUE", "b"],
-  ["Acompanhe quanto você tem de cada produto. Ela avisa quando é hora de repor.", "t"],
-  ["", ""],
-  ["4)  Aba RESUMO", "b"],
-  ["Seu painel: faturamento total, lucro, ticket médio e margem. Tudo num lugar só.", "t"],
-  ["", ""],
-  ["DICA: comece pela aba Precificação para nunca errar o preço. É lá que está o lucro.", "tip"],
-];
-let r = 6;
-for (const [text, kind] of guide) {
-  const cell = ws.getCell(`B${r}`);
+function head(cell, text) {
   cell.value = text;
-  if (kind === "h") cell.font = { name: FONT, bold: true, size: 13, color: { argb: ORANGE } };
-  else if (kind === "b") cell.font = { name: FONT, bold: true, size: 12, color: { argb: DARK } };
-  else if (kind === "t") { cell.font = { name: FONT, size: 11, color: { argb: "FF333333" } }; cell.alignment = { wrapText: true, vertical: "top" }; ws.getRow(r).height = 30; }
-  else if (kind === "tip") { cell.font = { name: FONT, bold: true, size: 11, color: { argb: GREEN } }; cell.fill = fill(GREEN_LT); cell.alignment = { wrapText: true, vertical: "middle" }; cell.border = border; ws.getRow(r).height = 28; }
-  r++;
-}
-
-function headerCell(cell, text) {
-  cell.value = text;
-  cell.font = { name: FONT, bold: true, color: { argb: WHITE }, size: 11 };
-  cell.fill = fill(ORANGE);
+  cell.font = { name: FONT, bold: true, color: { argb: HEADER_TXT }, size: 11 };
+  cell.fill = fill(HEADER);
   cell.alignment = { horizontal: "center", vertical: "middle", wrapText: true };
   cell.border = border;
 }
+function inputCell(cell, val, fmt, align = "center") {
+  if (val !== undefined && val !== null) cell.value = val;
+  cell.fill = fill(INPUT);
+  cell.font = { name: FONT, color: { argb: BLUE }, size: 11 };
+  if (fmt) cell.numFmt = fmt;
+  cell.alignment = { horizontal: align, vertical: "middle" };
+  cell.border = border;
+}
+function calcCell(cell, formula, fmt, opts = {}) {
+  cell.value = { formula };
+  cell.fill = fill(CALC);
+  cell.font = { name: FONT, size: 11, bold: !!opts.bold, color: { argb: opts.color || DARK } };
+  if (fmt) cell.numFmt = fmt;
+  cell.alignment = { horizontal: opts.align || "center", vertical: "middle" };
+  cell.border = border;
+}
+function title(ws, range, text) {
+  ws.mergeCells(range);
+  const c = ws.getCell(range.split(":")[0]);
+  c.value = text;
+  c.font = { name: FONT, bold: true, size: 12, color: { argb: GREEN } };
+}
 
-// ───────── ABA 2: PRECIFICAÇÃO
-ws = wb.addWorksheet("Precificação", { views: [{ showGridLines: false }] });
-const pH = ["Produto", "Custo do\nproduto (R$)", "Frete +\nembalagem (R$)", "Taxa do\nmarketplace (%)", "Margem de\nlucro desejada (%)", "Custo\ntotal (R$)", "PREÇO DE VENDA\nideal (R$)", "Lucro por\nvenda (R$)", "Margem\nreal (%)"];
-[26, 13, 14, 14, 16, 12, 17, 13, 11].forEach((w, i) => ws.getColumn(i + 1).width = w);
-ws.mergeCells("A1:I1");
-ws.getCell("A1").value = "PRECIFICAÇÃO INTELIGENTE — preencha as colunas amarelas e veja o preço ideal";
-ws.getCell("A1").font = { name: FONT, bold: true, size: 12, color: { argb: ORANGE } };
-pH.forEach((h, i) => headerCell(ws.getCell(2, i + 1), h));
-ws.getRow(2).height = 38;
-
-const examples = [
-  ["Conjunto fitness", 22, 8, 0.20, 0.30],
-  ["Perfume importado 50ml", 35, 6, 0.16, 0.35],
-  ["Kit maquiagem", 28, 7, 0.20, 0.30],
+// ═══════════════ ABA 1: INÍCIO (guia rápido) ═══════════════
+let ws = wb.addWorksheet("Início", { views: [{ showGridLines: false }] });
+ws.getColumn(1).width = 2; ws.getColumn(2).width = 92;
+ws.getCell("B2").value = "FORNECEDORVIP";
+ws.getCell("B2").font = { name: FONT, bold: true, size: 20, color: { argb: GREEN } };
+ws.getCell("B3").value = "Planilha de Controle + Precificação";
+ws.getCell("B3").font = { name: FONT, bold: true, size: 14, color: { argb: DARK } };
+const intro = [
+  ["", ""],
+  ["COMO USAR — leva 2 minutos", "h"],
+  ["Amarelo = você digita.  Cinza = a planilha calcula sozinha.  Verde escuro = cabeçalho.", "t"],
+  ["", ""],
+  ["1) ESTOQUE — cadastre seus produtos, fornecedor e custo. O estoque atual se atualiza sozinho.", "b"],
+  ["2) PRECIFICAÇÃO — informe custo, taxa e margem. Ela calcula o preço ideal e o lucro.", "b"],
+  ["3) CONTROLE DE VENDAS — anote cada venda. Receita, custo e lucro são automáticos (o custo é puxado do Estoque/Precificação).", "b"],
+  ["4) RESUMO FINANCEIRO — vê tudo somado: receita, custo, lucro, produto e plataforma campeões.", "b"],
+  ["", ""],
+  ["DICA: use sempre o MESMO nome de produto nas abas, para o cálculo automático funcionar.", "tip"],
 ];
-const PF = 3, PL = 52;
-for (let i = PF; i <= PL; i++) {
-  const ex = examples[i - PF];
-  const cA = ws.getCell(i, 1); cA.value = ex ? ex[0] : null; cA.font = { name: FONT, size: 11 }; cA.border = border;
-  const inputs = [[2, ex ? ex[1] : null, BRL], [3, ex ? ex[2] : null, BRL], [4, ex ? ex[3] : null, PCT], [5, ex ? ex[4] : null, PCT]];
-  for (const [col, val, fmt] of inputs) {
-    const c = ws.getCell(i, col);
-    c.value = val; c.fill = fill(INPUT); c.font = { name: FONT, color: { argb: BLUE }, size: 11 };
-    c.numFmt = fmt; c.alignment = { horizontal: "center" }; c.border = border;
-  }
-  const f = ws.getCell(i, 6); f.value = { formula: `IF(B${i}="","",B${i}+C${i})` }; f.numFmt = BRL; f.alignment = { horizontal: "center" }; f.border = border; f.font = { name: FONT, size: 11 };
-  const g = ws.getCell(i, 7); g.value = { formula: `IFERROR(IF(F${i}="","",F${i}/(1-D${i}-E${i})),"rever %")` }; g.numFmt = BRL; g.alignment = { horizontal: "center" }; g.border = border; g.font = { name: FONT, bold: true, size: 11, color: { argb: GREEN } }; g.fill = fill(GREEN_LT);
-  const h = ws.getCell(i, 8); h.value = { formula: `IFERROR(IF(G${i}="","",G${i}-F${i}-G${i}*D${i}),"")` }; h.numFmt = BRL; h.alignment = { horizontal: "center" }; h.border = border; h.font = { name: FONT, size: 11 };
-  const ii = ws.getCell(i, 9); ii.value = { formula: `IFERROR(IF(G${i}="","",H${i}/G${i}),"")` }; ii.numFmt = PCT; ii.alignment = { horizontal: "center" }; ii.border = border; ii.font = { name: FONT, size: 11 };
-}
-ws.mergeCells(`A${PL + 2}:I${PL + 2}`);
-ws.getCell(`A${PL + 2}`).value = "Taxas comuns: Shopee ~20%  |  Mercado Livre ~16%  |  Venda no Instagram/WhatsApp = 0%";
-ws.getCell(`A${PL + 2}`).font = { name: FONT, italic: true, size: 10, color: { argb: GREY } };
-
-// ───────── ABA 3: CONTROLE DE VENDAS
-ws = wb.addWorksheet("Controle de Vendas", { views: [{ showGridLines: false }] });
-const vH = ["Data", "Produto", "Qtd", "Custo unit.\n(R$)", "Preço venda\nunit. (R$)", "Taxa\nmkt (%)", "Faturamento\n(R$)", "Custo total\n(R$)", "Taxa paga\n(R$)", "LUCRO\n(R$)"];
-[12, 26, 7, 12, 13, 9, 14, 13, 12, 13].forEach((w, i) => ws.getColumn(i + 1).width = w);
-ws.mergeCells("A1:J1");
-ws.getCell("A1").value = "CONTROLE DE VENDAS — anote cada venda nas colunas amarelas";
-ws.getCell("A1").font = { name: FONT, bold: true, size: 12, color: { argb: ORANGE } };
-vH.forEach((h, i) => headerCell(ws.getCell(2, i + 1), h));
-ws.getRow(2).height = 38;
-const VF = 3, VL = 202;
-for (let i = VF; i <= VL; i++) {
-  const ins = [[1, null], [2, null], [3, "0"], [4, BRL], [5, BRL], [6, PCT]];
-  for (const [col, fmt] of ins) {
-    const c = ws.getCell(i, col);
-    c.fill = fill(INPUT); c.font = { name: FONT, color: { argb: BLUE }, size: 11 };
-    if (fmt) c.numFmt = fmt;
-    c.alignment = { horizontal: col === 2 ? "left" : "center" }; c.border = border;
-  }
-  const set = (col, formula, opts = {}) => {
-    const c = ws.getCell(i, col); c.value = { formula }; c.numFmt = BRL;
-    c.alignment = { horizontal: "center" }; c.border = border;
-    c.font = opts.bold ? { name: FONT, bold: true, color: { argb: GREEN }, size: 11 } : { name: FONT, size: 11 };
-  };
-  set(7, `IF(C${i}="","",C${i}*E${i})`);
-  set(8, `IF(C${i}="","",C${i}*D${i})`);
-  set(9, `IF(C${i}="","",G${i}*F${i})`);
-  set(10, `IF(C${i}="","",G${i}-H${i}-I${i})`, { bold: true });
-}
-const tr = VL + 1;
-for (let col = 1; col <= 6; col++) ws.getCell(tr, col).fill = fill(ORANGE);
-const tlabel = ws.getCell(tr, 2); tlabel.value = "TOTAL"; tlabel.font = { name: FONT, bold: true, color: { argb: WHITE } }; tlabel.alignment = { horizontal: "right" };
-for (const col of [7, 8, 9, 10]) {
-  const L = ws.getColumn(col).letter;
-  const c = ws.getCell(tr, col); c.value = { formula: `SUM(${L}${VF}:${L}${VL})` };
-  c.numFmt = BRL; c.font = { name: FONT, bold: true, color: { argb: WHITE } }; c.fill = fill(ORANGE);
-  c.alignment = { horizontal: "center" }; c.border = border;
+let r = 5;
+for (const [text, kind] of intro) {
+  const c = ws.getCell(`B${r}`); c.value = text;
+  if (kind === "h") c.font = { name: FONT, bold: true, size: 13, color: { argb: GREEN } };
+  else if (kind === "b") { c.font = { name: FONT, size: 11.5, color: { argb: "FF333333" } }; c.alignment = { wrapText: true, vertical: "top" }; ws.getRow(r).height = 32; }
+  else if (kind === "t") { c.font = { name: FONT, size: 11, italic: true, color: { argb: GREY } }; }
+  else if (kind === "tip") { c.font = { name: FONT, bold: true, size: 11, color: { argb: GREEN } }; c.fill = fill("FFF0FDF4"); c.alignment = { wrapText: true, vertical: "middle" }; c.border = border; ws.getRow(r).height = 28; }
+  r++;
 }
 
-// ───────── ABA 4: CONTROLE DE ESTOQUE
+// ═══════════════ ABA 2: CONTROLE DE ESTOQUE ═══════════════
 ws = wb.addWorksheet("Controle de Estoque", { views: [{ showGridLines: false }] });
-const eH = ["Produto", "Estoque\ninicial", "Entradas\n(comprou)", "Saídas\n(vendeu)", "Estoque\natual", "Estoque\nmínimo", "Situação"];
-[30, 11, 12, 11, 11, 11, 16].forEach((w, i) => ws.getColumn(i + 1).width = w);
-ws.mergeCells("A1:G1");
-ws.getCell("A1").value = "CONTROLE DE ESTOQUE — preencha o amarelo, a planilha avisa quando repor";
-ws.getCell("A1").font = { name: FONT, bold: true, size: 12, color: { argb: ORANGE } };
-eH.forEach((h, i) => headerCell(ws.getCell(2, i + 1), h));
-ws.getRow(2).height = 32;
-const EF = 3, EL = 52;
-for (let i = EF; i <= EL; i++) {
-  for (const col of [1, 2, 3, 4, 6]) {
-    const c = ws.getCell(i, col);
-    c.fill = fill(INPUT); c.font = { name: FONT, color: { argb: BLUE }, size: 11 };
-    if (col !== 1) c.numFmt = "0";
-    c.alignment = { horizontal: col === 1 ? "left" : "center" }; c.border = border;
-  }
-  const e = ws.getCell(i, 5); e.value = { formula: `IF(A${i}="","",B${i}+C${i}-D${i})` }; e.numFmt = "0"; e.alignment = { horizontal: "center" }; e.border = border; e.font = { name: FONT, bold: true, size: 11 };
-  const g = ws.getCell(i, 7); g.value = { formula: `IF(A${i}="","",IF(E${i}<=F${i},"⚠ REPOR","OK"))` }; g.alignment = { horizontal: "center" }; g.border = border; g.font = { name: FONT, bold: true, size: 11 };
+title(ws, "A1:G1", "CONTROLE DE ESTOQUE — preencha o amarelo; o estoque atual se calcula sozinho");
+const e1 = ["Nome do produto", "Fornecedor", "Preço de custo (R$)", "Qtd comprada", "Qtd vendida", "Qtd em estoque", "Data da compra"];
+[28, 22, 15, 13, 13, 14, 15].forEach((w, i) => ws.getColumn(i + 1).width = w);
+e1.forEach((h, i) => head(ws.getCell(2, i + 1), h));
+ws.getRow(2).height = 30;
+const estoqueEx = [
+  ["Conjunto fitness", "Moda Fit Atacado", 22, 50, 30, "10/01/2026"],
+  ["Perfume importado 50ml", "Essência Imports", 35, 30, 12, "05/02/2026"],
+  ["Kit maquiagem", "Beauty Atacado", 28, 40, 25, "20/02/2026"],
+];
+const ES_F = 3, ES_L = 52;
+for (let i = ES_F; i <= ES_L; i++) {
+  const ex = estoqueEx[i - ES_F];
+  inputCell(ws.getCell(i, 1), ex ? ex[0] : null, null, "left");
+  inputCell(ws.getCell(i, 2), ex ? ex[1] : null, null, "left");
+  inputCell(ws.getCell(i, 3), ex ? ex[2] : null, BRL);
+  inputCell(ws.getCell(i, 4), ex ? ex[3] : null, "0");
+  inputCell(ws.getCell(i, 5), ex ? ex[4] : null, "0");
+  calcCell(ws.getCell(i, 6), `IF(A${i}="","",D${i}-E${i})`, "0", { bold: true });
+  inputCell(ws.getCell(i, 7), ex ? ex[5] : null, null);
 }
 
-// ───────── ABA 5: RESUMO
-ws = wb.addWorksheet("Resumo", { views: [{ showGridLines: false }] });
-ws.getColumn(1).width = 2; ws.getColumn(2).width = 34; ws.getColumn(3).width = 22;
-ws.getCell("B2").value = "RESUMO DO SEU NEGÓCIO";
-ws.getCell("B2").font = { name: FONT, bold: true, size: 16, color: { argb: ORANGE } };
+// ═══════════════ ABA 3: PRECIFICAÇÃO ═══════════════
+ws = wb.addWorksheet("Precificação", { views: [{ showGridLines: false }] });
+title(ws, "A1:I1", "PRECIFICAÇÃO — informe custo, taxa, frete e margem; o resto é automático");
+const p1 = ["Nome do produto", "Preço de\ncusto (R$)", "Taxa da\nplataforma (%)", "Frete\nestimado (R$)", "Margem\ndesejada (%)", "Preço mínimo\nde venda (R$)", "Preço sugerido\nde venda (R$)", "Lucro por\nunidade (R$)", "Lucro por\nunidade (%)"];
+[26, 12, 13, 12, 12, 14, 15, 13, 12].forEach((w, i) => ws.getColumn(i + 1).width = w);
+p1.forEach((h, i) => head(ws.getCell(2, i + 1), h));
+ws.getRow(2).height = 38;
+const precoEx = [
+  ["Conjunto fitness", 22, 0.20, 8, 0.30],
+  ["Perfume importado 50ml", 35, 0.16, 6, 0.35],
+  ["Kit maquiagem", 28, 0.20, 7, 0.30],
+];
+const PR_F = 3, PR_L = 52;
+for (let i = PR_F; i <= PR_L; i++) {
+  const ex = precoEx[i - PR_F];
+  inputCell(ws.getCell(i, 1), ex ? ex[0] : null, null, "left");
+  inputCell(ws.getCell(i, 2), ex ? ex[1] : null, BRL);
+  inputCell(ws.getCell(i, 3), ex ? ex[2] : null, PCT);
+  inputCell(ws.getCell(i, 4), ex ? ex[3] : null, BRL);
+  inputCell(ws.getCell(i, 5), ex ? ex[4] : null, PCT);
+  // Preço mínimo (sem lucro) = (custo+frete)/(1-taxa)
+  calcCell(ws.getCell(i, 6), `IFERROR(IF(B${i}="","",(B${i}+D${i})/(1-C${i})),"rever %")`, BRL);
+  // Preço sugerido = (custo+frete)/(1-taxa-margem)
+  calcCell(ws.getCell(i, 7), `IFERROR(IF(B${i}="","",(B${i}+D${i})/(1-C${i}-E${i})),"rever %")`, BRL, { bold: true, color: GREEN });
+  // Lucro R$ = sugerido - custo - frete - sugerido*taxa
+  calcCell(ws.getCell(i, 8), `IFERROR(IF(G${i}="","",G${i}-B${i}-D${i}-G${i}*C${i}),"")`, BRL);
+  // Lucro % = lucro/sugerido
+  calcCell(ws.getCell(i, 9), `IFERROR(IF(G${i}="","",H${i}/G${i}),"")`, PCT);
+}
+title(ws, `A${PR_L + 2}:I${PR_L + 2}`, "Taxas comuns: Shopee ~20%  |  Mercado Livre ~16%  |  WhatsApp / Instagram = 0%");
+ws.getCell(`A${PR_L + 2}`).font = { name: FONT, italic: true, size: 10, color: { argb: GREY } };
+
+// ═══════════════ ABA 4: CONTROLE DE VENDAS ═══════════════
+ws = wb.addWorksheet("Controle de Vendas", { views: [{ showGridLines: false }] });
+title(ws, "A1:H1", "CONTROLE DE VENDAS — anote a venda; receita, custo e lucro são automáticos");
+const v1 = ["Data", "Produto", "Plataforma", "Qtd vendida", "Preço de\nvenda (R$)", "Receita\ntotal (R$)", "Custo\ntotal (R$)", "Lucro da\nvenda (R$)"];
+[13, 26, 16, 12, 13, 14, 13, 14].forEach((w, i) => ws.getColumn(i + 1).width = w);
+v1.forEach((h, i) => head(ws.getCell(2, i + 1), h));
+ws.getRow(2).height = 32;
+const ES = "'Controle de Estoque'";
+const PRf = "Precificação";
+const vendaEx = [
+  ["12/02/2026", "Conjunto fitness", "Shopee", 3, 60],
+  ["15/02/2026", "Perfume importado 50ml", "Instagram", 2, 83.67],
+  ["18/02/2026", "Kit maquiagem", "WhatsApp", 1, 70],
+];
+const VE_F = 3, VE_L = 202;
+for (let i = VE_F; i <= VE_L; i++) {
+  const ex = vendaEx[i - VE_F];
+  inputCell(ws.getCell(i, 1), ex ? ex[0] : null);
+  inputCell(ws.getCell(i, 2), ex ? ex[1] : null, null, "left");
+  inputCell(ws.getCell(i, 3), ex ? ex[2] : null);
+  inputCell(ws.getCell(i, 4), ex ? ex[3] : null, "0");
+  inputCell(ws.getCell(i, 5), ex ? ex[4] : null, BRL);
+  // Receita = qtd * preço
+  calcCell(ws.getCell(i, 6), `IF(D${i}="","",D${i}*E${i})`, BRL);
+  // Custo total = qtd * custo (PROCV no Estoque, fallback Precificação)
+  const lookupCost = `IFERROR(VLOOKUP(B${i},${ES}!$A$3:$C$52,3,0),IFERROR(VLOOKUP(B${i},${PRf}!$A$3:$B$52,2,0),0))`;
+  calcCell(ws.getCell(i, 7), `IF(D${i}="","",D${i}*${lookupCost})`, BRL);
+  // Lucro = receita - custo
+  calcCell(ws.getCell(i, 8), `IF(D${i}="","",F${i}-G${i})`, BRL, { bold: true, color: GREEN });
+}
+// Linha TOTAL
+const TR = VE_L + 1;
+for (let c = 1; c <= 5; c++) ws.getCell(TR, c).fill = fill(HEADER);
+const tl = ws.getCell(TR, 2); tl.value = "TOTAL"; tl.font = { name: FONT, bold: true, color: { argb: HEADER_TXT } }; tl.alignment = { horizontal: "right" };
+for (const c of [6, 7, 8]) {
+  const L = ws.getColumn(c).letter;
+  const cell = ws.getCell(TR, c); cell.value = { formula: `SUM(${L}${VE_F}:${L}${VE_L})` };
+  cell.numFmt = BRL; cell.font = { name: FONT, bold: true, color: { argb: HEADER_TXT } }; cell.fill = fill(HEADER);
+  cell.alignment = { horizontal: "center" }; cell.border = border;
+}
+
+// ═══════════════ ABA 5: RESUMO FINANCEIRO ═══════════════
+ws = wb.addWorksheet("Resumo Financeiro", { views: [{ showGridLines: false }] });
+ws.getColumn(1).width = 2; ws.getColumn(2).width = 30; ws.getColumn(3).width = 22;
+ws.getColumn(5).width = 22; ws.getColumn(6).width = 16;
+ws.getCell("B2").value = "RESUMO FINANCEIRO";
+ws.getCell("B2").font = { name: FONT, bold: true, size: 16, color: { argb: GREEN } };
 ws.getCell("B3").value = "Atualiza sozinho conforme você lança as vendas.";
 ws.getCell("B3").font = { name: FONT, italic: true, size: 10, color: { argb: GREY } };
+
 const V = "'Controle de Vendas'";
+// Tabela de apoio — plataformas (E/F)
+const plats = ["Shopee", "Mercado Livre", "WhatsApp", "Instagram"];
+ws.getCell("E5").value = "Apoio: plataformas (não apague)";
+ws.getCell("E5").font = { name: FONT, bold: true, size: 9, color: { argb: GREY } };
+ws.mergeCells("E5:F5");
+plats.forEach((p, idx) => {
+  const row = 6 + idx;
+  const pc = ws.getCell(row, 5); pc.value = p; pc.font = { name: FONT, size: 10 }; pc.border = border;
+  const rc = ws.getCell(row, 6); rc.value = { formula: `SUMIF(${V}!$C$3:$C$202,E${row},${V}!$F$3:$F$202)` };
+  rc.numFmt = BRL; rc.font = { name: FONT, size: 10 }; rc.border = border;
+});
+// Tabela de apoio — produtos (E/F a partir da linha 12), puxa lista da Precificação
+ws.getCell("E11").value = "Apoio: produtos (não apague)";
+ws.getCell("E11").font = { name: FONT, bold: true, size: 9, color: { argb: GREY } };
+ws.mergeCells("E11:F11");
+const APF = 12, APL = 61;
+for (let i = APF; i <= APL; i++) {
+  const prRow = PR_F + (i - APF); // 3..52
+  const pc = ws.getCell(i, 5); pc.value = { formula: `IF(${PRf}!A${prRow}="","",${PRf}!A${prRow})` }; pc.font = { name: FONT, size: 9 };
+  const qc = ws.getCell(i, 6); qc.value = { formula: `IF(${PRf}!A${prRow}="","",SUMIF(${V}!$B$3:$B$202,${PRf}!A${prRow},${V}!$D$3:$D$202))` }; qc.font = { name: FONT, size: 9 };
+}
+
+// Cards principais
 const cards = [
-  ["Faturamento total", `SUM(${V}!G3:G202)`, BRL],
-  ["Lucro total", `SUM(${V}!J3:J202)`, BRL],
-  ["Total de produtos vendidos", `SUM(${V}!C3:C202)`, "0"],
-  ["Número de vendas (pedidos)", `COUNT(${V}!E3:E202)`, "0"],
-  ["Ticket médio", `IFERROR(SUM(${V}!G3:G202)/COUNT(${V}!E3:E202),0)`, BRL],
-  ["Margem de lucro média", `IFERROR(SUM(${V}!J3:J202)/SUM(${V}!G3:G202),0)`, PCT],
-  ["Total pago em taxas", `SUM(${V}!I3:I202)`, BRL],
+  ["Receita total do mês", `SUM(${V}!F3:F202)`, BRL, true],
+  ["Custo total", `SUM(${V}!G3:G202)`, BRL, false],
+  ["Lucro bruto", `SUM(${V}!H3:H202)`, BRL, true],
+  ["Produto mais vendido", `IFERROR(IF(MAX(F${APF}:F${APL})=0,"—",INDEX(E${APF}:E${APL},MATCH(MAX(F${APF}:F${APL}),F${APF}:F${APL},0))),"—")`, null, false],
+  ["Plataforma que mais vendeu", `IFERROR(IF(MAX(F6:F9)=0,"—",INDEX(E6:E9,MATCH(MAX(F6:F9),F6:F9,0))),"—")`, null, false],
 ];
 r = 5;
-for (const [title, formula, fmt] of cards) {
-  const lc = ws.getCell(r, 2); lc.value = title; lc.font = { name: FONT, bold: true, size: 11, color: { argb: DARK } };
-  lc.fill = fill(ORANGE_LT); lc.alignment = { horizontal: "left", vertical: "middle", indent: 1 }; lc.border = border;
-  const vc = ws.getCell(r, 3); vc.value = { formula }; vc.numFmt = fmt;
-  const hot = title === "Lucro total" || title === "Faturamento total";
+for (const [label, formula, fmt, hot] of cards) {
+  const lc = ws.getCell(r, 2); lc.value = label; lc.font = { name: FONT, bold: true, size: 11, color: { argb: DARK } };
+  lc.fill = fill("FFF0FDF4"); lc.alignment = { horizontal: "left", vertical: "middle", indent: 1 }; lc.border = border;
+  const vc = ws.getCell(r, 3); vc.value = { formula };
+  if (fmt) vc.numFmt = fmt;
+  vc.fill = fill(CALC);
   vc.font = { name: FONT, bold: true, size: 12, color: { argb: hot ? GREEN : DARK } };
   vc.alignment = { horizontal: "center", vertical: "middle" }; vc.border = border;
-  ws.getRow(r).height = 26; r++;
+  ws.getRow(r).height = 28; r++;
 }
 ws.getCell(r + 1, 2).value = "FornecedorVip — fornecedorvip.shop";
 ws.getCell(r + 1, 2).font = { name: FONT, italic: true, size: 9, color: { argb: GREY } };
