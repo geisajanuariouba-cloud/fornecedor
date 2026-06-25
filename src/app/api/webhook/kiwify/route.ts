@@ -1,19 +1,55 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import { Resend } from "resend";
+import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const PIXEL_ID = "1274073178133799";
+const CAPI_TOKEN = process.env.META_CAPI_TOKEN ?? "";
 
 // Permite que o envio em segundo plano tenha tempo de concluir
 export const maxDuration = 60;
 
-const WHATSAPP_LINKS = `
-• Grupo VIP Revendedores: https://chat.whatsapp.com/IQiT9q9pC1CIe06TXwUEIy
-• Canal BossStore Vencedor: https://whatsapp.com/channel/0029Vb7gouR5q08XX9EtgW24
-• Canal João Cleber JC Atacado: https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l
-• Grupo Exclusivo: https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq
-`.trim();
+function sha256(value: string) {
+  return crypto.createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
+}
+
+// Evento Purchase via Conversions API (server-side) — o navegador não pode disparar pós-checkout
+async function sendMetaPurchase(email: string, orderId: string, phone?: string) {
+  if (!CAPI_TOKEN) {
+    console.warn("[webhook/kiwify] META_CAPI_TOKEN ausente — Purchase não enviado");
+    return;
+  }
+  const payload = {
+    data: [
+      {
+        event_name: "Purchase",
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: `purchase_${orderId}`,
+        action_source: "website",
+        event_source_url: "https://www.fornecedorvip.shop",
+        user_data: {
+          em: [sha256(email)],
+          ...(phone ? { ph: [sha256(phone.replace(/\D/g, ""))] } : {}),
+        },
+        custom_data: {
+          currency: "BRL",
+          value: 9.9,
+          content_name: "Lista de Fornecedores VIP",
+          content_category: "Digital Product",
+          order_id: orderId,
+        },
+      },
+    ],
+  };
+  const res = await fetch(
+    `https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${CAPI_TOKEN}`,
+    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }
+  );
+  const data = await res.json();
+  console.log("[webhook/kiwify] Purchase enviado:", JSON.stringify(data));
+}
 
 function readPdf(filename: string) {
   const filePath = path.join(process.cwd(), "private", "pdfs", filename);
@@ -52,6 +88,8 @@ export async function POST(req: NextRequest) {
     const rawStatus = (
       deepFind(body, ["order_status", "status", "webhook_event_type", "event"]) ?? "unknown"
     ).toLowerCase();
+    const orderId = deepFind(body, ["order_id", "order_ref", "id"]) ?? `order_${Date.now()}`;
+    const phone = deepFind(body, ["mobile", "phone"]);
 
     const isApproval = ["paid", "approved", "completed", "order_approved"].some((s) =>
       rawStatus.includes(s)
@@ -73,13 +111,18 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Responde à Kiwify IMEDIATAMENTE e envia o email em segundo plano (evita timeout)
+    // Responde à Kiwify IMEDIATAMENTE; email + Purchase (Meta) rodam em segundo plano (evita timeout)
     after(async () => {
       try {
         await sendDeliveryEmail(email, name);
         console.log("[webhook/kiwify] email enviado em background para", email);
       } catch (e) {
-        console.error("[webhook/kiwify] falha no envio em background:", e);
+        console.error("[webhook/kiwify] falha no envio de email:", e);
+      }
+      try {
+        await sendMetaPurchase(email, orderId, phone);
+      } catch (e) {
+        console.error("[webhook/kiwify] falha no Purchase Meta:", e);
       }
     });
 

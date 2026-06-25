@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
 
 const PIXEL_ID = "1274073178133799";
 const TOKEN = process.env.META_CAPI_TOKEN ?? "";
-
-function hash(value: string) {
-  return crypto.createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
-}
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,12 +12,14 @@ export async function POST(req: NextRequest) {
     const fbp = body.fbp ?? "";
     const fbc = body.fbc ?? "";
     const eventSourceUrl = body.url ?? "https://fornecedorvip.shop";
+    const eventId = body.event_id ?? undefined;
 
-    const payload = {
+    const payload: Record<string, unknown> = {
       data: [
         {
           event_name: "InitiateCheckout",
           event_time: Math.floor(Date.now() / 1000),
+          ...(eventId ? { event_id: eventId } : {}),
           action_source: "website",
           event_source_url: eventSourceUrl,
           user_data: {
@@ -39,8 +36,12 @@ export async function POST(req: NextRequest) {
           },
         },
       ],
-      test_event_code: process.env.META_TEST_CODE ?? "TEST79732",
     };
+
+    // Só envia como TESTE se META_TEST_CODE estiver definido (senão é evento real de produção)
+    if (process.env.META_TEST_CODE) {
+      payload.test_event_code = process.env.META_TEST_CODE;
+    }
 
     const res = await fetch(
       `https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${TOKEN}`,
