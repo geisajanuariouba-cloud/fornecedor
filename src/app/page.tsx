@@ -665,8 +665,8 @@ export default function FornecedoresPage() {
             <a href="mailto:contato@fornecedorvip.shop" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 600, background: "rgba(255,255,255,0.08)", padding: "10px 18px", borderRadius: "100px" }}>
               ✉️ contato@fornecedorvip.shop
             </a>
-            <a href="https://wa.me/553299842501" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 600, background: "#16a34a", padding: "10px 18px", borderRadius: "100px" }}>
-              💬 WhatsApp: (32) 99842-501
+            <a href="https://wa.me/5532998425801" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 600, background: "#16a34a", padding: "10px 18px", borderRadius: "100px" }}>
+              💬 WhatsApp: (32) 99842-5801
             </a>
           </div>
           <p style={{ fontSize: "11px", color: "#6b7280", lineHeight: 1.6 }}>

@@ -247,7 +247,7 @@ Para acompanhar novidades e falar direto com fornecedores, entre nos grupos:
 
 Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:
 - E-mail: contato@fornecedorvip.shop
-- WhatsApp: (32) 99842-501
+- WhatsApp: (32) 99842-5801
 
 Abraço,
 Equipe FornecedorVip
@@ -273,7 +273,7 @@ fornecedorvip.shop`;
           <p>Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:</p>
           <p>
             ✉️ E-mail: <a href="mailto:contato@fornecedorvip.shop">contato@fornecedorvip.shop</a><br/>
-            💬 WhatsApp: <a href="https://wa.me/553299842501">(32) 99842-501</a>
+            💬 WhatsApp: <a href="https://wa.me/5532998425801">(32) 99842-5801</a>
           </p>
           <p>Abraço,<br/>Equipe FornecedorVip<br/>
           <span style="color:#9ca3af;font-size:13px;">fornecedorvip.shop</span></p>
@@ -304,7 +304,7 @@ ${b.comoUsar}
 
 Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:
 - E-mail: contato@fornecedorvip.shop
-- WhatsApp: (32) 99842-501
+- WhatsApp: (32) 99842-5801
 
 Bons negócios e boas vendas!
 
@@ -326,7 +326,7 @@ fornecedorvip.shop`;
         <p>Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:</p>
         <p>
           ✉️ E-mail: <a href="mailto:contato@fornecedorvip.shop">contato@fornecedorvip.shop</a><br/>
-          💬 WhatsApp: <a href="https://wa.me/553299842501">(32) 99842-501</a>
+          💬 WhatsApp: <a href="https://wa.me/5532998425801">(32) 99842-5801</a>
         </p>
         <p>Bons negócios e boas vendas!</p>
         <p>Abraço,<br/>Equipe FornecedorVip<br/>
