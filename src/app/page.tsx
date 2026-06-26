@@ -47,28 +47,12 @@ function buildCheckoutUrl() {
   return `${CHECKOUT_URL}${CHECKOUT_URL.includes("?") ? "&" : "?"}${qs}`;
 }
 
-// Rola até o botão verde do CTA principal. Funciona em celulares antigos:
-// detecta suporte a scroll suave e cai pro scroll instantâneo (2 args) quando não há.
-function scrollToCheckout() {
-  const el = document.getElementById("cta-principal");
-  if (!el) return;
-  const rect = el.getBoundingClientRect();
-  const y = (window.pageYOffset || document.documentElement.scrollTop || 0) + rect.top - (window.innerHeight / 2) + (rect.height / 2);
-  const top = Math.max(0, y);
-  try {
-    if (typeof document !== "undefined" && "scrollBehavior" in document.documentElement.style) {
-      window.scrollTo({ top, behavior: "smooth" });
-    } else {
-      window.scrollTo(0, top); // navegadores antigos: jump instantâneo (sempre funciona)
-    }
-  } catch {
-    window.scrollTo(0, top);
-  }
-}
-
-// Dispara InitiateCheckout no navegador + CAPI (server) com o MESMO event_id (deduplicação) e vai pro checkout COM UTMs
+// Dispara InitiateCheckout no navegador + CAPI (server) com o MESMO event_id (deduplicação) e vai pro checkout COM UTMs.
+// É handler de um <a href={CHECKOUT_URL}>: se o JS rodar, enriquece com UTMs/pixel; se NÃO rodar
+// (celular/navegador antigo sem hidratação), o link nativo abre o checkout do mesmo jeito.
 let redirecting = false;
-function goToCheckout() {
+function goToCheckout(e?: React.MouseEvent) {
+  if (e) e.preventDefault();
   if (redirecting) return; // evita disparo duplo em cliques rápidos
   redirecting = true;
 
@@ -246,12 +230,12 @@ function PillLabel({ children }: { children: React.ReactNode }) {
 
 function CTAButton({ children, large, fullWidth }: { children: React.ReactNode; large?: boolean; fullWidth?: boolean }) {
   return (
-    <button
-      onClick={scrollToCheckout}
-      style={{ background: "#ea580c", color: "#fff", border: "none", borderRadius: "12px", padding: large ? "20px 56px" : "16px 32px", fontSize: large ? "18px" : "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", boxShadow: "0 4px 20px rgba(234,88,12,0.35)", fontFamily: "inherit", width: fullWidth ? "100%" : undefined }}
+    <a
+      href="#cta-principal"
+      style={{ display: fullWidth ? "block" : "inline-block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#ea580c", color: "#fff", border: "none", borderRadius: "12px", padding: large ? "20px 56px" : "16px 32px", fontSize: large ? "18px" : "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", boxShadow: "0 4px 20px rgba(234,88,12,0.35)", fontFamily: "inherit", width: fullWidth ? "100%" : undefined }}
     >
       {children}
-    </button>
+    </a>
   );
 }
 
@@ -337,6 +321,8 @@ export default function FornecedoresPage() {
 
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", minHeight: "100vh", color: "#111" }}>
+      {/* scroll suave nos navegadores que suportam; os antigos simplesmente pulam (sempre funciona) */}
+      <style dangerouslySetInnerHTML={{ __html: "html{scroll-behavior:smooth}#cta-principal{scroll-margin-top:90px}" }} />
 
       {/* ── Urgency bar ── */}
       <div style={{ background: "#ea580c", color: "#fff", textAlign: "center", padding: "10px 16px", fontSize: "13px", fontWeight: 700 }}>
@@ -392,9 +378,9 @@ export default function FornecedoresPage() {
                       <IconCheck size={14} /><span>{item}</span>
                     </div>
                   ))}
-                  <button onClick={scrollToCheckout} style={{ width: "100%", background: "#ea580c", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(234,88,12,0.3)" }}>
+                  <a href="#cta-principal" style={{ display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", width: "100%", background: "#ea580c", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(234,88,12,0.3)" }}>
                     LIBERAR MEU ACESSO →
-                  </button>
+                  </a>
                   <p style={{ textAlign: "center", fontSize: "10px", color: "#9ca3af", marginTop: "8px" }}>🔒 100% seguro</p>
                 </div>
               </div>
@@ -617,9 +603,9 @@ export default function FornecedoresPage() {
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
-                <button id="cta-principal" onClick={goToCheckout} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
+                <a id="cta-principal" href={CHECKOUT_URL} onClick={goToCheckout} style={{ display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
                   QUERO ACESSAR AGORA!
-                </button>
+                </a>
                 <p style={{ textAlign: "center", fontSize: "12px", color: "#6b7280", marginBottom: "16px" }}>
                   Você ficará um passo mais perto de realizar seu sonho 🎯
                 </p>
@@ -706,9 +692,9 @@ export default function FornecedoresPage() {
 
       {/* ── Barra fixa ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
-        <button onClick={scrollToCheckout} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
+        <a href="#cta-principal" style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
           ACESSAR FORNECEDORES — R$9,90
-        </button>
+        </a>
       </div>
     </div>
   );
