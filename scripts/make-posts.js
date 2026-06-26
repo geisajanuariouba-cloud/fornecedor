@@ -84,10 +84,12 @@ function postStat({ eyebrow: eb, stat, lines, cta }) {
     return `<text x="${W / 2}" y="${y}" font-family="${F}" font-size="62" font-weight="800" fill="#ffffff" text-anchor="middle">${esc(l.t)}</text>`;
   }).join("");
   const ctaY = startY + titleLines.length * lh + 60;
+  // tamanho do número dinâmico pra nunca estourar a largura (máx ~940px)
+  const statFs = Math.min(300, Math.floor(940 / (stat.length * 0.60)));
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
     ${backdrop()}
     ${eb ? eyebrow(eb) : ""}
-    <text x="${W / 2}" y="640" font-family="${F}" font-size="300" font-weight="900" fill="url(#num)" text-anchor="middle">${esc(stat)}</text>
+    <text x="${W / 2}" y="640" font-family="${F}" font-size="${statFs}" font-weight="900" fill="url(#num)" text-anchor="middle">${esc(stat)}</text>
     ${tl}
     ${ctaPill(cta, ctaY)}
     ${brand()}
