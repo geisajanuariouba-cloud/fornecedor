@@ -652,6 +652,30 @@ export default function FornecedoresPage() {
         </div>
       </div>
 
+      {/* ── RODAPÉ / SUPORTE ── */}
+      <div style={{ background: "#111", padding: isMobile ? "32px 20px 110px" : "40px 40px 90px", textAlign: "center" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <div style={{ fontSize: "20px", fontWeight: 900, color: "#ea580c", marginBottom: "8px" }}>
+            Fornecedor<span style={{ color: "#fff" }}>Vip</span>
+          </div>
+          <p style={{ fontSize: "13px", color: "#9ca3af", marginBottom: "18px" }}>
+            Precisa de ajuda? Fale com a gente:
+          </p>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "12px", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
+            <a href="mailto:contato@fornecedorvip.shop" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 600, background: "rgba(255,255,255,0.08)", padding: "10px 18px", borderRadius: "100px" }}>
+              ✉️ contato@fornecedorvip.shop
+            </a>
+            <a href="https://wa.me/553299842501" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#fff", textDecoration: "none", fontSize: "14px", fontWeight: 600, background: "#16a34a", padding: "10px 18px", borderRadius: "100px" }}>
+              💬 WhatsApp: (32) 99842-501
+            </a>
+          </div>
+          <p style={{ fontSize: "11px", color: "#6b7280", lineHeight: 1.6 }}>
+            FornecedorVip © 2026 — fornecedorvip.shop<br />
+            Todos os direitos reservados.
+          </p>
+        </div>
+      </div>
+
       {/* ── Barra fixa ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
         <button onClick={() => { document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "center" }); }} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>

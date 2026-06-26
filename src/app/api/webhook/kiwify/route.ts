@@ -84,12 +84,14 @@ const BUMP = {
     label: "Planilha de Precificação e Controle",
     desc: "a <strong>Planilha de Precificação e Controle</strong> (Excel editável)",
     descTxt: "a Planilha de Precificação e Controle (Excel editável)",
+    comoUsar: "Abra a planilha no Excel ou no Google Planilhas. Preencha apenas as células em amarelo (custo, taxa e margem) e ela calcula automaticamente o preço de venda ideal e o lucro de cada produto. Use também as abas de controle de estoque, vendas e o resumo financeiro.",
   },
   calendario: {
     file: "Lista-Produtos-por-Sazonalidade.pdf",
     label: "Calendário de Produtos por Sazonalidade",
     desc: "o <strong>Calendário de Produtos por Sazonalidade</strong> (PDF)",
     descTxt: "o Calendário de Produtos por Sazonalidade (PDF)",
+    comoUsar: "No PDF você encontra, mês a mês, o que mais vende em cada época do ano, com a margem média, o nível de demanda, em quais plataformas vender e quando comprar do fornecedor para chegar na frente. Comece pelo calendário do próximo mês e planeje suas compras com antecedência.",
   },
 } as const;
 
@@ -243,10 +245,13 @@ Para acompanhar novidades e falar direto com fornecedores, entre nos grupos:
 - Canal João Cleber JC Atacado: https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l
 - Grupo Exclusivo: https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq
 
-Se tiver qualquer dúvida, é só responder este email.
+Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:
+- E-mail: contato@fornecedorvip.shop
+- WhatsApp: (32) 99842-501
 
 Abraço,
-Equipe FornecedorVip`;
+Equipe FornecedorVip
+fornecedorvip.shop`;
 
   const sendResult = await resend.emails.send({
       from: "Equipe FornecedorVip <contato@fornecedorvip.shop>",
@@ -265,8 +270,13 @@ Equipe FornecedorVip`;
             • <a href="https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l">Canal João Cleber JC Atacado</a><br/>
             • <a href="https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq">Grupo Exclusivo</a>
           </p>
-          <p>Se tiver qualquer dúvida, é só responder este email.</p>
-          <p>Abraço,<br/>Equipe FornecedorVip</p>
+          <p>Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:</p>
+          <p>
+            ✉️ E-mail: <a href="mailto:contato@fornecedorvip.shop">contato@fornecedorvip.shop</a><br/>
+            💬 WhatsApp: <a href="https://wa.me/553299842501">(32) 99842-501</a>
+          </p>
+          <p>Abraço,<br/>Equipe FornecedorVip<br/>
+          <span style="color:#9ca3af;font-size:13px;">fornecedorvip.shop</span></p>
         </div>
       `,
       attachments: attachments.map((a) => ({
@@ -287,25 +297,40 @@ async function sendBumpEmail(email: string, name: string, kind: "planilha" | "ca
 
   const text = `Olá, ${firstName}!
 
-Seu pagamento foi confirmado. Segue em anexo ${b.descTxt}.
+Obrigado pela sua compra. Seu pagamento foi confirmado e o seu material já está em anexo neste e-mail: ${b.descTxt}.
 
-Se tiver qualquer dúvida, é só responder este email.
+Como usar:
+${b.comoUsar}
+
+Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:
+- E-mail: contato@fornecedorvip.shop
+- WhatsApp: (32) 99842-501
+
+Bons negócios e boas vendas!
 
 Abraço,
-Equipe FornecedorVip`;
+Equipe FornecedorVip
+fornecedorvip.shop`;
 
   const sendResult = await resend.emails.send({
     from: "Equipe FornecedorVip <contato@fornecedorvip.shop>",
     to: email,
     replyTo: "contato@fornecedorvip.shop",
-    subject: `${firstName}, seu acesso — ${b.label}`,
+    subject: `${firstName}, aqui está o seu material: ${b.label}`,
     text,
     html: `
-      <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#222;font-size:15px;line-height:1.6;">
+      <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#222;font-size:15px;line-height:1.7;">
         <p>Olá, ${firstName}!</p>
-        <p>Seu pagamento foi confirmado. Segue em anexo ${b.desc}.</p>
-        <p>Se tiver qualquer dúvida, é só responder este email.</p>
-        <p>Abraço,<br/>Equipe FornecedorVip</p>
+        <p>Obrigado pela sua compra. Seu pagamento foi confirmado e o seu material já está <strong>em anexo neste e-mail</strong>: ${b.desc}.</p>
+        <p><strong>Como usar:</strong><br/>${b.comoUsar}</p>
+        <p>Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:</p>
+        <p>
+          ✉️ E-mail: <a href="mailto:contato@fornecedorvip.shop">contato@fornecedorvip.shop</a><br/>
+          💬 WhatsApp: <a href="https://wa.me/553299842501">(32) 99842-501</a>
+        </p>
+        <p>Bons negócios e boas vendas!</p>
+        <p>Abraço,<br/>Equipe FornecedorVip<br/>
+        <span style="color:#9ca3af;font-size:13px;">fornecedorvip.shop</span></p>
       </div>
     `,
     attachments: [{ filename: b.file, content: readPdf(b.file) }],
