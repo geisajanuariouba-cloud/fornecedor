@@ -48,21 +48,30 @@ function buildCheckoutUrl() {
 }
 
 // Dispara InitiateCheckout no navegador + CAPI (server) com o MESMO event_id (deduplicação) e vai pro checkout COM UTMs
+let redirecting = false;
 function goToCheckout() {
+  if (redirecting) return; // evita disparo duplo em cliques rápidos
+  redirecting = true;
+
   const eventId = `ic_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+  const dest = buildCheckoutUrl();
+
   try {
     window.fbq?.("track", "InitiateCheckout", PRODUCT_DATA, { eventID: eventId });
   } catch { /* ignore */ }
 
   const fbp = document.cookie.split(";").find((c) => c.trim().startsWith("_fbp="))?.split("=")[1] ?? "";
   const fbc = document.cookie.split(";").find((c) => c.trim().startsWith("_fbc="))?.split("=")[1] ?? "";
+  // keepalive garante que a requisição complete mesmo após sair da página
   fetch("/api/capi", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ fbp, fbc, url: window.location.href, event_id: eventId }),
+    keepalive: true,
   }).catch(() => {});
 
-  window.location.href = buildCheckoutUrl();
+  // micro-atraso garante o envio do evento do navegador antes do redirect
+  setTimeout(() => { window.location.href = dest; }, 350);
 }
 
 /* ─── hooks ─────────────────────────────────────────────────── */
