@@ -16,7 +16,16 @@ function sha256(value: string) {
 }
 
 // Evento Purchase via Conversions API (server-side) — o navegador não pode disparar pós-checkout
-async function sendMetaPurchase(email: string, orderId: string, phone?: string) {
+async function sendMetaPurchase(p: {
+  email: string;
+  orderId: string;
+  value: number;
+  phone?: string;
+  fbp?: string;
+  fbc?: string;
+  ip?: string;
+  ua?: string;
+}) {
   if (!CAPI_TOKEN) {
     console.warn("[webhook/kiwify] META_CAPI_TOKEN ausente — Purchase não enviado");
     return;
@@ -26,19 +35,23 @@ async function sendMetaPurchase(email: string, orderId: string, phone?: string) 
       {
         event_name: "Purchase",
         event_time: Math.floor(Date.now() / 1000),
-        event_id: `purchase_${orderId}`,
+        event_id: `purchase_${p.orderId}`,
         action_source: "website",
         event_source_url: "https://www.fornecedorvip.shop",
         user_data: {
-          em: [sha256(email)],
-          ...(phone ? { ph: [sha256(phone.replace(/\D/g, ""))] } : {}),
+          em: [sha256(p.email)],
+          ...(p.phone ? { ph: [sha256(p.phone.replace(/\D/g, ""))] } : {}),
+          ...(p.fbp ? { fbp: p.fbp } : {}),
+          ...(p.fbc ? { fbc: p.fbc } : {}),
+          ...(p.ip ? { client_ip_address: p.ip } : {}),
+          ...(p.ua ? { client_user_agent: p.ua } : {}),
         },
         custom_data: {
           currency: "BRL",
-          value: 9.9,
+          value: p.value,
           content_name: "Lista de Fornecedores VIP",
           content_category: "Digital Product",
-          order_id: orderId,
+          order_id: p.orderId,
         },
       },
     ],
@@ -105,17 +118,55 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json().catch(() => ({}));
+    // Wiapy envia tudo dentro de "data"; Kiwify no nível raiz — funciona pros dois
+    const order = (body?.data ?? body) as Record<string, unknown>;
 
-    // Kiwify aninha tudo em "order"/"Customer" — busca recursiva é à prova de formato
-    const email = (deepFind(body, ["email"]) ?? "").toLowerCase().trim();
-    const name = deepFind(body, ["full_name", "name"]) ?? "Cliente";
-    const rawStatus = (
-      deepFind(body, ["order_status", "status", "webhook_event_type", "event"]) ?? "unknown"
+    const customer = (order?.customer ?? {}) as Record<string, unknown>;
+    const payment = (order?.payment ?? {}) as Record<string, unknown>;
+    const checkout = (order?.checkout ?? {}) as Record<string, unknown>;
+    const tracking = (order?.tracking ?? {}) as Record<string, unknown>;
+
+    const email = String(customer?.email ?? deepFind(body, ["email"]) ?? "").toLowerCase().trim();
+    const name = String(customer?.name ?? deepFind(body, ["full_name", "name"]) ?? "Cliente");
+    const phone = String(customer?.mobile_phone ?? deepFind(body, ["mobile", "phone"]) ?? "");
+    const rawStatus = String(
+      payment?.status ?? deepFind(body, ["order_status", "status", "webhook_event_type", "event"]) ?? "unknown"
     ).toLowerCase();
-    const orderId = deepFind(body, ["order_id", "order_ref", "id"]) ?? `order_${Date.now()}`;
-    const phone = deepFind(body, ["mobile", "phone"]);
-    const productName = deepFind(body, ["product_name"]) ?? "";
-    const product = detectProduct(productName);
+    const orderId = String(payment?.id ?? deepFind(body, ["order_id", "order_ref", "id"]) ?? `order_${Date.now()}`);
+
+    // Coleta TODOS os produtos do pedido (Wiapy manda um webhook só com principal + bumps)
+    const titles: string[] = [];
+    if (Array.isArray(order?.products)) {
+      for (const p of order.products as Array<Record<string, unknown>>) {
+        if (p?.title) titles.push(String(p.title));
+      }
+    }
+    if (titles.length === 0) {
+      if (checkout?.title) titles.push(String(checkout.title));
+      if (Array.isArray(checkout?.orderbump)) {
+        for (const ob of checkout.orderbump as Array<Record<string, unknown>>) {
+          if (ob?.title) titles.push(String(ob.title));
+        }
+      }
+    }
+    if (titles.length === 0) {
+      const pn = deepFind(body, ["product_name"]);
+      if (pn) titles.push(pn);
+    }
+    const kinds = Array.from(new Set(titles.map(detectProduct)));
+    if (kinds.length === 0) kinds.push("main");
+
+    // Valor do pedido (centavos -> reais). Usa o cobrado; se 0 (cupom), soma os produtos.
+    let cents = Number(payment?.amount ?? 0);
+    if (!cents) {
+      cents += Number(checkout?.amount ?? 0);
+      if (Array.isArray(checkout?.orderbump)) {
+        for (const ob of checkout.orderbump as Array<Record<string, unknown>>) {
+          cents += Number(ob?.amount ?? 0);
+        }
+      }
+    }
+    const value = cents > 0 ? cents / 100 : 9.9;
 
     const isApproval = ["paid", "approved", "completed", "order_approved", "aprovado", "pago"].some((s) =>
       rawStatus.includes(s)
@@ -124,8 +175,8 @@ export async function POST(req: NextRequest) {
     console.log("[webhook/kiwify] received", {
       email: email || "(empty)",
       status: rawStatus,
-      product,
-      product_name: productName,
+      kinds,
+      value,
       isApproval,
     });
 
@@ -138,26 +189,30 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Responde à Kiwify IMEDIATAMENTE; entrega + Purchase (Meta) rodam em segundo plano (evita timeout)
+    const fbp = String(tracking?.fbp ?? "") || undefined;
+    const fbc = String(tracking?.fbc ?? "") || undefined;
+    const ip = String(tracking?.ip ?? "") || undefined;
+    const ua = String(tracking?.useragent ?? "") || undefined;
+
+    // Responde IMEDIATAMENTE; entrega de cada produto + Purchase rodam em segundo plano
     after(async () => {
-      try {
-        if (product === "main") await sendDeliveryEmail(email, name);
-        else await sendBumpEmail(email, name, product);
-        console.log("[webhook/kiwify] email enviado:", product, "->", email);
-      } catch (e) {
-        console.error("[webhook/kiwify] falha no envio de email:", e);
-      }
-      // Purchase só no produto principal — evita inflar a contagem com os webhooks dos bumps
-      if (product === "main") {
+      for (const kind of kinds) {
         try {
-          await sendMetaPurchase(email, orderId, phone);
+          if (kind === "main") await sendDeliveryEmail(email, name);
+          else await sendBumpEmail(email, name, kind);
+          console.log("[webhook/kiwify] email enviado:", kind, "->", email);
         } catch (e) {
-          console.error("[webhook/kiwify] falha no Purchase Meta:", e);
+          console.error("[webhook/kiwify] falha no envio de email:", kind, e);
         }
+      }
+      try {
+        await sendMetaPurchase({ email, orderId, value, phone, fbp, fbc, ip, ua });
+      } catch (e) {
+        console.error("[webhook/kiwify] falha no Purchase Meta:", e);
       }
     });
 
-    return NextResponse.json({ ok: true, queued: true, product });
+    return NextResponse.json({ ok: true, queued: true, kinds });
   } catch (e) {
     console.error("[webhook/kiwify]", e);
     return NextResponse.json({ ok: false, error: String(e) });
