@@ -56,6 +56,30 @@ function readPdf(filename: string) {
   return fs.readFileSync(filePath);
 }
 
+// Identifica o produto pelo nome (a Kiwify dispara 1 webhook por produto/bump)
+type ProductKind = "planilha" | "calendario" | "main";
+function detectProduct(name: string): ProductKind {
+  const n = (name || "").toLowerCase();
+  if (n.includes("planilha")) return "planilha";
+  if (n.includes("sazonal") || n.includes("calend")) return "calendario";
+  return "main";
+}
+
+const BUMP = {
+  planilha: {
+    file: "Planilha-Controle-e-Precificacao.xlsx",
+    label: "Planilha de Precificação e Controle",
+    desc: "a <strong>Planilha de Precificação e Controle</strong> (Excel editável)",
+    descTxt: "a Planilha de Precificação e Controle (Excel editável)",
+  },
+  calendario: {
+    file: "Lista-Produtos-por-Sazonalidade.pdf",
+    label: "Calendário de Produtos por Sazonalidade",
+    desc: "o <strong>Calendário de Produtos por Sazonalidade</strong> (PDF)",
+    descTxt: "o Calendário de Produtos por Sazonalidade (PDF)",
+  },
+} as const;
+
 // Busca recursiva por uma chave em qualquer nível do payload (Kiwify aninha em order/Customer)
 function deepFind(obj: unknown, keys: string[]): string | undefined {
   if (!obj || typeof obj !== "object") return undefined;
@@ -90,6 +114,8 @@ export async function POST(req: NextRequest) {
     ).toLowerCase();
     const orderId = deepFind(body, ["order_id", "order_ref", "id"]) ?? `order_${Date.now()}`;
     const phone = deepFind(body, ["mobile", "phone"]);
+    const productName = deepFind(body, ["product_name"]) ?? "";
+    const product = detectProduct(productName);
 
     const isApproval = ["paid", "approved", "completed", "order_approved"].some((s) =>
       rawStatus.includes(s)
@@ -98,8 +124,9 @@ export async function POST(req: NextRequest) {
     console.log("[webhook/kiwify] received", {
       email: email || "(empty)",
       status: rawStatus,
+      product,
+      product_name: productName,
       isApproval,
-      body_keys: Object.keys(body || {}),
     });
 
     if (!email || !isApproval) {
@@ -111,22 +138,26 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Responde à Kiwify IMEDIATAMENTE; email + Purchase (Meta) rodam em segundo plano (evita timeout)
+    // Responde à Kiwify IMEDIATAMENTE; entrega + Purchase (Meta) rodam em segundo plano (evita timeout)
     after(async () => {
       try {
-        await sendDeliveryEmail(email, name);
-        console.log("[webhook/kiwify] email enviado em background para", email);
+        if (product === "main") await sendDeliveryEmail(email, name);
+        else await sendBumpEmail(email, name, product);
+        console.log("[webhook/kiwify] email enviado:", product, "->", email);
       } catch (e) {
         console.error("[webhook/kiwify] falha no envio de email:", e);
       }
-      try {
-        await sendMetaPurchase(email, orderId, phone);
-      } catch (e) {
-        console.error("[webhook/kiwify] falha no Purchase Meta:", e);
+      // Purchase só no produto principal — evita inflar a contagem com os webhooks dos bumps
+      if (product === "main") {
+        try {
+          await sendMetaPurchase(email, orderId, phone);
+        } catch (e) {
+          console.error("[webhook/kiwify] falha no Purchase Meta:", e);
+        }
       }
     });
 
-    return NextResponse.json({ ok: true, queued: true });
+    return NextResponse.json({ ok: true, queued: true, product });
   } catch (e) {
     console.error("[webhook/kiwify]", e);
     return NextResponse.json({ ok: false, error: String(e) });
@@ -193,4 +224,40 @@ Equipe FornecedorVip`;
     throw new Error(JSON.stringify(sendResult.error));
   }
   console.log("[webhook/kiwify] resend id=", sendResult.data?.id);
+}
+
+async function sendBumpEmail(email: string, name: string, kind: "planilha" | "calendario") {
+  const b = BUMP[kind];
+  const firstName = name.split(" ")[0] || name;
+
+  const text = `Olá, ${firstName}!
+
+Seu pagamento foi confirmado. Segue em anexo ${b.descTxt}.
+
+Se tiver qualquer dúvida, é só responder este email.
+
+Abraço,
+Equipe FornecedorVip`;
+
+  const sendResult = await resend.emails.send({
+    from: "Equipe FornecedorVip <contato@fornecedorvip.shop>",
+    to: email,
+    replyTo: "contato@fornecedorvip.shop",
+    subject: `${firstName}, seu acesso — ${b.label}`,
+    text,
+    html: `
+      <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#222;font-size:15px;line-height:1.6;">
+        <p>Olá, ${firstName}!</p>
+        <p>Seu pagamento foi confirmado. Segue em anexo ${b.desc}.</p>
+        <p>Se tiver qualquer dúvida, é só responder este email.</p>
+        <p>Abraço,<br/>Equipe FornecedorVip</p>
+      </div>
+    `,
+    attachments: [{ filename: b.file, content: readPdf(b.file) }],
+  });
+
+  if (sendResult.error) {
+    throw new Error(JSON.stringify(sendResult.error));
+  }
+  console.log("[webhook/kiwify] bump enviado:", kind, sendResult.data?.id);
 }
