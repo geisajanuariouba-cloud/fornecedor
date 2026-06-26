@@ -117,7 +117,7 @@ export async function POST(req: NextRequest) {
     const productName = deepFind(body, ["product_name"]) ?? "";
     const product = detectProduct(productName);
 
-    const isApproval = ["paid", "approved", "completed", "order_approved"].some((s) =>
+    const isApproval = ["paid", "approved", "completed", "order_approved", "aprovado", "pago"].some((s) =>
       rawStatus.includes(s)
     );
 

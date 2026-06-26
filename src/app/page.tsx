@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.kiwify.com.br/SGGxnsc";
+const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.wiapy.com/gTiNVrOtMoj";
 
 declare global {
   interface Window {
