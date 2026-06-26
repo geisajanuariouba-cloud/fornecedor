@@ -47,6 +47,25 @@ function buildCheckoutUrl() {
   return `${CHECKOUT_URL}${CHECKOUT_URL.includes("?") ? "&" : "?"}${qs}`;
 }
 
+// Rola até o botão verde do CTA principal. Funciona em celulares antigos:
+// detecta suporte a scroll suave e cai pro scroll instantâneo (2 args) quando não há.
+function scrollToCheckout() {
+  const el = document.getElementById("cta-principal");
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const y = (window.pageYOffset || document.documentElement.scrollTop || 0) + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+  const top = Math.max(0, y);
+  try {
+    if (typeof document !== "undefined" && "scrollBehavior" in document.documentElement.style) {
+      window.scrollTo({ top, behavior: "smooth" });
+    } else {
+      window.scrollTo(0, top); // navegadores antigos: jump instantâneo (sempre funciona)
+    }
+  } catch {
+    window.scrollTo(0, top);
+  }
+}
+
 // Dispara InitiateCheckout no navegador + CAPI (server) com o MESMO event_id (deduplicação) e vai pro checkout COM UTMs
 let redirecting = false;
 function goToCheckout() {
@@ -228,7 +247,7 @@ function PillLabel({ children }: { children: React.ReactNode }) {
 function CTAButton({ children, large, fullWidth }: { children: React.ReactNode; large?: boolean; fullWidth?: boolean }) {
   return (
     <button
-      onClick={() => { document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
+      onClick={scrollToCheckout}
       style={{ background: "#ea580c", color: "#fff", border: "none", borderRadius: "12px", padding: large ? "20px 56px" : "16px 32px", fontSize: large ? "18px" : "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", boxShadow: "0 4px 20px rgba(234,88,12,0.35)", fontFamily: "inherit", width: fullWidth ? "100%" : undefined }}
     >
       {children}
@@ -373,7 +392,7 @@ export default function FornecedoresPage() {
                       <IconCheck size={14} /><span>{item}</span>
                     </div>
                   ))}
-                  <button onClick={() => { document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "center" }); }} style={{ width: "100%", background: "#ea580c", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(234,88,12,0.3)" }}>
+                  <button onClick={scrollToCheckout} style={{ width: "100%", background: "#ea580c", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(234,88,12,0.3)" }}>
                     LIBERAR MEU ACESSO →
                   </button>
                   <p style={{ textAlign: "center", fontSize: "10px", color: "#9ca3af", marginTop: "8px" }}>🔒 100% seguro</p>
@@ -687,7 +706,7 @@ export default function FornecedoresPage() {
 
       {/* ── Barra fixa ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
-        <button onClick={() => { document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "center" }); }} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
+        <button onClick={scrollToCheckout} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
           ACESSAR FORNECEDORES — R$9,90
         </button>
       </div>
