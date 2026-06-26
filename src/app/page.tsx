@@ -373,7 +373,7 @@ export default function FornecedoresPage() {
                       <IconCheck size={14} /><span>{item}</span>
                     </div>
                   ))}
-                  <button onClick={goToCheckout} style={{ width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(34,197,94,0.3)" }}>
+                  <button onClick={() => { document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "center" }); }} style={{ width: "100%", background: "#ea580c", color: "#fff", border: "none", borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", marginTop: "14px", boxShadow: "0 4px 16px rgba(234,88,12,0.3)" }}>
                     LIBERAR MEU ACESSO →
                   </button>
                   <p style={{ textAlign: "center", fontSize: "10px", color: "#9ca3af", marginTop: "8px" }}>🔒 100% seguro</p>
