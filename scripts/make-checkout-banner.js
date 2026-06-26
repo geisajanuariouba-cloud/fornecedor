@@ -13,8 +13,8 @@ const svg = `
   <text x="56" y="182" font-family="${F}" font-size="22" fill="#555">180 fornecedores do atacado + 6 bônus exclusivos</text>
 
   <!-- selo lista -->
-  <rect x="56" y="210" width="430" height="58" rx="12" fill="#16a34a"/>
-  <text x="78" y="247" font-family="${F}" font-size="24" font-weight="800" fill="#fff">✓ Compra 100% segura e protegida</text>
+  <rect x="56" y="210" width="556" height="58" rx="12" fill="#16a34a"/>
+  <text x="80" y="247" font-family="${F}" font-size="22" font-weight="800" fill="#fff">✓ Compra 100% segura e protegida</text>
 
   <!-- direita: trust -->
   <g font-family="${F}">
