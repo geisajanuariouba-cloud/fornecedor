@@ -1,68 +1,17 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import { Resend } from "resend";
-import crypto from "crypto";
 import fs from "fs";
 import path from "path";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const PIXEL_ID = "1274073178133799";
-const CAPI_TOKEN = process.env.META_CAPI_TOKEN ?? "";
 
 // Permite que o envio em segundo plano tenha tempo de concluir
 export const maxDuration = 60;
 
-function sha256(value: string) {
-  return crypto.createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
-}
-
-// Evento Purchase via Conversions API (server-side) — o navegador não pode disparar pós-checkout
-async function sendMetaPurchase(p: {
-  email: string;
-  orderId: string;
-  value: number;
-  phone?: string;
-  fbp?: string;
-  fbc?: string;
-  ip?: string;
-  ua?: string;
-}) {
-  if (!CAPI_TOKEN) {
-    console.warn("[webhook/kiwify] META_CAPI_TOKEN ausente — Purchase não enviado");
-    return;
-  }
-  const payload = {
-    data: [
-      {
-        event_name: "Purchase",
-        event_time: Math.floor(Date.now() / 1000),
-        event_id: `purchase_${p.orderId}`,
-        action_source: "website",
-        event_source_url: "https://www.fornecedorvip.shop",
-        user_data: {
-          em: [sha256(p.email)],
-          ...(p.phone ? { ph: [sha256(p.phone.replace(/\D/g, ""))] } : {}),
-          ...(p.fbp ? { fbp: p.fbp } : {}),
-          ...(p.fbc ? { fbc: p.fbc } : {}),
-          ...(p.ip ? { client_ip_address: p.ip } : {}),
-          ...(p.ua ? { client_user_agent: p.ua } : {}),
-        },
-        custom_data: {
-          currency: "BRL",
-          value: p.value,
-          content_name: "Lista de Fornecedores VIP",
-          content_category: "Digital Product",
-          order_id: p.orderId,
-        },
-      },
-    ],
-  };
-  const res = await fetch(
-    `https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${CAPI_TOKEN}`,
-    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }
-  );
-  const data = await res.json();
-  console.log("[webhook/kiwify] Purchase enviado:", JSON.stringify(data));
-}
+// OBS: o evento Purchase NÃO é mais enviado daqui. A Wiapy dispara o Purchase
+// pelo navegador + API de Conversões (mesmo event_id) ao aprovar o pagamento,
+// o que garante a deduplicação e a cobertura na Meta. Enviar daqui também
+// criaria um Purchase paralelo com event_id diferente (duplicidade / cobertura 0%).
 
 function readPdf(filename: string) {
   const filePath = path.join(process.cwd(), "private", "pdfs", filename);
@@ -126,15 +75,12 @@ export async function POST(req: NextRequest) {
     const customer = (order?.customer ?? {}) as Record<string, unknown>;
     const payment = (order?.payment ?? {}) as Record<string, unknown>;
     const checkout = (order?.checkout ?? {}) as Record<string, unknown>;
-    const tracking = (order?.tracking ?? {}) as Record<string, unknown>;
 
     const email = String(customer?.email ?? deepFind(body, ["email"]) ?? "").toLowerCase().trim();
     const name = String(customer?.name ?? deepFind(body, ["full_name", "name"]) ?? "Cliente");
-    const phone = String(customer?.mobile_phone ?? deepFind(body, ["mobile", "phone"]) ?? "");
     const rawStatus = String(
       payment?.status ?? deepFind(body, ["order_status", "status", "webhook_event_type", "event"]) ?? "unknown"
     ).toLowerCase();
-    const orderId = String(payment?.id ?? deepFind(body, ["order_id", "order_ref", "id"]) ?? `order_${Date.now()}`);
 
     // Coleta TODOS os produtos do pedido (Wiapy manda um webhook só com principal + bumps)
     const titles: string[] = [];
@@ -191,12 +137,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const fbp = String(tracking?.fbp ?? "") || undefined;
-    const fbc = String(tracking?.fbc ?? "") || undefined;
-    const ip = String(tracking?.ip ?? "") || undefined;
-    const ua = String(tracking?.useragent ?? "") || undefined;
-
-    // Responde IMEDIATAMENTE; entrega de cada produto + Purchase rodam em segundo plano
+    // Responde IMEDIATAMENTE; a entrega de cada produto roda em segundo plano
     after(async () => {
       for (const kind of kinds) {
         try {
@@ -206,11 +147,6 @@ export async function POST(req: NextRequest) {
         } catch (e) {
           console.error("[webhook/kiwify] falha no envio de email:", kind, e);
         }
-      }
-      try {
-        await sendMetaPurchase({ email, orderId, value, phone, fbp, fbc, ip, ua });
-      } catch (e) {
-        console.error("[webhook/kiwify] falha no Purchase Meta:", e);
       }
     });
 
