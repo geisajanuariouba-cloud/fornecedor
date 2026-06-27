@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
     const fbc = body.fbc ?? "";
     const eventSourceUrl = body.url ?? "https://fornecedorvip.shop";
     const eventId = body.event_id ?? undefined;
+    const value = typeof body.value === "number" ? body.value : 9.90;
 
     const payload: Record<string, unknown> = {
       data: [
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
           },
           custom_data: {
             currency: "BRL",
-            value: 9.90,
+            value,
             content_name: "Lista de Fornecedores VIP",
             content_category: "Digital Product",
           },
