@@ -239,6 +239,30 @@ function CTAButton({ children, large, fullWidth }: { children: React.ReactNode; 
   );
 }
 
+/* ─── Selos de confiança ────────────────────────────────────── */
+
+function TrustRow({ isMobile }: { isMobile: boolean }) {
+  const items = [
+    { icon: "⚡", t: "Acesso imediato", s: "Enviado no seu e-mail na hora" },
+    { icon: "🔒", t: "Pagamento seguro", s: "Ambiente 100% protegido" },
+    { icon: "🛡️", t: "Garantia de 7 dias", s: "Não gostou? Devolvemos tudo" },
+    { icon: "♾️", t: "Sem mensalidade", s: "Pagamento único e vitalício" },
+  ];
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: "10px", marginTop: "22px" }}>
+      {items.map((it) => (
+        <div key={it.t} style={{ display: "flex", alignItems: "flex-start", gap: "8px", background: "#fff", border: "1px solid #fed7aa", borderRadius: "10px", padding: "10px 12px", textAlign: "left" }}>
+          <span style={{ fontSize: "18px", flexShrink: 0, lineHeight: 1.2 }}>{it.icon}</span>
+          <div>
+            <div style={{ fontSize: "12px", fontWeight: 800, color: "#111" }}>{it.t}</div>
+            <div style={{ fontSize: "11px", color: "#6b7280", lineHeight: 1.3 }}>{it.s}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ─── Countdown box ─────────────────────────────────────────── */
 
 function CountdownBox({ h, m, s }: { h: string; m: string; s: string }) {
@@ -362,6 +386,7 @@ export default function FornecedoresPage() {
               <div style={{ textAlign: isMobile ? "center" : "left" }}>
                 <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO ACESSAR OS FORNECEDORES →</CTAButton>
                 <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único de R$9,90 • 7 dias de garantia</p>
+                <TrustRow isMobile={isMobile} />
               </div>
             </div>
 
@@ -386,6 +411,37 @@ export default function FornecedoresPage() {
               </div>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* ── COMO VOCÊ RECEBE ── */}
+      <div style={{ background: "#fff", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
+        <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
+          <PillLabel>ENTREGA 100% AUTOMÁTICA</PillLabel>
+          <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "6px", textTransform: "uppercase" }}>
+            COMO VOCÊ RECEBE APÓS A COMPRA
+          </h2>
+          <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "28px" }}>
+            Tudo automático. Em menos de 1 minuto a lista chega no seu e-mail.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "14px" : "20px", marginBottom: "24px" }}>
+            {[
+              { n: "1", icon: "💳", t: "Você paga com Pix ou cartão", s: "Em ambiente 100% seguro e criptografado." },
+              { n: "2", icon: "📧", t: "Recebe o acesso no e-mail na hora", s: "Automático, assim que o pagamento é aprovado." },
+              { n: "3", icon: "📂", t: "Abre a lista + os 6 bônus", s: "Acesso vitalício, no celular ou no computador." },
+            ].map((step) => (
+              <div key={step.n} style={{ position: "relative", background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "14px", padding: "24px 18px", textAlign: "center" }}>
+                <div style={{ position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)", width: "28px", height: "28px", borderRadius: "50%", background: "#ea580c", color: "#fff", fontSize: "14px", fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center" }}>{step.n}</div>
+                <div style={{ fontSize: "38px", marginBottom: "10px", marginTop: "4px" }}>{step.icon}</div>
+                <div style={{ fontSize: "14px", fontWeight: 800, color: "#111", marginBottom: "6px", lineHeight: 1.3 }}>{step.t}</div>
+                <div style={{ fontSize: "12px", color: "#6b7280", lineHeight: 1.5 }}>{step.s}</div>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontSize: "13px", color: "#111", fontWeight: 600, marginBottom: "20px" }}>
+            💬 Não recebeu? A gente te responde no WhatsApp e resolve na hora.
+          </p>
+          <CTAButton fullWidth={isMobile}>QUERO MEU ACESSO IMEDIATO →</CTAButton>
         </div>
       </div>
 
@@ -603,11 +659,18 @@ export default function FornecedoresPage() {
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
+                <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "12px", padding: "14px 16px", marginBottom: "16px", textAlign: "left" }}>
+                  <div style={{ fontSize: "13px", fontWeight: 800, color: "#111", marginBottom: "4px" }}>🤔 Por que tão barato?</div>
+                  <div style={{ fontSize: "12px", color: "#555", lineHeight: 1.6 }}>
+                    É uma <strong>promoção de lançamento</strong> pra você conhecer o nosso material. Preferimos cobrar pouco e ter milhares de clientes satisfeitas do que cobrar caro de poucas. E você ainda tem <strong>7 dias de garantia</strong> — se não gostar, devolvemos 100%. Risco zero.
+                  </div>
+                </div>
+
                 <a id="cta-principal" href={CHECKOUT_URL} onClick={goToCheckout} style={{ display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
                   QUERO ACESSAR AGORA!
                 </a>
-                <p style={{ textAlign: "center", fontSize: "12px", color: "#6b7280", marginBottom: "16px" }}>
-                  Você ficará um passo mais perto de realizar seu sonho 🎯
+                <p style={{ textAlign: "center", fontSize: "12px", color: "#6b7280", marginBottom: "16px", lineHeight: 1.6 }}>
+                  🔒 Pagamento seguro (Pix ou cartão) • Acesso enviado na hora no seu e-mail • 7 dias de garantia
                 </p>
 
                 <div style={{ textAlign: "center" }}>
