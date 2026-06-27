@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 
-// VARIANTE DE TESTE (A/B de preço): R$19,90 — checkout próprio na Wiapy.
+// VARIANTE DE TESTE (A/B de preço): R$37,90 — checkout próprio na Wiapy.
 // Não usa a env NEXT_PUBLIC_CHECKOUT_URL pra não conflitar com a página original (/).
 const CHECKOUT_URL = "https://pay.wiapy.com/lzRXtuSG_Ku";
-const PRICE_VALUE = 19.9;
+const PRICE_VALUE = 37.9;
 
 declare global {
   interface Window {
@@ -388,7 +388,7 @@ export default function FornecedoresOfertaPage() {
 
               <div style={{ textAlign: isMobile ? "center" : "left" }}>
                 <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO ACESSAR OS FORNECEDORES →</CTAButton>
-                <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único de R$19,90 • 7 dias de garantia</p>
+                <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único de R$37,90 • 7 dias de garantia</p>
                 <TrustRow isMobile={isMobile} />
               </div>
             </div>
@@ -399,7 +399,7 @@ export default function FornecedoresOfertaPage() {
                 <div style={{ border: "2px solid #ea580c", borderRadius: "16px", padding: "24px 20px", background: "#fff" }}>
                   <div style={{ display: "inline-block", background: "#ea580c", color: "#fff", fontSize: "11px", fontWeight: 800, padding: "4px 14px", borderRadius: "100px", marginBottom: "12px" }}>OFERTA EXCLUSIVA E LIMITADA</div>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>DE R$397,00 POR APENAS</div>
-                  <div style={{ fontSize: "46px", fontWeight: 900, color: "#ea580c", lineHeight: 1, marginBottom: "2px" }}>R$19,90</div>
+                  <div style={{ fontSize: "46px", fontWeight: 900, color: "#ea580c", lineHeight: 1, marginBottom: "2px" }}>R$37,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginBottom: "16px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                   {["180 fornecedores em 14 categorias", "6 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", marginBottom: "6px" }}>
@@ -494,7 +494,7 @@ export default function FornecedoresOfertaPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
           <PillLabel>CONTEÚDO</PillLabel>
           <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
-            ISSO TUDO POR MENOS DE 20 REAIS 🤩
+            ISSO TUDO POR MENOS DE 40 REAIS 🤩
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
             {oquerecebes.map((item) => (
@@ -658,7 +658,7 @@ export default function FornecedoresOfertaPage() {
 
                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$397,00 por apenas:</div>
-                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$19,90</div>
+                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$37,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
@@ -726,7 +726,7 @@ export default function FornecedoresOfertaPage() {
             ))}
           </div>
           <div style={{ textAlign: "center" }}>
-            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA — R$19,90</CTAButton>
+            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA — R$37,90</CTAButton>
             <p style={{ marginTop: "12px", textAlign: "center", fontSize: "11px", color: "#9ca3af" }}>🔒 Compra 100% segura • Acesso imediato • 7 dias de garantia</p>
           </div>
         </div>
@@ -759,7 +759,7 @@ export default function FornecedoresOfertaPage() {
       {/* ── Barra fixa ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
         <a href="#cta-principal" style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
-          ACESSAR FORNECEDORES — R$19,90
+          ACESSAR FORNECEDORES — R$37,90
         </a>
       </div>
     </div>
