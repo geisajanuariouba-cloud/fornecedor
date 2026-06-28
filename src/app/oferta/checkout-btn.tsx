@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 
 const CHECKOUT_URL = "https://pay.wiapy.com/lzRXtuSG_Ku";
-const PRICE_VALUE = 37.9;
 
 declare global { interface Window { fbq?: (...args: unknown[]) => void; } }
 
@@ -12,7 +11,7 @@ const PRODUCT_DATA = {
   content_category: "Digital Product",
   content_ids: ["fornecedorvip"],
   content_type: "product",
-  value: PRICE_VALUE,
+  value: 37.9,
   currency: "BRL",
 };
 
@@ -31,7 +30,6 @@ function buildCheckoutUrl() {
   return `${CHECKOUT_URL}${CHECKOUT_URL.includes("?") ? "&" : "?"}${qs}`;
 }
 
-// Espera o fbq estar disponível (até 5s) antes de disparar o callback
 function waitFbq(cb: (fbq: NonNullable<Window["fbq"]>) => void) {
   let tries = 0;
   const id = setInterval(() => {
@@ -40,7 +38,7 @@ function waitFbq(cb: (fbq: NonNullable<Window["fbq"]>) => void) {
   }, 250);
 }
 
-// Componente que dispara ViewContent ao montar (página de resultado do quiz)
+// Dispara ViewContent quando o resultado do quiz aparece
 export function QuizViewContent() {
   useEffect(() => {
     waitFbq(fbq => fbq("track", "ViewContent", PRODUCT_DATA));
@@ -48,27 +46,11 @@ export function QuizViewContent() {
   return null;
 }
 
+// Wiapy já dispara IC quando o checkout carrega — nós só redirecionamos com UTMs.
 export function CheckoutBtn({ label, bar }: { label: string; bar?: boolean }) {
   function go(e: React.MouseEvent) {
     e.preventDefault();
-    const eventId = `ic_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
-    const dest = buildCheckoutUrl();
-
-    // Dispara browser pixel — aguarda fbq estar disponível
-    waitFbq(fbq => fbq("track", "InitiateCheckout", PRODUCT_DATA, { eventID: eventId }));
-
-    // CAPI com mesmo event_id para deduplicação
-    const fbp = document.cookie.split(";").find(c=>c.trim().startsWith("_fbp="))?.split("=")[1]??"";
-    const fbc = document.cookie.split(";").find(c=>c.trim().startsWith("_fbc="))?.split("=")[1]??"";
-    fetch("/api/capi", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fbp, fbc, url: window.location.href, event_id: eventId, value: PRICE_VALUE }),
-      keepalive: true,
-    }).catch(() => {});
-
-    // Redireciona após breve delay para dar tempo dos eventos saírem
-    setTimeout(() => { window.location.href = dest; }, 400);
+    window.location.href = buildCheckoutUrl();
   }
 
   const baseStyle: React.CSSProperties = {

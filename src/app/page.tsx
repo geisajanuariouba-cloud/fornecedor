@@ -50,31 +50,11 @@ function buildCheckoutUrl() {
 // Dispara InitiateCheckout no navegador + CAPI (server) com o MESMO event_id (deduplicação) e vai pro checkout COM UTMs.
 // É handler de um <a href={CHECKOUT_URL}>: se o JS rodar, enriquece com UTMs/pixel; se NÃO rodar
 // (celular/navegador antigo sem hidratação), o link nativo abre o checkout do mesmo jeito.
-let redirecting = false;
+// Wiapy já dispara IC (browser pixel) quando o checkout carrega.
+// Nós disparamos apenas o redirect com UTMs — sem IC duplicado.
 function goToCheckout(e?: React.MouseEvent) {
   if (e) e.preventDefault();
-  if (redirecting) return; // evita disparo duplo em cliques rápidos
-  redirecting = true;
-
-  const eventId = `ic_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-  const dest = buildCheckoutUrl();
-
-  try {
-    window.fbq?.("track", "InitiateCheckout", PRODUCT_DATA, { eventID: eventId });
-  } catch { /* ignore */ }
-
-  const fbp = document.cookie.split(";").find((c) => c.trim().startsWith("_fbp="))?.split("=")[1] ?? "";
-  const fbc = document.cookie.split(";").find((c) => c.trim().startsWith("_fbc="))?.split("=")[1] ?? "";
-  // keepalive garante que a requisição complete mesmo após sair da página
-  fetch("/api/capi", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ fbp, fbc, url: window.location.href, event_id: eventId }),
-    keepalive: true,
-  }).catch(() => {});
-
-  // micro-atraso garante o envio do evento do navegador antes do redirect
-  setTimeout(() => { window.location.href = dest; }, 350);
+  window.location.href = buildCheckoutUrl();
 }
 
 /* ─── hooks ─────────────────────────────────────────────────── */
