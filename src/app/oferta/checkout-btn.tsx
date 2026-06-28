@@ -46,11 +46,13 @@ export function QuizViewContent() {
   return null;
 }
 
-// Wiapy já dispara IC quando o checkout carrega — nós só redirecionamos com UTMs.
 export function CheckoutBtn({ label, bar }: { label: string; bar?: boolean }) {
   function go(e: React.MouseEvent) {
     e.preventDefault();
-    window.location.href = buildCheckoutUrl();
+    const dest = buildCheckoutUrl();
+    // Dispara IC no nosso domínio para Utmify capturar a atribuição
+    waitFbq(fbq => fbq("track", "InitiateCheckout", PRODUCT_DATA));
+    setTimeout(() => { window.location.href = dest; }, 300);
   }
 
   const baseStyle: React.CSSProperties = {

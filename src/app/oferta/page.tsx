@@ -1,7 +1,9 @@
 ﻿// Servidor — zero JS obrigatório. Cada opção é um <a href> normal.
 // Funciona em qualquer celular/browser sem hidratação React.
+export const dynamic = "force-dynamic";
+
 import { CheckoutBtn, QuizViewContent } from "./checkout-btn";
-import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase";
 
 const CHECKOUT_URL = "https://pay.wiapy.com/lzRXtuSG_Ku";
 
@@ -27,11 +29,12 @@ function nextUrl(base: Q, step: number, extra?: Record<string, string>) {
 
 async function track(sid: string, step: number, stepName: string, answers: Q) {
   try {
-    await supabase.from("quiz_sessions").upsert(
+    const { error } = await supabaseAdmin.from("quiz_sessions").upsert(
       { session_id: sid, step, step_name: stepName, answers, updated_at: new Date().toISOString() },
       { onConflict: "session_id" }
     );
-  } catch { /* silencioso */ }
+    if (error) console.error("[quiz-track error]", error);
+  } catch (e) { console.error("[quiz-track]", e); }
 }
 
 /* ─── estilos reutilizáveis ─────────────────────────────────── */
