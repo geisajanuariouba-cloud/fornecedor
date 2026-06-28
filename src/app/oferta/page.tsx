@@ -139,7 +139,7 @@ function OrangeBtn({ children, onClick, fullWidth }: { children: React.ReactNode
 
 function OptionBtn({ children, onClick, selected }: { children: React.ReactNode; onClick: () => void; selected?: boolean }) {
   return (
-    <button onClick={onClick} style={{ display: "block", width: "100%", boxSizing: "border-box", textAlign: "left", background: selected ? "#fff7ed" : "#fff", border: `2px solid ${selected ? "#ea580c" : "#e5e7eb"}`, borderRadius: "10px", padding: "14px 16px", fontSize: "14px", fontWeight: 600, cursor: "pointer", color: "#111", fontFamily: "inherit", transition: "border-color 0.15s, background 0.15s" }}>
+    <button onClick={onClick} style={{ display: "block", width: "100%", boxSizing: "border-box", textAlign: "left", background: selected ? "#fff7ed" : "#fff", border: `2px solid ${selected ? "#ea580c" : "#e5e7eb"}`, borderRadius: "10px", padding: "16px", fontSize: "15px", fontWeight: 600, cursor: "pointer", color: "#111", fontFamily: "inherit", transition: "border-color 0.15s, background 0.15s", minHeight: "52px", lineHeight: 1.3 }}>
       {children}
     </button>
   );
@@ -200,6 +200,13 @@ export default function QuizOfertaPage() {
         html { scroll-behavior: smooth; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
         .quiz-card { animation: fadeUp 0.3s ease; }
+        button, a {
+          -webkit-tap-highlight-color: rgba(0,0,0,0);
+          touch-action: manipulation;
+          -webkit-touch-callout: none;
+          user-select: none;
+          -webkit-user-select: none;
+        }
       ` }} />
 
       {/* Header */}
