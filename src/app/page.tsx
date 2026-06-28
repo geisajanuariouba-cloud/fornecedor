@@ -638,8 +638,7 @@ export default function FornecedoresPage() {
         <div style={{ overflow: "hidden", width: "100%" }}>
           <div className="dep-track">
             {[...Array(2)].flatMap(() =>
-              ["/depoimentos/dep1.webp","/depoimentos/dep2.webp","/depoimentos/dep3.webp",
-               "/depoimentos/dep4.webp","/depoimentos/dep5.webp","/depoimentos/dep6.webp",
+              ["/depoimentos/dep4.webp","/depoimentos/dep5.webp","/depoimentos/dep6.webp",
                "/depoimentos/dep7.webp","/depoimentos/dep8.webp","/depoimentos/dep9.webp"].map((src, i) => (
                 <div key={`${src}-${i}`} style={{ flexShrink: 0, width: isMobile ? "240px" : "300px", marginRight: isMobile ? "12px" : "16px", borderRadius: "14px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.12)", border: "1px solid #e5e7eb" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
