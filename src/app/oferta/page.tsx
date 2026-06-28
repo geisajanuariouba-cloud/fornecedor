@@ -32,8 +32,9 @@ async function track(sid: string, step: number, stepName: string, answers: Q) {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   console.log("[quiz-track debug] url:", url, "key:", key ? key.slice(0,10)+"..." : "MISSING");
   try {
-    const { error } = await supabaseAdmin.from("quiz_sessions").insert(
-      { session_id: sid, step, step_name: stepName, answers, updated_at: new Date().toISOString() }
+    const { error } = await supabaseAdmin.from("quiz_sessions").upsert(
+      { session_id: sid, step, step_name: stepName, answers, updated_at: new Date().toISOString() },
+      { onConflict: "session_id" }
     );
     if (error) console.error("[quiz-track error]", error);
     else console.log("[quiz-track ok] step", step);
