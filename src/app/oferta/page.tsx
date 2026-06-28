@@ -1,4 +1,4 @@
-// Servidor — zero JS obrigatório. Cada opção é um <a href> normal.
+﻿// Servidor — zero JS obrigatório. Cada opção é um <a href> normal.
 // Funciona em qualquer celular/browser sem hidratação React.
 import { CheckoutBtn, QuizViewContent } from "./checkout-btn";
 import { supabase } from "@/lib/supabase";
@@ -94,7 +94,7 @@ export default async function QuizPage({
   const q: Q = { sid, ...Object.fromEntries(Object.entries(params).filter(([k]) => k !== "s")) };
 
   // rastreamento server-side
-  const stepNames = ["capa","q1","transicao1","q2","dado","q3","q4","q5","q6","loading","resultado"];
+  const stepNames = ["capa","q1","transicao1","q2","dado","depoimentos","q3","q4","q5","q6","loading","resultado"];
   await track(sid, s, stepNames[s] ?? `step_${s}`, q);
 
   const wrap: React.CSSProperties = {
@@ -242,8 +242,62 @@ export default async function QuizPage({
     </div>
   );
 
-  // ── Q3 (s=5) — situação ──────────────────────────────────────
+  // ── DEPOIMENTOS (s=5) ────────────────────────────────────────
   if (s === 5) return (
+    <div style={wrap}>
+      <Header />
+      {/* carrossel CSS puro — sem JS */}
+      <style>{`
+        @keyframes dep-scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        .dep-track { display:flex; width:max-content; animation:dep-scroll 22s linear infinite; }
+      `}</style>
+      <div style={{ padding:"28px 0 0" }}>
+        {/* copy */}
+        <div style={{ padding:"0 18px", marginBottom:"20px", textAlign:"center" }}>
+          <div style={{ display:"inline-block", background:"#fff7ed", border:"1px solid #fed7aa", borderRadius:"100px", padding:"5px 14px", fontSize:"12px", fontWeight:700, color:"#ea580c", marginBottom:"12px" }}>
+            ✅ +5.000 revendedoras já acessam
+          </div>
+          <h2 style={{ fontSize:"20px", fontWeight:900, lineHeight:1.25, marginBottom:"8px" }}>
+            Olha o que estão falando 👇
+          </h2>
+          <p style={{ fontSize:"13px", color:"#6b7280", lineHeight:1.5 }}>
+            Gente que também não sabia onde comprar — e encontrou a lista.
+          </p>
+        </div>
+
+        {/* carrossel */}
+        <div style={{ overflow:"hidden", width:"100%", marginBottom:"24px" }}>
+          <div className="dep-track">
+            {[...Array(2)].flatMap((_, ri) =>
+              ["/depoimentos/dep4.webp","/depoimentos/dep5.webp","/depoimentos/dep6.webp",
+               "/depoimentos/dep7.webp","/depoimentos/dep8.webp","/depoimentos/dep9.webp"].map((src, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <div key={`${ri}-${i}`} style={{ flexShrink:0, width:"220px", marginRight:"12px", borderRadius:"14px", overflow:"hidden", boxShadow:"0 4px 16px rgba(0,0,0,0.14)", border:"1px solid #e5e7eb" }}>
+                  <img src={src} alt={`Depoimento ${i+1}`} width={220} height={283} loading="eager" decoding="async" style={{ width:"100%", height:"auto", display:"block" }} />
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* CTA continuar */}
+        <div style={{ padding:"0 18px 32px" }}>
+          <div style={{ background:"#fff", border:"1px solid #e5e7eb", borderRadius:"14px", padding:"18px", marginBottom:"14px", textAlign:"center" }}>
+            <p style={{ fontSize:"14px", fontWeight:700, color:"#111", marginBottom:"4px" }}>
+              Elas compraram. Você pode ser a próxima.
+            </p>
+            <p style={{ fontSize:"12px", color:"#6b7280" }}>
+              Faltam só mais 3 perguntas pro seu resultado personalizado.
+            </p>
+          </div>
+          <a href={nextUrl(q, 6)} style={btn(true)}>QUERO VER MEU RESULTADO →</a>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── Q3 (s=6) — situação ──────────────────────────────────────
+  if (s === 6) return (
     <div style={wrap}>
       <Header />
       <div style={inner}>
@@ -258,15 +312,15 @@ export default async function QuizPage({
             ["Acho que preciso de muito dinheiro pra começar","muito_capital"],
             ["Já compro mas minha margem não está boa","margem_ruim"],
           ].map(([label, val]) => (
-            <a key={val} href={nextUrl(q, 6, { q3: val })} style={optBtn()}>{label}</a>
+            <a key={val} href={nextUrl(q, 7, { q3: val })} style={optBtn()}>{label}</a>
           ))}
         </div>
       </div>
     </div>
   );
 
-  // ── Q4 (s=6) — capital ───────────────────────────────────────
-  if (s === 6) return (
+  // ── Q4 (s=7) — capital ───────────────────────────────────────
+  if (s === 7) return (
     <div style={wrap}>
       <Header />
       <div style={inner}>
@@ -288,8 +342,8 @@ export default async function QuizPage({
     </div>
   );
 
-  // ── Q5 (s=7) — categoria ─────────────────────────────────────
-  if (s === 7) return (
+  // ── Q5 (s=8) — categoria ─────────────────────────────────────
+  if (s === 8) return (
     <div style={wrap}>
       <Header />
       <div style={inner}>
@@ -300,15 +354,15 @@ export default async function QuizPage({
         <p style={{ fontSize:"12px", color:"#9ca3af", marginBottom:"18px" }}>Seu resultado mostrará os fornecedores dessa categoria.</p>
         <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
           {Object.keys(CATEGORIAS).map(cat => (
-            <a key={cat} href={nextUrl(q, 8, { q5: cat })} style={optBtn()}>{cat}</a>
+            <a key={cat} href={nextUrl(q, 9, { q5: cat })} style={optBtn()}>{cat}</a>
           ))}
         </div>
       </div>
     </div>
   );
 
-  // ── Q6 (s=8) — CNPJ ─────────────────────────────────────────
-  if (s === 8) return (
+  // ── Q6 (s=9) — CNPJ ─────────────────────────────────────────
+  if (s === 9) return (
     <div style={wrap}>
       <Header />
       <div style={inner}>
@@ -322,16 +376,16 @@ export default async function QuizPage({
             ["Tenho CNPJ","cnpj"],
             ["Não sei se preciso de CNPJ","nao_sei"],
           ].map(([label, val]) => (
-            <a key={val} href={nextUrl(q, 9, { q6: val })} style={optBtn()}>{label}</a>
+            <a key={val} href={nextUrl(q, 10, { q6: val })} style={optBtn()}>{label}</a>
           ))}
         </div>
       </div>
     </div>
   );
 
-  // ── LOADING (s=9) — CSS puro + meta refresh ──────────────────
-  if (s === 9) {
-    const resultUrl = nextUrl(q, 10);
+  // ── LOADING (s=10) — CSS puro + meta refresh ──────────────────
+  if (s === 10) {
+    const resultUrl = nextUrl(q, 11);
     return (
       <div style={wrap}>
         {/* meta refresh — avança sem JS após 2.5s */}
@@ -363,7 +417,7 @@ export default async function QuizPage({
     );
   }
 
-  // ── RESULTADO (s=10) ─────────────────────────────────────────
+  // ── RESULTADO (s=11) ─────────────────────────────────────────
   const cat = params.q5 ? CATEGORIAS[params.q5] : null;
   const temCPF = params.q6 === "cpf" || params.q6 === "nao_sei";
   const poucoCapital = params.q4 === "ate100";
@@ -451,3 +505,4 @@ function Header() {
     </div>
   );
 }
+
