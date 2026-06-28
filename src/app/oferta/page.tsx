@@ -342,7 +342,7 @@ export default async function QuizPage({
             ["De R$300 a R$500","300a500"],
             ["Mais de R$500","mais500"],
           ].map(([label, val]) => (
-            <a key={val} href={nextUrl(q, 7, { q4: val })} style={optBtn()}>{label}</a>
+            <a key={val} href={nextUrl(q, 8, { q4: val })} style={optBtn()}>{label}</a>
           ))}
         </div>
       </div>
