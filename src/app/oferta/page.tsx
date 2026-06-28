@@ -28,12 +28,16 @@ function nextUrl(base: Q, step: number, extra?: Record<string, string>) {
 }
 
 async function track(sid: string, step: number, stepName: string, answers: Q) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  console.log("[quiz-track debug] url:", url, "key:", key ? key.slice(0,10)+"..." : "MISSING");
   try {
     const { error } = await supabaseAdmin.from("quiz_sessions").upsert(
       { session_id: sid, step, step_name: stepName, answers, updated_at: new Date().toISOString() },
       { onConflict: "session_id" }
     );
     if (error) console.error("[quiz-track error]", error);
+    else console.log("[quiz-track ok] step", step);
   } catch (e) { console.error("[quiz-track]", e); }
 }
 
