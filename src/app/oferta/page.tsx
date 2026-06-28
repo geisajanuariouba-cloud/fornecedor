@@ -1,6 +1,6 @@
 // Servidor — zero JS obrigatório. Cada opção é um <a href> normal.
 // Funciona em qualquer celular/browser sem hidratação React.
-import { CheckoutBtn } from "./checkout-btn";
+import { CheckoutBtn, QuizViewContent } from "./checkout-btn";
 import { supabase } from "@/lib/supabase";
 
 const CHECKOUT_URL = "https://pay.wiapy.com/lzRXtuSG_Ku";
@@ -370,6 +370,8 @@ export default async function QuizPage({
 
   return (
     <div style={wrap}>
+      {/* dispara ViewContent assim que a página de resultado monta */}
+      <QuizViewContent />
       <Header />
       <div style={inner}>
 

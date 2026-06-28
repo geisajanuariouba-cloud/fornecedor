@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {children}
-        {/* Meta Pixel — next/script garante execução após hidratação */}
+        {/* Meta Pixel */}
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
