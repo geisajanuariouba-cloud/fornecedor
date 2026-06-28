@@ -478,7 +478,7 @@ export default function FornecedoresPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "28px" }}>
               {compostoItems.map((item) => (
                 <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                  <span style={{ color: "#ea580c", fontSize: "18px", flexShrink: 0, lineHeight: 1.4 }}>★</span>
+                  <IconCheck size={20} color="#22c55e" />
                   <span style={{ fontSize: isMobile ? "13px" : "15px", color: "#333", lineHeight: 1.5 }}>{item}</span>
                 </div>
               ))}
@@ -510,37 +510,46 @@ export default function FornecedoresPage() {
       </div>
 
       {/* ── COMPARAÇÃO ── */}
-      <div style={{ background: "#f9fafb", padding: secPad }}>
+      <div style={{ background: "#111", padding: secPad }}>
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
-          <PillLabel>POR QUE A LISTA VIP?</PillLabel>
-          <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
-            A DIFERENÇA É GRITANTE
+          <div style={{ display: "inline-block", border: "1.5px solid #ea580c", borderRadius: "100px", padding: "6px 18px", fontSize: "12px", fontWeight: 700, color: "#ea580c", letterSpacing: "0.08em", marginBottom: "14px" }}>
+            POR QUE A LISTA VIP?
+          </div>
+          <h2 style={{ fontSize: isMobile ? "24px" : "36px", fontWeight: 900, marginBottom: "8px", textTransform: "uppercase", color: "#fff", lineHeight: 1.1 }}>
+            A DIFERENÇA É
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: isMobile ? "12px" : "24px", maxWidth: isMobile ? "100%" : "800px", margin: "0 auto 28px" }}>
-            <div style={{ border: "2px solid #fecaca", borderRadius: "12px", overflow: "hidden" }}>
-              <div style={{ background: "#fee2e2", padding: "12px", fontWeight: 800, fontSize: isMobile ? "12px" : "14px", color: "#dc2626" }}>❌ SEM A LISTA</div>
-              <div style={{ padding: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
+          <h2 style={{ fontSize: isMobile ? "32px" : "48px", fontWeight: 900, marginBottom: "32px", color: "#ea580c", lineHeight: 1 }}>
+            GRITANTE
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: isMobile ? "10px" : "20px", maxWidth: isMobile ? "100%" : "860px", margin: "0 auto 32px" }}>
+            {/* SEM A LISTA */}
+            <div style={{ borderRadius: "16px", overflow: "hidden", border: "2px solid #ef4444" }}>
+              <div style={{ background: "#ef4444", padding: isMobile ? "12px 10px" : "16px 20px", fontWeight: 900, fontSize: isMobile ? "13px" : "16px", color: "#fff", letterSpacing: "0.03em" }}>❌ SEM A LISTA</div>
+              <div style={{ background: "#1a1a1a", padding: isMobile ? "14px 10px" : "20px", display: "flex", flexDirection: "column", gap: isMobile ? "10px" : "14px" }}>
                 {["Compra no varejo e perde margem", "Não sabe onde achar fornecedor confiável", "Risco de cair em golpe", "Acha que precisa de muito capital", "Fica travada sem saber por onde começar"].map((item) => (
-                  <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "6px", textAlign: "left" }}>
+                  <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", textAlign: "left" }}>
                     <IconX size={isMobile ? 14 : 16} />
-                    <span style={{ fontSize: isMobile ? "11px" : "13px", color: "#555" }}>{item}</span>
+                    <span style={{ fontSize: isMobile ? "11px" : "13px", color: "#bbb", lineHeight: 1.4 }}>{item}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div style={{ border: "2px solid #86efac", borderRadius: "12px", overflow: "hidden" }}>
-              <div style={{ background: "#dcfce7", padding: "12px", fontWeight: 800, fontSize: isMobile ? "12px" : "14px", color: "#16a34a" }}>✅ COM A LISTA VIP</div>
-              <div style={{ padding: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
+            {/* COM A LISTA */}
+            <div style={{ borderRadius: "16px", overflow: "hidden", border: "2px solid #22c55e", boxShadow: "0 0 24px rgba(34,197,94,0.25)" }}>
+              <div style={{ background: "#22c55e", padding: isMobile ? "12px 10px" : "16px 20px", fontWeight: 900, fontSize: isMobile ? "13px" : "16px", color: "#fff", letterSpacing: "0.03em" }}>✅ COM A LISTA VIP</div>
+              <div style={{ background: "#1a1a1a", padding: isMobile ? "14px 10px" : "20px", display: "flex", flexDirection: "column", gap: isMobile ? "10px" : "14px" }}>
                 {["Compra no atacado com 100%+ de margem", "180 fornecedores verificados no bolso", "Todos testados e aprovados", "Começa com menos de R$100", "Começa hoje mesmo, sem enrolação"].map((item) => (
-                  <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "6px", textAlign: "left" }}>
-                    <IconCheck size={isMobile ? 14 : 16} />
-                    <span style={{ fontSize: isMobile ? "11px" : "13px", color: "#555" }}>{item}</span>
+                  <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px", textAlign: "left" }}>
+                    <IconCheck size={isMobile ? 14 : 16} color="#22c55e" />
+                    <span style={{ fontSize: isMobile ? "11px" : "13px", color: "#fff", fontWeight: 600, lineHeight: 1.4 }}>{item}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <CTAButton fullWidth={isMobile}>QUERO ACESSAR O MÉTODO AGORA →</CTAButton>
+          <a href="#cta-principal" style={{ display: isMobile ? "block" : "inline-block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#ea580c", color: "#fff", borderRadius: "12px", padding: "18px 40px", fontSize: isMobile ? "15px" : "17px", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.5px", boxShadow: "0 4px 24px rgba(234,88,12,0.5)", width: isMobile ? "100%" : undefined, fontFamily: "inherit" }}>
+            QUERO ACESSAR O MÉTODO AGORA →
+          </a>
         </div>
       </div>
 
@@ -609,30 +618,40 @@ export default function FornecedoresPage() {
       </div>
 
       {/* ── DEPOIMENTOS ── */}
-      <div style={{ background: "#fff", padding: secPad }}>
-        <div style={{ maxWidth: maxW, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "28px" }}>
-            <PillLabel>QUEM USA</PillLabel>
-            <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "8px" }}>
-              DEPOIMENTOS DE QUEM JÁ UTILIZOU A LISTA
-            </h2>
-            <p style={{ fontSize: "14px", color: "#555" }}>
-              Mais de <strong>5.000 pessoas</strong> já transformaram seus negócios com a lista.
-            </p>
-          </div>
+      <div style={{ background: "#fff", padding: `${isMobile ? "40px" : "64px"} 0` }}>
+        <div style={{ textAlign: "center", marginBottom: "28px", padding: "0 20px" }}>
+          <PillLabel>QUEM USA</PillLabel>
+          <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "8px" }}>
+            DEPOIMENTOS DE QUEM JÁ UTILIZOU A LISTA
+          </h2>
+          <p style={{ fontSize: "14px", color: "#555" }}>
+            Mais de <strong>5.000 pessoas</strong> já transformaram seus negócios com a lista.
+          </p>
+        </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "16px" : "24px", marginBottom: "28px", alignItems: "start" }}>
-            {["/depoimentos/dep1.webp", "/depoimentos/dep2.webp", "/depoimentos/dep3.webp"].map((src, i) => (
-              <div key={i} style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Depoimento ${i + 1}`} width={700} height={903} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
-              </div>
-            ))}
+        {/* Carrossel infinito */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+          .dep-track { display:flex; width:max-content; animation:marquee 28s linear infinite; }
+          .dep-track:hover { animation-play-state:paused; }
+        ` }} />
+        <div style={{ overflow: "hidden", width: "100%" }}>
+          <div className="dep-track">
+            {[...Array(2)].flatMap(() =>
+              ["/depoimentos/dep1.webp","/depoimentos/dep2.webp","/depoimentos/dep3.webp",
+               "/depoimentos/dep4.webp","/depoimentos/dep5.webp","/depoimentos/dep6.webp",
+               "/depoimentos/dep7.webp","/depoimentos/dep8.webp","/depoimentos/dep9.webp"].map((src, i) => (
+                <div key={`${src}-${i}`} style={{ flexShrink: 0, width: isMobile ? "240px" : "300px", marginRight: isMobile ? "12px" : "16px", borderRadius: "14px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.12)", border: "1px solid #e5e7eb" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt={`Depoimento ${i + 1}`} width={300} height={386} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
+                </div>
+              ))
+            )}
           </div>
+        </div>
 
-          <div style={{ textAlign: "center" }}>
-            <CTAButton fullWidth={isMobile}>QUERO FAZER PARTE →</CTAButton>
-          </div>
+        <div style={{ textAlign: "center", marginTop: "28px", padding: "0 20px" }}>
+          <CTAButton fullWidth={isMobile}>QUERO FAZER PARTE →</CTAButton>
         </div>
       </div>
 
