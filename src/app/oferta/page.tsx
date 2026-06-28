@@ -389,6 +389,10 @@ export default function FornecedoresOfertaPage() {
               <div style={{ textAlign: isMobile ? "center" : "left" }}>
                 <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO ACESSAR OS FORNECEDORES →</CTAButton>
                 <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único de R$37,90 • 7 dias de garantia</p>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: isMobile ? "center" : "flex-start", marginTop: "14px" }}>
+                  <span style={{ color: "#f59e0b", fontSize: "17px", letterSpacing: "1px" }}>★★★★★</span>
+                  <span style={{ fontSize: "12px", color: "#555", fontWeight: 600 }}>+5.000 revendedoras já acessaram a Lista VIP</span>
+                </div>
                 <TrustRow isMobile={isMobile} />
               </div>
             </div>
@@ -456,7 +460,7 @@ export default function FornecedoresOfertaPage() {
             14 CATEGORIAS QUE VOCÊ PODE ACESSAR AINDA HOJE
           </h2>
           <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "28px" }}>
-            180 fornecedores verificados, de Roupas a Suplementos, do atacado direto para você
+            Mais de 180 fornecedores verificados em 14 categorias, de Roupas a Suplementos
           </p>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)", gap: isMobile ? "12px" : "16px", marginBottom: "28px" }}>
             {categorias.map((cat) => (
@@ -543,6 +547,32 @@ export default function FornecedoresOfertaPage() {
         </div>
       </div>
 
+      {/* ── O QUE VOCÊ PODE FAZER ── */}
+      <div style={{ background: "#fff", padding: secPad }}>
+        <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
+          <PillLabel>O RESULTADO</PillLabel>
+          <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
+            O QUE VOCÊ PODE FAZER COM ESSA LISTA
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
+            {[
+              "Comprar pagando bem menos, direto da fonte",
+              "Revender com margem de 100% a 400%",
+              "Encontrar produtos difíceis de achar",
+              "Comprar direto da origem, sem atravessador",
+              "Trabalhar só com fornecedores já verificados",
+              "Começar pequeno e escalar com o próprio lucro",
+            ].map((item) => (
+              <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "12px", background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "10px", padding: "12px 14px", textAlign: "left" }}>
+                <IconCheck />
+                <span style={{ fontSize: "13px", fontWeight: 600 }}>{item}</span>
+              </div>
+            ))}
+          </div>
+          <CTAButton fullWidth={isMobile}>QUERO ESSES RESULTADOS →</CTAButton>
+        </div>
+      </div>
+
       {/* ── BÔNUS ── */}
       <div style={{ background: "linear-gradient(160deg, #fff7ed 0%, #fff 100%)", padding: secPad }}>
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
@@ -558,7 +588,7 @@ export default function FornecedoresOfertaPage() {
               <div key={b.n} style={{ border: "1px solid #e5e7eb", borderRadius: "16px", overflow: "hidden", background: "#fff", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
                 <div style={{ background: "linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%)", height: isMobile ? "110px" : "130px", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
                   <div style={{ fontSize: isMobile ? "52px" : "64px" }}>{b.emoji}</div>
-                  <div style={{ position: "absolute", top: "10px", right: "10px", background: "#ea580c", color: "#fff", fontSize: "10px", fontWeight: 800, padding: "3px 10px", borderRadius: "100px" }}>GRÁTIS</div>
+                  <div style={{ position: "absolute", top: "10px", right: "10px", background: "#16a34a", color: "#fff", fontSize: "10px", fontWeight: 800, padding: "3px 10px", borderRadius: "100px" }}>🎁 INCLUSO</div>
                 </div>
                 <div style={{ padding: "16px" }}>
                   <div style={{ fontSize: "12px", fontWeight: 800, color: "#ea580c", marginBottom: "4px" }}>🎁 BÔNUS {b.n}:</div>
