@@ -372,7 +372,7 @@ export default function FornecedoresOfertaPage() {
             {/* Coluna esquerda */}
             <div style={{ flex: isMobile ? undefined : "1 1 55%" }}>
               <h1 style={{ fontSize: isMobile ? "26px" : "42px", fontWeight: 900, lineHeight: 1.15, marginBottom: "18px", textAlign: isMobile ? "center" : "left" }}>
-                Cansada de não saber onde comprar barato pra revender?{" "}
+                Cansado de não saber onde comprar barato pra revender?{" "}
                 <span style={{ color: "#ea580c" }}>Aqui estão os 180 fornecedores que as lojas não divulgam.</span>
               </h1>
               <p style={{ fontSize: isMobile ? "15px" : "18px", color: "#555", lineHeight: 1.6, marginBottom: "20px", textAlign: isMobile ? "center" : "left" }}>
