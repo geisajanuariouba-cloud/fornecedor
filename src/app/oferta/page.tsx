@@ -620,19 +620,29 @@ export default function FornecedoresOfertaPage() {
               Mais de <strong>5.000 pessoas</strong> já transformaram seus negócios com a lista.
             </p>
           </div>
+        </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "16px" : "24px", marginBottom: "28px", alignItems: "start" }}>
-            {["/depoimentos/dep1.webp", "/depoimentos/dep2.webp", "/depoimentos/dep3.webp"].map((src, i) => (
-              <div key={i} style={{ borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`Depoimento ${i + 1}`} width={700} height={903} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
-              </div>
-            ))}
+        {/* Carrossel infinito — sem padding lateral pra sangrar */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+          .marquee-track { display: flex; gap: 16px; width: max-content; animation: marquee 28s linear infinite; }
+          .marquee-track:hover { animation-play-state: paused; }
+        ` }} />
+        <div style={{ overflow: "hidden", marginBottom: "28px" }}>
+          <div className="marquee-track">
+            {[...Array(2)].flatMap(() =>
+              [1,2,3,4,5,6,7,8,9].map((n) => (
+                <div key={`${n}-${Math.random()}`} style={{ flexShrink: 0, width: isMobile ? "220px" : "280px", borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={`/depoimentos/dep${n}.webp`} alt={`Depoimento ${n}`} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
+                </div>
+              ))
+            )}
           </div>
+        </div>
 
-          <div style={{ textAlign: "center" }}>
-            <CTAButton fullWidth={isMobile}>QUERO FAZER PARTE →</CTAButton>
-          </div>
+        <div style={{ textAlign: "center" }}>
+          <CTAButton fullWidth={isMobile}>QUERO FAZER PARTE →</CTAButton>
         </div>
       </div>
 
