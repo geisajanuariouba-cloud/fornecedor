@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.wiapy.com/gTiNVrOtMoj";
-const PRICE_VALUE = 97.9;
+const PRICE_VALUE = 9.9;
 
 declare global {
   interface Window {
@@ -192,7 +192,7 @@ const faqs = [
   { q: "Quais categorias têm na lista?", a: "Roupas, Lingerie, Eletrônicos e Celulares, Maquiagem e Cosméticos, Perfumes, Bijuterias e Semijoias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 14 categorias." },
   { q: "Como recebo o acesso após a compra?", a: "Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício, compre agora e abra quando quiser, sem prazo." },
   { q: "Tem garantia?", a: "Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia. O risco é inteiramente nosso." },
-  { q: "O preço vai aumentar?", a: "Esse valor de R$97,90 é promocional de lançamento. Não temos data definida para encerrar, mas quando encerrar o preço sobe. Garantir agora é a forma mais segura de pagar o menor valor." },
+  { q: "O preço vai aumentar?", a: "Esse valor de R$9,90 é promocional de lançamento. Não temos data definida para encerrar, mas quando encerrar o preço sobe. Garantir agora é a forma mais segura de pagar o menor valor." },
   { q: "Posso vender nos marketplaces (Mercado Livre, Shopee, Amazon)?", a: "Com certeza! Os fornecedores da lista foram selecionados pensando nos marketplaces. Você consegue margem suficiente para cobrir taxas e ainda lucrar bem." },
 ];
 
@@ -542,7 +542,7 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
           <PillLabel>CONTEÚDO</PillLabel>
           <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
-            ISSO TUDO POR MENOS DE 100 REAIS
+            ISSO TUDO POR MENOS DE 10 REAIS
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
             {oquerecebes.map((item) => (
@@ -759,14 +759,14 @@ export default function FornecedoresPage() {
                   <div style={{ background: "#dcfce7", border: "2px solid #86efac", borderRadius: "10px", padding: "12px", textAlign: "center", position: "relative" }}>
                     <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#16a34a", color: "#fff", fontSize: "9px", fontWeight: 800, padding: "2px 10px", borderRadius: "100px", whiteSpace: "nowrap" }}>VOCÊ LEVA</div>
                     <div style={{ fontSize: "10px", fontWeight: 800, color: "#16a34a", textTransform: "uppercase", marginBottom: "4px" }}>Lista completa VIP</div>
-                    <div style={{ fontSize: "22px", fontWeight: 900, color: "#16a34a" }}>R$97,90</div>
+                    <div style={{ fontSize: "22px", fontWeight: 900, color: "#16a34a" }}>R$9,90</div>
                     <div style={{ fontSize: "10px", color: "#16a34a", marginTop: "2px" }}>180 fornecedores</div>
                   </div>
                 </div>
 
                 <div id="cta-principal" style={{ textAlign: "center", marginBottom: "20px", scrollMarginTop: "20px" }}>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$397,00 por apenas:</div>
-                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$97,90</div>
+                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$9,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
@@ -872,7 +872,7 @@ export default function FornecedoresPage() {
             ))}
           </div>
           <div style={{ textAlign: "center" }}>
-            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA • R$97,90</CTAButton>
+            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA • R$9,90</CTAButton>
             <p style={{ marginTop: "12px", textAlign: "center", fontSize: "11px", color: "#9ca3af" }}>🔒 Compra 100% segura • Acesso imediato • 7 dias de garantia</p>
           </div>
         </div>
