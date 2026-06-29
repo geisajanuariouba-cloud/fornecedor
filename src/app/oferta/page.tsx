@@ -631,7 +631,7 @@ export default function FornecedoresOfertaPage() {
         <div style={{ overflow: "hidden", marginBottom: "28px" }}>
           <div className="marquee-track">
             {[...Array(2)].flatMap(() =>
-              [1,2,3,4,5,6,7,8,9].map((n) => (
+              [4,5,6,7,8,9].map((n) => (
                 <div key={`${n}-${Math.random()}`} style={{ flexShrink: 0, width: isMobile ? "220px" : "280px", borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={`/depoimentos/dep${n}.webp`} alt={`Depoimento ${n}`} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
