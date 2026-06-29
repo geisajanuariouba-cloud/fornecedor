@@ -414,7 +414,7 @@ export default function FornecedoresPage() {
 
               <div style={{ textAlign: isMobile ? "center" : "left" }}>
                 <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO ACESSAR OS FORNECEDORES →</CTAButton>
-                <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único de R$97,90 • 7 dias de garantia</p>
+                <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único • 7 dias de garantia</p>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: isMobile ? "center" : "flex-start", marginTop: "14px" }}>
                   <span style={{ color: "#f59e0b", fontSize: "17px", letterSpacing: "1px" }}>★★★★★</span>
                   <span style={{ fontSize: "12px", color: "#555", fontWeight: 600 }}>+5.000 revendedores já acessaram a Lista VIP</span>
@@ -428,8 +428,6 @@ export default function FornecedoresPage() {
               <div style={{ flex: "0 0 360px" }}>
                 <div style={{ border: "2px solid #ea580c", borderRadius: "16px", padding: "24px 20px", background: "#fff" }}>
                   <div style={{ display: "inline-block", background: "#ea580c", color: "#fff", fontSize: "11px", fontWeight: 800, padding: "4px 14px", borderRadius: "100px", marginBottom: "12px" }}>OFERTA EXCLUSIVA E LIMITADA</div>
-                  <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>DE R$397,00 POR APENAS</div>
-                  <div style={{ fontSize: "46px", fontWeight: 900, color: "#ea580c", lineHeight: 1, marginBottom: "2px" }}>R$97,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginBottom: "16px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                   {["180 fornecedores em 14 categorias", "6 bônus exclusivos", "Grupos WhatsApp com fornecedores", "Acesso imediato no e-mail"].map(item => (
                     <div key={item} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12px", marginBottom: "6px" }}>
@@ -887,7 +885,7 @@ export default function FornecedoresPage() {
       {/* ── Barra fixa ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
         <a href="#cta-principal" style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
-          ACESSAR FORNECEDORES • R$97,90
+          ACESSAR FORNECEDORES →
         </a>
       </div>
     </div>
