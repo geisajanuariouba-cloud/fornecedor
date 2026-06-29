@@ -85,7 +85,15 @@ function goToCheckout(e?: React.MouseEvent) {
 function useCountdown(totalSeconds: number) {
   const [time, setTime] = useState(totalSeconds);
   useEffect(() => {
-    const t = setInterval(() => setTime((s) => Math.max(0, s - 1)), 1000);
+    const key = "fv_countdown_end";
+    let end = parseInt(localStorage.getItem(key) ?? "0", 10);
+    if (!end || end < Date.now()) {
+      end = Date.now() + totalSeconds * 1000;
+      localStorage.setItem(key, String(end));
+    }
+    const tick = () => setTime(Math.max(0, Math.round((end - Date.now()) / 1000)));
+    tick();
+    const t = setInterval(tick, 1000);
     return () => clearInterval(t);
   }, []);
   const h = Math.floor(time / 3600).toString().padStart(2, "0");
@@ -125,14 +133,14 @@ const categorias = [
 ];
 
 const oquerecebes = [
+  "Preços de atacado real com margem de 100% a 400% por produto",
   "180 fornecedores verificados direto da fonte, no atacado",
   "Contato direto: site, WhatsApp e telefone de cada empresa",
   "14 categorias: Roupas, Lingerie, Eletrônicos, Maquiagem, Perfumes, Bijuterias, Games e mais",
-  "Marcas reais: Multilaser, RCell, Rovitex, Gimba, Inventa, Technos e muito mais",
   "Não precisa de CNPJ, compre como pessoa física",
   "Comece com menos de R$100, sem pedido mínimo alto",
   "Envio para todo o Brasil, fornecedores de SP, RS, SC e todo o país",
-  "Preços de atacado real com margem de 100% a 400% por produto",
+  "Marcas reais: Multilaser, RCell, Rovitex, Gimba, Inventa, Technos e muito mais",
 ];
 
 const compostoItems = [
@@ -186,11 +194,15 @@ const bonuses = [
 
 const faqs = [
   { q: "O que é a Lista de Fornecedores?", a: "É um arquivo digital com 180 fornecedores verificados, com contato direto, categorias de produtos, condições de compra e forma de pagamento. Tudo que você precisa para começar a revender hoje mesmo." },
+  { q: "Esses fornecedores são diferentes dos que aparecem no Google?", a: "Sim. Essa não é uma lista copiada do Google. Cada fornecedor foi verificado manualmente: testamos o contato, confirmamos que vende para pessoa física e checamos o pedido mínimo real. Se não passou nesse critério, não entrou na lista." },
+  { q: "Como sei que os fornecedores são confiáveis?", a: "Todos os fornecedores foram testados por quem usa essa lista na própria operação de revenda. Verificamos site, telefone, WhatsApp e condições de compra antes de incluir qualquer um. Você recebe só o que foi aprovado." },
   { q: "Preciso de CNPJ para comprar dos fornecedores?", a: "Não! A maioria dos fornecedores da lista vende para pessoa física. Você consegue comprar com CPF mesmo, sem burocracia." },
   { q: "Com quanto capital posso começar?", a: "Com menos de R$100! A maioria dos fornecedores aceita pedidos pequenos — perfeitos para quem está começando e quer testar antes de investir mais." },
+  { q: "Quanto tempo leva pra começar a vender após acessar a lista?", a: "O acesso chega no seu e-mail em menos de 1 minuto após o pagamento. Muitos clientes já entram em contato com o primeiro fornecedor no mesmo dia e fazem o primeiro pedido dentro de 48 horas." },
   { q: "Quais categorias têm na lista?", a: "Roupas, Lingerie, Eletrônicos e Celulares, Maquiagem e Cosméticos, Perfumes, Bijuterias e Semijoias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 14 categorias." },
-  { q: "Como recebo o acesso após a compra?", a: "Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício." },
-  { q: "Tem garantia?", a: "Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia." },
+  { q: "Como recebo o acesso após a compra?", a: "Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício — compre agora e abra quando quiser, sem prazo." },
+  { q: "Tem garantia?", a: "Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia. O risco é inteiramente nosso." },
+  { q: "O preço vai aumentar?", a: "Esse valor de R$37,90 é promocional de lançamento. Não temos data definida para encerrar, mas quando encerrar o preço sobe. Garantir agora é a forma mais segura de pagar o menor valor." },
   { q: "Posso vender nos marketplaces (Mercado Livre, Shopee, Amazon)?", a: "Com certeza! Os fornecedores da lista foram selecionados pensando nos marketplaces. Você consegue margem suficiente para cobrir taxas e ainda lucrar bem." },
 ];
 
@@ -231,10 +243,11 @@ function PillLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function CTAButton({ children, large, fullWidth }: { children: React.ReactNode; large?: boolean; fullWidth?: boolean }) {
+function CTAButton({ children, large, fullWidth, checkout }: { children: React.ReactNode; large?: boolean; fullWidth?: boolean; checkout?: boolean }) {
   return (
     <a
-      href="#cta-principal"
+      href={checkout ? CHECKOUT_URL : "#cta-principal"}
+      onClick={checkout ? goToCheckout : undefined}
       style={{ display: fullWidth ? "block" : "inline-block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#ea580c", color: "#fff", border: "none", borderRadius: "12px", padding: large ? "20px 56px" : "16px 32px", fontSize: large ? "18px" : "15px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", boxShadow: "0 4px 20px rgba(234,88,12,0.35)", fontFamily: "inherit", width: fullWidth ? "100%" : undefined }}
     >
       {children}
@@ -375,12 +388,18 @@ export default function FornecedoresOfertaPage() {
                 Cansado de não saber onde comprar barato pra revender?{" "}
                 <span style={{ color: "#ea580c" }}>Aqui estão os 180 fornecedores que as lojas não divulgam.</span>
               </h1>
-              <p style={{ fontSize: isMobile ? "15px" : "18px", color: "#555", lineHeight: 1.6, marginBottom: "20px", textAlign: isMobile ? "center" : "left" }}>
-                Acesse os 180 fornecedores verificados que vendem direto do atacado, sem CNPJ, sem pedido mínimo alto e começando com menos de R$100.
+              <p style={{ fontSize: isMobile ? "15px" : "18px", color: "#555", lineHeight: 1.6, marginBottom: "16px", textAlign: isMobile ? "center" : "left" }}>
+                Chega de garimpar no Google e cair em atravessador. Com essa lista você fala direto com o fabricante — e começa a lucrar do primeiro pedido.
               </p>
 
-              <p style={{ fontSize: isMobile ? "14px" : "15px", fontWeight: 700, color: "#111", marginBottom: "28px", textAlign: isMobile ? "center" : "left" }}>
-                <span style={{ color: "#ea580c" }}>+5.000 revendedoras</span> já compram direto da fonte com esta lista.
+              <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "10px", padding: "12px 14px", marginBottom: "20px", textAlign: "left" }}>
+                <p style={{ fontSize: isMobile ? "13px" : "14px", color: "#555", lineHeight: 1.6, margin: 0 }}>
+                  Você já pesquisou "fornecedor atacado" no Google e encontrou sites que vendem pelo mesmo preço do varejo — ou pior: exigiram CNPJ, pedido mínimo de R$500 e demoraram 15 dias pra entregar. Enquanto isso, lojas e grandes revendedores compram com 60% de desconto de fornecedores que não anunciam em lugar nenhum. <strong>É exatamente aí que essa lista entra.</strong>
+                </p>
+              </div>
+
+              <p style={{ fontSize: isMobile ? "14px" : "15px", fontWeight: 700, color: "#111", marginBottom: "20px", textAlign: isMobile ? "center" : "left" }}>
+                <span style={{ color: "#ea580c" }}>+5.000 revendedores</span> já compram direto da fonte com esta lista.
               </p>
 
               {/* Depoimentos com foto — above the fold */}
@@ -437,6 +456,27 @@ export default function FornecedoresOfertaPage() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── QUEM SOMOS ── */}
+      <div style={{ background: "#f9fafb", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
+        <div style={{ maxWidth: isMobile ? 480 : 700, margin: "0 auto", textAlign: "center" }}>
+          <PillLabel>QUEM SOMOS</PillLabel>
+          <h2 style={{ fontSize: isMobile ? "20px" : "26px", fontWeight: 900, marginBottom: "20px", lineHeight: 1.3 }}>
+            Por trás dessa lista tem gente que já esteve no seu lugar
+          </h2>
+          <div style={{ background: "#fff", border: "1px solid #fed7aa", borderRadius: "16px", padding: isMobile ? "24px 18px" : "32px 36px", textAlign: "left" }}>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
+              Somos um grupo de pessoas que trabalha com revenda em alta escala há anos. No começo, passamos pelo mesmo problema que você provavelmente está enfrentando agora: <strong>não sabíamos onde achar fornecedores bons, que vendessem com preço real de atacado, sem exigir CNPJ ou pedido mínimo absurdo.</strong>
+            </p>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
+              Demoramos anos testando, ligando, pedindo catálogo e filtrando os que realmente entregam. Hoje compramos direto da fonte, com margem que a maioria dos revendedores nem imagina que é possível.
+            </p>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "0" }}>
+              Quando percebemos que todo mundo ao nosso redor travava exatamente nesse mesmo ponto — <strong>não saber onde comprar</strong> — decidimos organizar tudo o que levamos anos para descobrir e entregar por um preço acessível pra quem está começando. <strong>Essa lista é o atalho que a gente queria ter tido no início.</strong>
+            </p>
           </div>
         </div>
       </div>
@@ -518,7 +558,7 @@ export default function FornecedoresOfertaPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
           <PillLabel>CONTEÚDO</PillLabel>
           <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
-            ISSO TUDO POR MENOS DE 40 REAIS 🤩
+            ISSO TUDO POR MENOS DE 40 REAIS
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
             {oquerecebes.map((item) => (
@@ -543,7 +583,7 @@ export default function FornecedoresOfertaPage() {
             <div style={{ border: "2px solid #fecaca", borderRadius: "12px", overflow: "hidden" }}>
               <div style={{ background: "#fee2e2", padding: "12px", fontWeight: 800, fontSize: isMobile ? "12px" : "14px", color: "#dc2626" }}>❌ SEM A LISTA</div>
               <div style={{ padding: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
-                {["Compra no varejo e perde margem", "Não sabe onde achar fornecedor confiável", "Risco de cair em golpe", "Acha que precisa de muito capital", "Fica travada sem saber por onde começar"].map((item) => (
+                {["Compra no varejo e perde margem", "Não sabe onde achar fornecedor confiável", "Risco de cair em golpe", "Acha que precisa de muito capital", "Fica travado sem saber por onde começar"].map((item) => (
                   <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "6px", textAlign: "left" }}>
                     <IconX size={isMobile ? 14 : 16} />
                     <span style={{ fontSize: isMobile ? "11px" : "13px", color: "#555" }}>{item}</span>
@@ -563,7 +603,7 @@ export default function FornecedoresOfertaPage() {
               </div>
             </div>
           </div>
-          <CTAButton fullWidth={isMobile}>QUERO ACESSAR O MÉTODO AGORA →</CTAButton>
+          <CTAButton fullWidth={isMobile} checkout>QUERO ACESSAR A LISTA AGORA →</CTAButton>
         </div>
       </div>
 
@@ -589,7 +629,7 @@ export default function FornecedoresOfertaPage() {
               </div>
             ))}
           </div>
-          <CTAButton fullWidth={isMobile}>QUERO ESSES RESULTADOS →</CTAButton>
+          <CTAButton fullWidth={isMobile} checkout>QUERO ESSES RESULTADOS →</CTAButton>
         </div>
       </div>
 
@@ -627,7 +667,7 @@ export default function FornecedoresOfertaPage() {
           <div style={{ background: "#ea580c", borderRadius: "12px", padding: "14px 20px", color: "#fff", fontSize: isMobile ? "13px" : "15px", fontWeight: 700, marginBottom: "20px" }}>
             VALOR TOTAL (LISTA + 6 BÔNUS): R$397,00 INCLUSO SEM CUSTO EXTRA 🎯
           </div>
-          <CTAButton fullWidth={isMobile}>QUERO TUDO ISSO AGORA →</CTAButton>
+          <CTAButton fullWidth={isMobile} checkout>QUERO TUDO ISSO AGORA →</CTAButton>
         </div>
       </div>
 
@@ -664,8 +704,17 @@ export default function FornecedoresOfertaPage() {
           </div>
         </div>
 
+        {/* Depoimento em destaque */}
+        <div style={{ background: "#fff7ed", border: "2px solid #ea580c", borderRadius: "14px", padding: isMobile ? "20px 16px" : "24px 32px", margin: `0 auto 24px`, maxWidth: isMobile ? "100%" : "600px", textAlign: "center" }}>
+          <div style={{ fontSize: "28px", color: "#ea580c", marginBottom: "10px", lineHeight: 1 }}>❝</div>
+          <p style={{ fontSize: isMobile ? "15px" : "17px", fontWeight: 700, color: "#111", lineHeight: 1.5, margin: "0 0 12px" }}>
+            "Pedi várias peças e realmente são muito baratas. Já vendi mais da metade no primeiro mês."
+          </p>
+          <div style={{ fontSize: "13px", color: "#ea580c", fontWeight: 800 }}>— Cliente verificado ✅</div>
+        </div>
+
         <div style={{ textAlign: "center" }}>
-          <CTAButton fullWidth={isMobile}>QUERO FAZER PARTE →</CTAButton>
+          <CTAButton fullWidth={isMobile} checkout>QUERO ACESSAR OS 180 FORNECEDORES →</CTAButton>
         </div>
       </div>
 
@@ -737,19 +786,28 @@ export default function FornecedoresOfertaPage() {
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
-                <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "12px", padding: "14px 16px", marginBottom: "16px", textAlign: "left" }}>
+                <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "12px", padding: "14px 16px", marginBottom: "12px", textAlign: "left" }}>
                   <div style={{ fontSize: "13px", fontWeight: 800, color: "#111", marginBottom: "4px" }}>🤔 Por que tão barato?</div>
                   <div style={{ fontSize: "12px", color: "#555", lineHeight: 1.6 }}>
-                    É uma <strong>promoção de lançamento</strong> pra você conhecer o nosso material. Preferimos cobrar pouco e ter milhares de clientes satisfeitas do que cobrar caro de poucas. E você ainda tem <strong>7 dias de garantia</strong> — se não gostar, devolvemos 100%. Risco zero.
+                    É uma <strong>promoção de lançamento</strong> pra você conhecer o nosso material. Preferimos cobrar pouco e ter milhares de clientes satisfeitos do que cobrar caro de poucos. É menos que um jantar delivery — e ao contrário do jantar, você recupera no primeiro pedido.
                   </div>
                 </div>
 
                 {/* Depoimentos rápidos antes do botão */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "14px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "12px" }}>
                   {["/depoimentos/dep1.webp", "/depoimentos/dep2.webp", "/depoimentos/dep3.webp"].map((src, i) => (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img key={i} src={src} alt={`Depoimento ${i + 1}`} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
                   ))}
+                </div>
+
+                {/* Garantia antes do botão */}
+                <div style={{ background: "#f0fdf4", border: "1.5px solid #86efac", borderRadius: "12px", padding: "12px 14px", marginBottom: "14px", display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                  <span style={{ fontSize: "20px", flexShrink: 0 }}>🛡️</span>
+                  <div>
+                    <div style={{ fontSize: "11px", fontWeight: 800, color: "#16a34a", marginBottom: "2px" }}>GARANTIA INCONDICIONAL DE 7 DIAS</div>
+                    <div style={{ fontSize: "11px", color: "#444", lineHeight: 1.5 }}>Se abrir a lista e não ficar satisfeito — por qualquer motivo — é só mandar um e-mail e devolvemos 100%. Sem formulário, sem explicação. O risco é inteiramente nosso.</div>
+                  </div>
                 </div>
 
                 <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
@@ -777,9 +835,9 @@ export default function FornecedoresOfertaPage() {
           </div>
           <h2 style={{ fontSize: isMobile ? "22px" : "28px", fontWeight: 900, marginBottom: "10px", color: "#ea580c" }}>Garantia Incondicional de 7 dias</h2>
           <p style={{ fontSize: isMobile ? "14px" : "16px", color: "#555", lineHeight: 1.6, marginBottom: "12px" }}>
-            Teste a lista por 7 dias. Se você não ficar 100% satisfeita, devolvemos todo o seu dinheiro.
+            Você tem 7 dias para testar. Se abrir a lista e não ficar satisfeito com o que encontrou — por qualquer motivo, sem precisar explicar nada — é só mandar um e-mail e devolvemos 100% do valor.
           </p>
-          <p style={{ fontSize: "13px", fontWeight: 700, color: "#ea580c", letterSpacing: "0.05em", marginBottom: "24px" }}>SEM PERGUNTAS. SEM BUROCRACIA.</p>
+          <p style={{ fontSize: "13px", fontWeight: 700, color: "#ea580c", letterSpacing: "0.05em", marginBottom: "24px" }}>O RISCO É INTEIRAMENTE NOSSO, NÃO SEU.</p>
           <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO GARANTIR MEU ACESSO →</CTAButton>
         </div>
       </div>
