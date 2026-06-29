@@ -460,27 +460,6 @@ export default function FornecedoresOfertaPage() {
         </div>
       </div>
 
-      {/* ── QUEM SOMOS ── */}
-      <div style={{ background: "#f9fafb", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
-        <div style={{ maxWidth: isMobile ? 480 : 700, margin: "0 auto", textAlign: "center" }}>
-          <PillLabel>QUEM SOMOS</PillLabel>
-          <h2 style={{ fontSize: isMobile ? "20px" : "26px", fontWeight: 900, marginBottom: "20px", lineHeight: 1.3 }}>
-            Por trás dessa lista tem gente que já esteve no seu lugar
-          </h2>
-          <div style={{ background: "#fff", border: "1px solid #fed7aa", borderRadius: "16px", padding: isMobile ? "24px 18px" : "32px 36px", textAlign: "left" }}>
-            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
-              Somos um grupo de pessoas que trabalha com revenda em alta escala há anos. No começo, passamos pelo mesmo problema que você provavelmente está enfrentando agora: <strong>não sabíamos onde achar fornecedores bons, que vendessem com preço real de atacado, sem exigir CNPJ ou pedido mínimo absurdo.</strong>
-            </p>
-            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
-              Demoramos anos testando, ligando, pedindo catálogo e filtrando os que realmente entregam. Hoje compramos direto da fonte, com margem que a maioria dos revendedores nem imagina que é possível.
-            </p>
-            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "0" }}>
-              Quando percebemos que todo mundo ao nosso redor travava exatamente nesse mesmo ponto, <strong>não saber onde comprar</strong>, decidimos organizar tudo o que levamos anos para descobrir e entregar por um preço acessível pra quem está começando. <strong>Essa lista é o atalho que a gente queria ter tido no início.</strong>
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* ── COMO VOCÊ RECEBE ── */}
       <div style={{ background: "#fff", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
@@ -839,6 +818,27 @@ export default function FornecedoresOfertaPage() {
           </p>
           <p style={{ fontSize: "13px", fontWeight: 700, color: "#ea580c", letterSpacing: "0.05em", marginBottom: "24px" }}>O RISCO É INTEIRAMENTE NOSSO, NÃO SEU.</p>
           <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO GARANTIR MEU ACESSO →</CTAButton>
+        </div>
+      </div>
+
+      {/* ── QUEM SOMOS ── */}
+      <div style={{ background: "#f9fafb", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
+        <div style={{ maxWidth: isMobile ? 480 : 700, margin: "0 auto", textAlign: "center" }}>
+          <PillLabel>QUEM SOMOS</PillLabel>
+          <h2 style={{ fontSize: isMobile ? "20px" : "26px", fontWeight: 900, marginBottom: "20px", lineHeight: 1.3 }}>
+            Por trás dessa lista tem gente que já esteve no seu lugar
+          </h2>
+          <div style={{ background: "#fff", border: "1px solid #fed7aa", borderRadius: "16px", padding: isMobile ? "24px 18px" : "32px 36px", textAlign: "left" }}>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
+              Somos um grupo de pessoas que trabalha com revenda em alta escala há anos. No começo, passamos pelo mesmo problema que você provavelmente está enfrentando agora: <strong>não sabíamos onde achar fornecedores bons, que vendessem com preço real de atacado, sem exigir CNPJ ou pedido mínimo absurdo.</strong>
+            </p>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
+              Demoramos anos testando, ligando, pedindo catálogo e filtrando os que realmente entregam. Hoje compramos direto da fonte, com margem que a maioria dos revendedores nem imagina que é possível.
+            </p>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "0" }}>
+              Quando percebemos que todo mundo ao nosso redor travava exatamente nesse mesmo ponto, <strong>não saber onde comprar</strong>, decidimos organizar tudo o que levamos anos para descobrir e entregar por um preço acessível pra quem está começando. <strong>Essa lista é o atalho que a gente queria ter tido no início.</strong>
+            </p>
+          </div>
         </div>
       </div>
 
