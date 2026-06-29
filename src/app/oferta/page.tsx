@@ -149,7 +149,7 @@ const compostoItems = [
   "Categoria de produto e faixa de preço no atacado",
   "Pedido mínimo e formas de pagamento aceitas",
   "Informação se vende para pessoa física (CPF) ou só CNPJ",
-  "Avaliação de confiabilidade — só fornecedores testados",
+  "Avaliação de confiabilidade: só fornecedores testados",
 ];
 
 const bonuses = [
@@ -162,7 +162,7 @@ const bonuses = [
   {
     n: "02", emoji: "🔥",
     title: "LISTA DOS PRODUTOS MAIS VENDIDOS",
-    desc: "Os produtos que mais vendem agora no Mercado Livre, Shopee e Amazon — já com o fornecedor certo indicado dentro da lista.",
+    desc: "Os produtos que mais vendem agora no Mercado Livre, Shopee e Amazon, já com o fornecedor certo indicado dentro da lista.",
     valor: "R$37",
   },
   {
@@ -186,7 +186,7 @@ const bonuses = [
   {
     n: "06", emoji: "💬",
     title: "GRUPOS E COMUNIDADES NO WHATSAPP",
-    desc: "Acesso a grupos e comunidades no WhatsApp com contato direto de fornecedores — tire dúvidas, negocie preços e receba novidades dos atacadistas em tempo real.",
+    desc: "Acesso a grupos e comunidades no WhatsApp com contato direto de fornecedores. Tire dúvidas, negocie preços e receba novidades dos atacadistas em tempo real.",
     valor: "R$67",
   },
 ];
@@ -197,10 +197,10 @@ const faqs = [
   { q: "Esses fornecedores são diferentes dos que aparecem no Google?", a: "Sim. Essa não é uma lista copiada do Google. Cada fornecedor foi verificado manualmente: testamos o contato, confirmamos que vende para pessoa física e checamos o pedido mínimo real. Se não passou nesse critério, não entrou na lista." },
   { q: "Como sei que os fornecedores são confiáveis?", a: "Todos os fornecedores foram testados por quem usa essa lista na própria operação de revenda. Verificamos site, telefone, WhatsApp e condições de compra antes de incluir qualquer um. Você recebe só o que foi aprovado." },
   { q: "Preciso de CNPJ para comprar dos fornecedores?", a: "Não! A maioria dos fornecedores da lista vende para pessoa física. Você consegue comprar com CPF mesmo, sem burocracia." },
-  { q: "Com quanto capital posso começar?", a: "Com menos de R$100! A maioria dos fornecedores aceita pedidos pequenos — perfeitos para quem está começando e quer testar antes de investir mais." },
+  { q: "Com quanto capital posso começar?", a: "Com menos de R$100! A maioria dos fornecedores aceita pedidos pequenos, perfeitos para quem está começando e quer testar antes de investir mais." },
   { q: "Quanto tempo leva pra começar a vender após acessar a lista?", a: "O acesso chega no seu e-mail em menos de 1 minuto após o pagamento. Muitos clientes já entram em contato com o primeiro fornecedor no mesmo dia e fazem o primeiro pedido dentro de 48 horas." },
   { q: "Quais categorias têm na lista?", a: "Roupas, Lingerie, Eletrônicos e Celulares, Maquiagem e Cosméticos, Perfumes, Bijuterias e Semijoias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 14 categorias." },
-  { q: "Como recebo o acesso após a compra?", a: "Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício — compre agora e abra quando quiser, sem prazo." },
+  { q: "Como recebo o acesso após a compra?", a: "Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício, compre agora e abra quando quiser, sem prazo." },
   { q: "Tem garantia?", a: "Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia. O risco é inteiramente nosso." },
   { q: "O preço vai aumentar?", a: "Esse valor de R$37,90 é promocional de lançamento. Não temos data definida para encerrar, mas quando encerrar o preço sobe. Garantir agora é a forma mais segura de pagar o menor valor." },
   { q: "Posso vender nos marketplaces (Mercado Livre, Shopee, Amazon)?", a: "Com certeza! Os fornecedores da lista foram selecionados pensando nos marketplaces. Você consegue margem suficiente para cobrir taxas e ainda lucrar bem." },
@@ -389,12 +389,12 @@ export default function FornecedoresOfertaPage() {
                 <span style={{ color: "#ea580c" }}>Aqui estão os 180 fornecedores que as lojas não divulgam.</span>
               </h1>
               <p style={{ fontSize: isMobile ? "15px" : "18px", color: "#555", lineHeight: 1.6, marginBottom: "16px", textAlign: isMobile ? "center" : "left" }}>
-                Chega de garimpar no Google e cair em atravessador. Com essa lista você fala direto com o fabricante — e começa a lucrar do primeiro pedido.
+                Chega de garimpar no Google e cair em atravessador. Com essa lista você fala direto com o fabricante e começa a lucrar do primeiro pedido.
               </p>
 
               <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "10px", padding: "12px 14px", marginBottom: "20px", textAlign: "left" }}>
                 <p style={{ fontSize: isMobile ? "13px" : "14px", color: "#555", lineHeight: 1.6, margin: 0 }}>
-                  Você já pesquisou "fornecedor atacado" no Google e encontrou sites que vendem pelo mesmo preço do varejo — ou pior: exigiram CNPJ, pedido mínimo de R$500 e demoraram 15 dias pra entregar. Enquanto isso, lojas e grandes revendedores compram com 60% de desconto de fornecedores que não anunciam em lugar nenhum. <strong>É exatamente aí que essa lista entra.</strong>
+                  Você já pesquisou "fornecedor atacado" no Google e encontrou sites que vendem pelo mesmo preço do varejo, ou pior: exigiram CNPJ, pedido mínimo de R$500 e demoraram 15 dias pra entregar. Enquanto isso, lojas e grandes revendedores compram com 60% de desconto de fornecedores que não anunciam em lugar nenhum. <strong>É exatamente aí que essa lista entra.</strong>
                 </p>
               </div>
 
@@ -475,7 +475,7 @@ export default function FornecedoresOfertaPage() {
               Demoramos anos testando, ligando, pedindo catálogo e filtrando os que realmente entregam. Hoje compramos direto da fonte, com margem que a maioria dos revendedores nem imagina que é possível.
             </p>
             <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "0" }}>
-              Quando percebemos que todo mundo ao nosso redor travava exatamente nesse mesmo ponto — <strong>não saber onde comprar</strong> — decidimos organizar tudo o que levamos anos para descobrir e entregar por um preço acessível pra quem está começando. <strong>Essa lista é o atalho que a gente queria ter tido no início.</strong>
+              Quando percebemos que todo mundo ao nosso redor travava exatamente nesse mesmo ponto, <strong>não saber onde comprar</strong>, decidimos organizar tudo o que levamos anos para descobrir e entregar por um preço acessível pra quem está começando. <strong>Essa lista é o atalho que a gente queria ter tido no início.</strong>
             </p>
           </div>
         </div>
@@ -789,7 +789,7 @@ export default function FornecedoresOfertaPage() {
                 <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "12px", padding: "14px 16px", marginBottom: "12px", textAlign: "left" }}>
                   <div style={{ fontSize: "13px", fontWeight: 800, color: "#111", marginBottom: "4px" }}>🤔 Por que tão barato?</div>
                   <div style={{ fontSize: "12px", color: "#555", lineHeight: 1.6 }}>
-                    É uma <strong>promoção de lançamento</strong> pra você conhecer o nosso material. Preferimos cobrar pouco e ter milhares de clientes satisfeitos do que cobrar caro de poucos. É menos que um jantar delivery — e ao contrário do jantar, você recupera no primeiro pedido.
+                    É uma <strong>promoção de lançamento</strong> pra você conhecer o nosso material. Preferimos cobrar pouco e ter milhares de clientes satisfeitos do que cobrar caro de poucos. É menos que um jantar delivery, e ao contrário do jantar, você recupera no primeiro pedido.
                   </div>
                 </div>
 
@@ -806,7 +806,7 @@ export default function FornecedoresOfertaPage() {
                   <span style={{ fontSize: "20px", flexShrink: 0 }}>🛡️</span>
                   <div>
                     <div style={{ fontSize: "11px", fontWeight: 800, color: "#16a34a", marginBottom: "2px" }}>GARANTIA INCONDICIONAL DE 7 DIAS</div>
-                    <div style={{ fontSize: "11px", color: "#444", lineHeight: 1.5 }}>Se abrir a lista e não ficar satisfeito — por qualquer motivo — é só mandar um e-mail e devolvemos 100%. Sem formulário, sem explicação. O risco é inteiramente nosso.</div>
+                    <div style={{ fontSize: "11px", color: "#444", lineHeight: 1.5 }}>Se abrir a lista e não ficar satisfeito por qualquer motivo, é só mandar um e-mail e devolvemos 100%. Sem formulário, sem explicação. O risco é inteiramente nosso.</div>
                   </div>
                 </div>
 
@@ -835,7 +835,7 @@ export default function FornecedoresOfertaPage() {
           </div>
           <h2 style={{ fontSize: isMobile ? "22px" : "28px", fontWeight: 900, marginBottom: "10px", color: "#ea580c" }}>Garantia Incondicional de 7 dias</h2>
           <p style={{ fontSize: isMobile ? "14px" : "16px", color: "#555", lineHeight: 1.6, marginBottom: "12px" }}>
-            Você tem 7 dias para testar. Se abrir a lista e não ficar satisfeito com o que encontrou — por qualquer motivo, sem precisar explicar nada — é só mandar um e-mail e devolvemos 100% do valor.
+            Você tem 7 dias para testar. Se abrir a lista e não ficar satisfeito com o que encontrou, por qualquer motivo, sem precisar explicar nada, é só mandar um e-mail e devolvemos 100% do valor.
           </p>
           <p style={{ fontSize: "13px", fontWeight: 700, color: "#ea580c", letterSpacing: "0.05em", marginBottom: "24px" }}>O RISCO É INTEIRAMENTE NOSSO, NÃO SEU.</p>
           <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO GARANTIR MEU ACESSO →</CTAButton>
@@ -867,7 +867,7 @@ export default function FornecedoresOfertaPage() {
             ))}
           </div>
           <div style={{ textAlign: "center" }}>
-            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA — R$37,90</CTAButton>
+            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA • R$37,90</CTAButton>
             <p style={{ marginTop: "12px", textAlign: "center", fontSize: "11px", color: "#9ca3af" }}>🔒 Compra 100% segura • Acesso imediato • 7 dias de garantia</p>
           </div>
         </div>
@@ -891,7 +891,7 @@ export default function FornecedoresOfertaPage() {
             </a>
           </div>
           <p style={{ fontSize: "11px", color: "#6b7280", lineHeight: 1.6 }}>
-            FornecedorVip © 2026 — fornecedorvip.shop<br />
+            FornecedorVip © 2026 • fornecedorvip.shop<br />
             Todos os direitos reservados.
           </p>
         </div>
