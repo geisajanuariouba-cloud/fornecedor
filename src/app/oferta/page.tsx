@@ -371,12 +371,9 @@ export default function FornecedoresOfertaPage() {
           <div style={{ display: "flex", gap: "56px", alignItems: "flex-start", flexDirection: isMobile ? "column" : "row" }}>
             {/* Coluna esquerda */}
             <div style={{ flex: isMobile ? undefined : "1 1 55%" }}>
-              <p style={{ fontStyle: "italic", fontSize: isMobile ? "13px" : "14px", color: "#9ca3af", lineHeight: 1.5, marginBottom: "16px", textAlign: isMobile ? "center" : "left" }}>
-                Se você já tentou revender e travou na hora de achar fornecedor, isso foi feito pra você.
-              </p>
-              <h1 style={{ fontSize: isMobile ? "28px" : "44px", fontWeight: 900, lineHeight: 1.1, marginBottom: "18px", textAlign: isMobile ? "center" : "left" }}>
-                As lojas não pagam o que você paga.{" "}
-                <span style={{ color: "#ea580c" }}>Elas compram aqui.</span>
+              <h1 style={{ fontSize: isMobile ? "26px" : "42px", fontWeight: 900, lineHeight: 1.15, marginBottom: "18px", textAlign: isMobile ? "center" : "left" }}>
+                Cansada de não saber onde comprar barato pra revender?{" "}
+                <span style={{ color: "#ea580c" }}>Aqui estão os 180 fornecedores que as lojas não divulgam.</span>
               </h1>
               <p style={{ fontSize: isMobile ? "15px" : "18px", color: "#555", lineHeight: 1.6, marginBottom: "20px", textAlign: isMobile ? "center" : "left" }}>
                 Acesse os 180 fornecedores verificados que vendem direto do atacado, sem CNPJ, sem pedido mínimo alto e começando com menos de R$100.
@@ -686,6 +683,21 @@ export default function FornecedoresOfertaPage() {
                   ))}
                 </div>
 
+                {/* Ancoragem de preço */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "16px" }}>
+                  <div style={{ background: "#fee2e2", border: "1.5px solid #fca5a5", borderRadius: "10px", padding: "12px", textAlign: "center" }}>
+                    <div style={{ fontSize: "10px", fontWeight: 800, color: "#dc2626", textTransform: "uppercase", marginBottom: "4px" }}>Consultoria individual</div>
+                    <div style={{ fontSize: "22px", fontWeight: 900, color: "#dc2626", textDecoration: "line-through" }}>R$397</div>
+                    <div style={{ fontSize: "10px", color: "#ef4444", marginTop: "2px" }}>Por fornecedor avulso</div>
+                  </div>
+                  <div style={{ background: "#dcfce7", border: "2px solid #86efac", borderRadius: "10px", padding: "12px", textAlign: "center", position: "relative" }}>
+                    <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#16a34a", color: "#fff", fontSize: "9px", fontWeight: 800, padding: "2px 10px", borderRadius: "100px", whiteSpace: "nowrap" }}>VOCÊ LEVA</div>
+                    <div style={{ fontSize: "10px", fontWeight: 800, color: "#16a34a", textTransform: "uppercase", marginBottom: "4px" }}>Lista completa VIP</div>
+                    <div style={{ fontSize: "22px", fontWeight: 900, color: "#16a34a" }}>R$37,90</div>
+                    <div style={{ fontSize: "10px", color: "#16a34a", marginTop: "2px" }}>180 fornecedores</div>
+                  </div>
+                </div>
+
                 <div id="cta-principal" style={{ textAlign: "center", marginBottom: "20px", scrollMarginTop: "20px" }}>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$397,00 por apenas:</div>
                   <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$37,90</div>
@@ -697,6 +709,14 @@ export default function FornecedoresOfertaPage() {
                   <div style={{ fontSize: "12px", color: "#555", lineHeight: 1.6 }}>
                     É uma <strong>promoção de lançamento</strong> pra você conhecer o nosso material. Preferimos cobrar pouco e ter milhares de clientes satisfeitas do que cobrar caro de poucas. E você ainda tem <strong>7 dias de garantia</strong> — se não gostar, devolvemos 100%. Risco zero.
                   </div>
+                </div>
+
+                {/* Depoimentos rápidos antes do botão */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "8px", marginBottom: "14px" }}>
+                  {["/depoimentos/dep1.webp", "/depoimentos/dep2.webp", "/depoimentos/dep3.webp"].map((src, i) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={i} src={src} alt={`Depoimento ${i + 1}`} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
+                  ))}
                 </div>
 
                 <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
