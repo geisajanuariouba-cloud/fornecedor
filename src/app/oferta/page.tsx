@@ -383,12 +383,35 @@ export default function FornecedoresOfertaPage() {
                 <span style={{ color: "#ea580c" }}>+5.000 revendedoras</span> já compram direto da fonte com esta lista.
               </p>
 
+              {/* Depoimentos com foto — above the fold */}
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: "10px", marginBottom: "20px" }}>
+                {[
+                  { avatar: "/depoimentos/avatar2.jpg", nome: "Mariana S.", cidade: "SP", texto: "As peças são lindas, qualidade ótima. Já virei cliente fiel 😍" },
+                  { avatar: "/depoimentos/avatar3.jpg", nome: "Rafael T.", cidade: "MG", texto: "Preço surreal, muito barato. Já indiquei pra várias pessoas 🔥" },
+                  { avatar: "/depoimentos/avatar4.jpg", nome: "Carlos M.", cidade: "RJ", texto: "Pedi 8 peças e vieram todas. Qualidade excelente, vou pedir mais!" },
+                  { avatar: "/depoimentos/avatar5.webp", nome: "Dona Fátima", cidade: "RS", texto: "Perfeitoo, amei demais. Muito obrigada pelo carinho 🙏" },
+                ].map((dep) => (
+                  <div key={dep.nome} style={{ background: "#fff", border: "1px solid #fed7aa", borderRadius: "12px", padding: "12px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={dep.avatar} alt={dep.nome} width={36} height={36} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "2px solid #ea580c" }} />
+                      <div>
+                        <div style={{ fontSize: "11px", fontWeight: 800, color: "#111", lineHeight: 1.2 }}>{dep.nome}</div>
+                        <div style={{ fontSize: "10px", color: "#9ca3af" }}>{dep.cidade}</div>
+                      </div>
+                    </div>
+                    <div style={{ color: "#f59e0b", fontSize: "11px", letterSpacing: "1px" }}>★★★★★</div>
+                    <p style={{ fontSize: "11px", color: "#444", lineHeight: 1.4, margin: 0 }}>{dep.texto}</p>
+                  </div>
+                ))}
+              </div>
+
               <div style={{ textAlign: isMobile ? "center" : "left" }}>
                 <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO ACESSAR OS FORNECEDORES →</CTAButton>
                 <p style={{ fontSize: "12px", color: "#9ca3af", marginTop: "10px" }}>🔒 Acesso imediato • Pagamento único de R$37,90 • 7 dias de garantia</p>
                 <div style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: isMobile ? "center" : "flex-start", marginTop: "14px" }}>
                   <span style={{ color: "#f59e0b", fontSize: "17px", letterSpacing: "1px" }}>★★★★★</span>
-                  <span style={{ fontSize: "12px", color: "#555", fontWeight: 600 }}>+5.000 revendedoras já acessaram a Lista VIP</span>
+                  <span style={{ fontSize: "12px", color: "#555", fontWeight: 600 }}>+5.000 revendedores já acessaram a Lista VIP</span>
                 </div>
                 <TrustRow isMobile={isMobile} />
               </div>
