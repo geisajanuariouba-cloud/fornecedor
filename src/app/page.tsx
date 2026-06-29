@@ -379,6 +379,26 @@ export default function FornecedoresPage() {
                 Chega de garimpar no Google e cair em atravessador. Com essa lista você fala direto com o fabricante e começa a lucrar do primeiro pedido.
               </p>
 
+              {/* Essa lista é pra você se */}
+              <div style={{ background: "#f0fdf4", border: "1.5px solid #86efac", borderRadius: "12px", padding: "16px 18px", marginBottom: "20px", textAlign: "left" }}>
+                <div style={{ fontSize: isMobile ? "13px" : "14px", fontWeight: 800, color: "#111", marginBottom: "12px" }}>✅ Essa lista é pra você se:</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {[
+                    "Quer revender e ter margem real de lucro, sem depender de atravessador",
+                    "Está começando e não sabe onde encontrar fornecedor confiável",
+                    "Já tentou revender mas travou na hora de achar produto barato",
+                    "Quer comprar direto sem precisar de CNPJ ou pedido mínimo alto",
+                    "Quer montar uma renda extra vendendo no Mercado Livre, Shopee ou pelo WhatsApp",
+                    "Quer economizar nas suas próprias compras e parar de pagar preço de varejo",
+                  ].map((item) => (
+                    <div key={item} style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: "2px" }}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                      <span style={{ fontSize: isMobile ? "12px" : "13px", color: "#333", lineHeight: 1.5 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <div style={{ background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "10px", padding: "12px 14px", marginBottom: "20px", textAlign: "left" }}>
                 <p style={{ fontSize: isMobile ? "13px" : "14px", color: "#555", lineHeight: 1.6, margin: 0 }}>
                   Você já pesquisou "fornecedor atacado" no Google e encontrou sites que vendem pelo mesmo preço do varejo, ou pior: exigiram CNPJ, pedido mínimo de R$500 e demoraram 15 dias pra entregar. Enquanto isso, lojas e grandes revendedores compram com 60% de desconto de fornecedores que não anunciam em lugar nenhum. <strong>É exatamente aí que essa lista entra.</strong>
