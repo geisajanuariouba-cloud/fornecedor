@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
     }
     const value = cents > 0 ? cents / 100 : 9.9;
 
-    const isApproval = ["paid", "approved", "completed", "order_approved", "aprovado", "pago"].some((s) =>
+    const isApproval = ["paid", "approved", "completed", "order_approved", "aprovado", "pago", "venda_aprovada"].some((s) =>
       rawStatus.includes(s)
     );
 
