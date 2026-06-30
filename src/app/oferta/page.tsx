@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 // VARIANTE DE TESTE (A/B de preço): R$37,90 — checkout próprio na Wiapy.
 // Não usa a env NEXT_PUBLIC_CHECKOUT_URL pra não conflitar com a página original (/).
-const CHECKOUT_URL = "https://pay.wiapy.com/lzRXtuSG_Ku";
+const CHECKOUT_URL = "https://zyrocheckout.space/checkout/v5/high/fornecedorvip";
 const PRICE_VALUE = 37.9;
 
 declare global {
