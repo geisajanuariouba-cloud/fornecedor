@@ -67,7 +67,7 @@ function goToCheckout(e?: React.MouseEvent) {
     keepalive: true,
   }).catch(() => {});
 
-  setTimeout(() => { window.location.href = dest; }, 350);
+  setTimeout(() => { window.location.href = dest; redirecting = false; }, 350);
 }
 
 /* ─── hooks ─────────────────────────────────────────────────── */

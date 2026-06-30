@@ -77,7 +77,7 @@ function goToCheckout(e?: React.MouseEvent) {
   }).catch(() => {});
 
   // micro-atraso garante o envio do evento do navegador antes do redirect
-  setTimeout(() => { window.location.href = dest; }, 350);
+  setTimeout(() => { window.location.href = dest; redirecting = false; }, 350);
 }
 
 /* ─── hooks ─────────────────────────────────────────────────── */
