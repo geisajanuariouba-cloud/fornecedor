@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const CHECKOUT_URL = "https://pay.wiapy.com/lzRXtuSG_Ku";
+const CHECKOUT_URL = "https://zyrocheckout.space/checkout/v5/high/fornecedorvip";
 
 declare global { interface Window { fbq?: (...args: unknown[]) => void; } }
 

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.wiapy.com/gTiNVrOtMoj";
-const PRICE_VALUE = 9.9;
+const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://zyrocheckout.space/checkout/v5/high/fornecedorvip";
+const PRICE_VALUE = 37.9;
 
 declare global {
   interface Window {
@@ -77,7 +77,7 @@ function useCountdown(totalSeconds: number) {
   useEffect(() => {
     const key = "fv_home_countdown_end";
     let end = parseInt(localStorage.getItem(key) ?? "0", 10);
-    if (!end || end < Date.now()) {
+    if (!end) {
       end = Date.now() + totalSeconds * 1000;
       localStorage.setItem(key, String(end));
     }
@@ -192,7 +192,7 @@ const faqs = [
   { q: "Quais categorias têm na lista?", a: "Roupas, Lingerie, Eletrônicos e Celulares, Maquiagem e Cosméticos, Perfumes, Bijuterias e Semijoias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 14 categorias." },
   { q: "Como recebo o acesso após a compra?", a: "Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício, compre agora e abra quando quiser, sem prazo." },
   { q: "Tem garantia?", a: "Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia. O risco é inteiramente nosso." },
-  { q: "O preço vai aumentar?", a: "Esse valor de R$9,90 é promocional de lançamento. Não temos data definida para encerrar, mas quando encerrar o preço sobe. Garantir agora é a forma mais segura de pagar o menor valor." },
+  { q: "O preço vai aumentar?", a: "Esse valor de R$37,90 é promocional de lançamento. Não temos data definida para encerrar, mas quando encerrar o preço sobe. Garantir agora é a forma mais segura de pagar o menor valor." },
   { q: "Posso vender nos marketplaces (Mercado Livre, Shopee, Amazon)?", a: "Com certeza! Os fornecedores da lista foram selecionados pensando nos marketplaces. Você consegue margem suficiente para cobrir taxas e ainda lucrar bem." },
 ];
 
@@ -217,13 +217,6 @@ function IconX({ size = 16 }: { size?: number }) {
   );
 }
 
-function IconChevron({ open }: { open: boolean }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, transition: "transform 0.2s", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-  );
-}
 
 function PillLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -269,9 +262,12 @@ function TrustRow({ isMobile }: { isMobile: boolean }) {
   );
 }
 
-/* ─── Countdown box ─────────────────────────────────────────── */
+/* ─── Countdown box — estado próprio, não re-renderiza a página toda ── */
 
-function CountdownBox({ h, m, s }: { h: string; m: string; s: string }) {
+const COUNTDOWN_SECONDS = 2 * 3600 + 47 * 60 + 33;
+
+function CountdownBox() {
+  const { h, m, s } = useCountdown(COUNTDOWN_SECONDS);
   const boxStyle: React.CSSProperties = { background: "#fff7ed", border: "1px solid #fed7aa", borderRadius: "8px", padding: "8px 14px", textAlign: "center", minWidth: "52px" };
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "6px", justifyContent: "center" }}>
@@ -288,32 +284,22 @@ function CountdownBox({ h, m, s }: { h: string; m: string; s: string }) {
   );
 }
 
+function UrgencyCountdown() {
+  const { h, m, s } = useCountdown(COUNTDOWN_SECONDS);
+  return (
+    <span style={{ background: "rgba(0,0,0,0.2)", borderRadius: "6px", padding: "2px 8px", marginLeft: "6px", fontVariantNumeric: "tabular-nums" }}>
+      {h}:{m}:{s}
+    </span>
+  );
+}
+
 /* ─── Category Card ─────────────────────────────────────────── */
 
 function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boolean }) {
-  const [failed, setFailed] = useState(false);
-  const imgSize = isMobile ? 90 : 120;
-  const src = cat.local || `https://images.unsplash.com/photo-${cat.img}?w=${imgSize * 2}&h=${imgSize * 2}&fit=crop&auto=format&q=70`;
   return (
     <div style={{ border: "2.5px solid #e879a0", borderRadius: "14px", overflow: "hidden", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div style={{ width: "100%", height: isMobile ? 90 : 120, overflow: "hidden" }}>
-        {!failed ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={src}
-            alt={cat.label}
-            width={imgSize}
-            height={imgSize}
-            loading="lazy"
-            decoding="async"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-            onError={() => setFailed(true)}
-          />
-        ) : (
-          <div style={{ width: "100%", height: "100%", background: "#fff7ed", display: "flex", alignItems: "center", justifyContent: "center", fontSize: isMobile ? "36px" : "48px" }}>
-            {cat.emoji}
-          </div>
-        )}
+      <div style={{ width: "100%", height: isMobile ? 90 : 120, background: "#fff7ed", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ fontSize: isMobile ? "40px" : "52px", lineHeight: 1 }}>{cat.emoji}</span>
       </div>
       <div style={{ padding: "6px 4px 8px", textAlign: "center" }}>
         <span style={{ fontSize: isMobile ? "9px" : "10px", fontWeight: 800, color: "#111", letterSpacing: "0.02em", lineHeight: 1.3 }}>{cat.label}</span>
@@ -324,10 +310,48 @@ function CatCard({ cat, isMobile }: { cat: typeof categorias[0]; isMobile: boole
 
 /* ─── Página ─────────────────────────────────────────────────── */
 
+function ExitIntentPopup({ isMobile }: { isMobile: boolean }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (isMobile) return;
+    const shown = sessionStorage.getItem("fv_exit_shown");
+    if (shown) return;
+    const onMouseOut = (e: MouseEvent) => {
+      if (e.clientY <= 10) {
+        setVisible(true);
+        sessionStorage.setItem("fv_exit_shown", "1");
+        document.removeEventListener("mouseleave", onMouseOut);
+      }
+    };
+    document.addEventListener("mouseleave", onMouseOut);
+    return () => document.removeEventListener("mouseleave", onMouseOut);
+  }, [isMobile]);
+
+  if (!visible) return null;
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }} onClick={() => setVisible(false)}>
+      <div style={{ background: "#fff", borderRadius: "20px", padding: "36px 32px", maxWidth: "440px", width: "100%", textAlign: "center", position: "relative", boxShadow: "0 24px 80px rgba(0,0,0,0.25)" }} onClick={e => e.stopPropagation()}>
+        <button onClick={() => setVisible(false)} style={{ position: "absolute", top: "14px", right: "16px", background: "none", border: "none", fontSize: "20px", cursor: "pointer", color: "#9ca3af", fontFamily: "inherit" }}>✕</button>
+        <div style={{ fontSize: "44px", marginBottom: "12px" }}>⏳</div>
+        <h3 style={{ fontSize: "20px", fontWeight: 900, color: "#111", marginBottom: "8px", lineHeight: 1.3 }}>
+          Espera — você vai deixar os 6 bônus pra trás?
+        </h3>
+        <p style={{ fontSize: "14px", color: "#555", lineHeight: 1.6, marginBottom: "20px" }}>
+          Você ainda não garantiu acesso aos <strong>180 fornecedores</strong> e aos <strong>6 bônus exclusivos</strong>. Por <strong style={{ color: "#ea580c" }}>R$37,90</strong> — menos que um jantar — você começa a revender ainda hoje.
+        </p>
+        <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display: "block", background: "#ea580c", color: "#fff", textDecoration: "none", borderRadius: "12px", padding: "16px", fontSize: "16px", fontWeight: 800, textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 16px rgba(234,88,12,0.35)", marginBottom: "10px" }}>
+          QUERO GARANTIR MEU ACESSO →
+        </a>
+        <button onClick={() => setVisible(false)} style={{ background: "none", border: "none", fontSize: "12px", color: "#9ca3af", cursor: "pointer", fontFamily: "inherit" }}>
+          Não, prefiro continuar pagando caro em fornecedor
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function FornecedoresPage() {
-  const { h, m, s } = useCountdown(2 * 3600 + 47 * 60 + 33);
   const isMobile = useIsMobile();
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => { persistUTMs(); }, []);
 
@@ -345,7 +369,7 @@ export default function FornecedoresPage() {
   }, []);
 
   const maxW = isMobile ? 480 : 1100;
-  const secPad = isMobile ? "40px 20px" : "64px 40px";
+  const secPad = isMobile ? "28px 20px" : "56px 40px";
 
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", minHeight: "100vh", color: "#111" }}>
@@ -354,9 +378,7 @@ export default function FornecedoresPage() {
       {/* ── Urgency bar ── */}
       <div style={{ background: "#ea580c", color: "#fff", textAlign: "center", padding: "10px 16px", fontSize: "13px", fontWeight: 700 }}>
         🔥 OFERTA ESPECIAL ENCERRA EM:{" "}
-        <span style={{ background: "rgba(0,0,0,0.2)", borderRadius: "6px", padding: "2px 8px", marginLeft: "6px", fontVariantNumeric: "tabular-nums" }}>
-          {h}:{m}:{s}
-        </span>
+        <UrgencyCountdown />
       </div>
 
       {/* ── HERO ── */}
@@ -409,18 +431,27 @@ export default function FornecedoresPage() {
                 <span style={{ color: "#ea580c" }}>+5.000 revendedores</span> já compram direto da fonte com esta lista.
               </p>
 
+              {/* Preço visível acima da dobra — só no mobile */}
+              {isMobile && (
+                <div style={{ background: "#f0fdf4", border: "2px solid #86efac", borderRadius: "12px", padding: "14px 16px", marginBottom: "20px", textAlign: "center" }}>
+                  <div style={{ fontSize: "12px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "2px" }}>De R$397,00 por apenas:</div>
+                  <div style={{ fontSize: "38px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$37,90</div>
+                  <div style={{ fontSize: "12px", color: "#22c55e", fontWeight: 700, marginTop: "4px" }}>PAGAMENTO ÚNICO • 7 DIAS DE GARANTIA</div>
+                </div>
+              )}
+
               {/* Depoimentos com foto — above the fold */}
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: "10px", marginBottom: "20px" }}>
                 {[
-                  { avatar: "/depoimentos/avatar2.jpg", nome: "Mariana S.", cidade: "SP", texto: "As peças são lindas, qualidade ótima. Já virei cliente fiel 😍" },
-                  { avatar: "/depoimentos/avatar3.jpg", nome: "Rafael T.", cidade: "MG", texto: "Preço surreal, muito barato. Já indiquei pra várias pessoas 🔥" },
-                  { avatar: "/depoimentos/avatar4.jpg", nome: "Carlos M.", cidade: "RJ", texto: "Pedi 8 peças e vieram todas. Qualidade excelente, vou pedir mais!" },
-                  { avatar: "/depoimentos/avatar5.webp", nome: "Dona Fátima", cidade: "RS", texto: "Perfeitoo, amei demais. Muito obrigada pelo carinho 🙏" },
+                  { avatar: "/depoimentos/avatar2.jpg", nome: "Mariana S.", cidade: "SP", texto: "Investi R$180 em roupas femininas e revendi R$620 em 5 dias no Shopee. Nunca imaginei que era tão simples 🔥" },
+                  { avatar: "/depoimentos/avatar3.jpg", nome: "Rafael T.", cidade: "MG", texto: "Comprei R$250 em eletrônicos direto do fornecedor da lista e lucrei R$780 em uma semana no Mercado Livre 🚀" },
+                  { avatar: "/depoimentos/avatar4.jpg", nome: "Carlos M.", cidade: "RJ", texto: "Fiz meu primeiro pedido com R$130 em perfumes. Vendi tudo pelo WhatsApp em 3 dias e já pedi mais duas vezes!" },
+                  { avatar: "/depoimentos/avatar5_resized.webp", nome: "Fátima O.", cidade: "RS", texto: "Tava desempregada e resolvi tentar. Em 2 semanas já tinha feito R$1.400 revendendo pelo grupo de WhatsApp 🙏" },
                 ].map((dep) => (
                   <div key={dep.nome} style={{ background: "#fff", border: "1px solid #fed7aa", borderRadius: "12px", padding: "12px", display: "flex", flexDirection: "column", gap: "8px" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={dep.avatar} alt={dep.nome} width={36} height={36} style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "2px solid #ea580c" }} />
+                      <img src={dep.avatar} alt={dep.nome} width={36} height={36} loading="lazy" decoding="async" style={{ width: "36px", height: "36px", borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: "2px solid #ea580c" }} />
                       <div>
                         <div style={{ fontSize: "11px", fontWeight: 800, color: "#111", lineHeight: 1.2 }}>{dep.nome}</div>
                         <div style={{ fontSize: "10px", color: "#9ca3af" }}>{dep.cidade}</div>
@@ -496,6 +527,27 @@ export default function FornecedoresPage() {
         </div>
       </div>
 
+      {/* ── QUEM SOMOS ── */}
+      <div style={{ background: "#f9fafb", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
+        <div style={{ maxWidth: isMobile ? 480 : 700, margin: "0 auto", textAlign: "center" }}>
+          <PillLabel>QUEM SOMOS</PillLabel>
+          <h2 style={{ fontSize: isMobile ? "20px" : "26px", fontWeight: 900, marginBottom: "20px", lineHeight: 1.3 }}>
+            Por trás dessa lista tem gente que já esteve no seu lugar
+          </h2>
+          <div style={{ background: "#fff", border: "1px solid #fed7aa", borderRadius: "16px", padding: isMobile ? "24px 18px" : "32px 36px", textAlign: "left" }}>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
+              Somos um grupo de pessoas que trabalha com revenda em alta escala há anos. No começo, passamos pelo mesmo problema que você provavelmente está enfrentando agora: <strong>não sabíamos onde achar fornecedores bons, que vendessem com preço real de atacado, sem exigir CNPJ ou pedido mínimo absurdo.</strong>
+            </p>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
+              Demoramos anos testando, ligando, pedindo catálogo e filtrando os que realmente entregam. Hoje compramos direto da fonte, com margem que a maioria dos revendedores nem imagina que é possível.
+            </p>
+            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "0" }}>
+              Quando percebemos que todo mundo ao nosso redor travava exatamente nesse mesmo ponto, <strong>não saber onde comprar</strong>, decidimos organizar tudo o que levamos anos para descobrir e entregar por um preço acessível pra quem está começando. <strong>Essa lista é o atalho que a gente queria ter tido no início.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* ── CATEGORIAS ── */}
       <div style={{ background: "#fff", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
@@ -542,7 +594,7 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth: maxW, margin: "0 auto", textAlign: "center" }}>
           <PillLabel>CONTEÚDO</PillLabel>
           <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: 900, marginBottom: "24px", textTransform: "uppercase" }}>
-            ISSO TUDO POR MENOS DE 10 REAIS
+            ISSO TUDO POR R$37,90
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
             {oquerecebes.map((item) => (
@@ -669,7 +721,16 @@ export default function FornecedoresPage() {
           </div>
         </div>
 
-        {/* Carrossel infinito */}
+        {/* Depoimento em destaque */}
+        <div style={{ background: "#fff7ed", border: "2px solid #ea580c", borderRadius: "14px", padding: isMobile ? "20px 16px" : "24px 32px", margin: `0 auto 24px`, maxWidth: isMobile ? "100%" : "600px", textAlign: "center" }}>
+          <div style={{ fontSize: "28px", color: "#ea580c", marginBottom: "10px", lineHeight: 1 }}>❝</div>
+          <p style={{ fontSize: isMobile ? "15px" : "17px", fontWeight: 700, color: "#111", lineHeight: 1.5, margin: "0 0 12px" }}>
+            "Entrei em contato com 3 fornecedores da lista no mesmo dia que comprei. Em menos de 48h já tinha feito meu primeiro pedido no atacado. Paguei R$340 e revendi por R$1.100 no primeiro mês."
+          </p>
+          <div style={{ fontSize: "13px", color: "#ea580c", fontWeight: 800 }}>— Juliana M., Curitiba — PR ✅</div>
+        </div>
+
+        {/* Carrossel infinito — prints reais de WhatsApp */}
         <style dangerouslySetInnerHTML={{ __html: `
           @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
           .marquee-track { display: flex; gap: 16px; width: max-content; animation: marquee 28s linear infinite; }
@@ -677,24 +738,15 @@ export default function FornecedoresPage() {
         ` }} />
         <div style={{ overflow: "hidden", marginBottom: "28px" }}>
           <div className="marquee-track">
-            {[...Array(2)].flatMap(() =>
+            {[...Array(2)].flatMap((_, setIdx) =>
               [4,5,6,7,8,9].map((n) => (
-                <div key={`${n}-${Math.random()}`} style={{ flexShrink: 0, width: isMobile ? "220px" : "280px", borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
+                <div key={`${setIdx}-${n}`} style={{ flexShrink: 0, width: isMobile ? "220px" : "280px", borderRadius: "16px", overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,0.13)", border: "1px solid #e5e7eb" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={`/depoimentos/dep${n}.webp`} alt={`Depoimento ${n}`} loading="lazy" decoding="async" style={{ width: "100%", height: "auto", display: "block" }} />
                 </div>
               ))
             )}
           </div>
-        </div>
-
-        {/* Depoimento em destaque */}
-        <div style={{ background: "#fff7ed", border: "2px solid #ea580c", borderRadius: "14px", padding: isMobile ? "20px 16px" : "24px 32px", margin: `0 auto 24px`, maxWidth: isMobile ? "100%" : "600px", textAlign: "center" }}>
-          <div style={{ fontSize: "28px", color: "#ea580c", marginBottom: "10px", lineHeight: 1 }}>❝</div>
-          <p style={{ fontSize: isMobile ? "15px" : "17px", fontWeight: 700, color: "#111", lineHeight: 1.5, margin: "0 0 12px" }}>
-            "Pedi várias peças e realmente são muito baratas. Já vendi mais da metade no primeiro mês."
-          </p>
-          <div style={{ fontSize: "13px", color: "#ea580c", fontWeight: 800 }}>— Cliente verificado ✅</div>
         </div>
 
         <div style={{ textAlign: "center" }}>
@@ -759,14 +811,14 @@ export default function FornecedoresPage() {
                   <div style={{ background: "#dcfce7", border: "2px solid #86efac", borderRadius: "10px", padding: "12px", textAlign: "center", position: "relative" }}>
                     <div style={{ position: "absolute", top: "-10px", left: "50%", transform: "translateX(-50%)", background: "#16a34a", color: "#fff", fontSize: "9px", fontWeight: 800, padding: "2px 10px", borderRadius: "100px", whiteSpace: "nowrap" }}>VOCÊ LEVA</div>
                     <div style={{ fontSize: "10px", fontWeight: 800, color: "#16a34a", textTransform: "uppercase", marginBottom: "4px" }}>Lista completa VIP</div>
-                    <div style={{ fontSize: "22px", fontWeight: 900, color: "#16a34a" }}>R$9,90</div>
+                    <div style={{ fontSize: "22px", fontWeight: 900, color: "#16a34a" }}>R$37,90</div>
                     <div style={{ fontSize: "10px", color: "#16a34a", marginTop: "2px" }}>180 fornecedores</div>
                   </div>
                 </div>
 
                 <div id="cta-principal" style={{ textAlign: "center", marginBottom: "20px", scrollMarginTop: "20px" }}>
                   <div style={{ fontSize: "13px", color: "#9ca3af", textDecoration: "line-through", marginBottom: "4px" }}>De R$397,00 por apenas:</div>
-                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$9,90</div>
+                  <div style={{ fontSize: isMobile ? "42px" : "52px", fontWeight: 900, color: "#ea580c", lineHeight: 1 }}>R$37,90</div>
                   <div style={{ fontSize: "13px", color: "#22c55e", fontWeight: 700, marginTop: "6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
                 </div>
 
@@ -794,7 +846,7 @@ export default function FornecedoresPage() {
                   </div>
                 </div>
 
-                <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", width: "100%", background: "#22c55e", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(34,197,94,0.35)", marginBottom: "12px" }}>
+                <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", width: "100%", background: "#ea580c", color: "#fff", border: "none", borderRadius: "12px", padding: "18px", fontSize: "17px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", fontFamily: "inherit", boxShadow: "0 4px 20px rgba(234,88,12,0.35)", marginBottom: "12px" }}>
                   QUERO ACESSAR AGORA!
                 </a>
                 <p style={{ textAlign: "center", fontSize: "12px", color: "#6b7280", marginBottom: "16px", lineHeight: 1.6 }}>
@@ -803,7 +855,7 @@ export default function FornecedoresPage() {
 
                 <div style={{ textAlign: "center" }}>
                   <p style={{ fontSize: "12px", color: "#ea580c", fontWeight: 700, marginBottom: "10px" }}>⏳ Esta oferta expira em:</p>
-                  <CountdownBox h={h} m={m} s={s} />
+                  <CountdownBox />
                 </div>
               </div>
             </div>
@@ -826,28 +878,17 @@ export default function FornecedoresPage() {
         </div>
       </div>
 
-      {/* ── QUEM SOMOS ── */}
-      <div style={{ background: "#f9fafb", padding: secPad, borderTop: "1px solid #f3f4f6" }}>
-        <div style={{ maxWidth: isMobile ? 480 : 700, margin: "0 auto", textAlign: "center" }}>
-          <PillLabel>QUEM SOMOS</PillLabel>
-          <h2 style={{ fontSize: isMobile ? "20px" : "26px", fontWeight: 900, marginBottom: "20px", lineHeight: 1.3 }}>
-            Por trás dessa lista tem gente que já esteve no seu lugar
-          </h2>
-          <div style={{ background: "#fff", border: "1px solid #fed7aa", borderRadius: "16px", padding: isMobile ? "24px 18px" : "32px 36px", textAlign: "left" }}>
-            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
-              Somos um grupo de pessoas que trabalha com revenda em alta escala há anos. No começo, passamos pelo mesmo problema que você provavelmente está enfrentando agora: <strong>não sabíamos onde achar fornecedores bons, que vendessem com preço real de atacado, sem exigir CNPJ ou pedido mínimo absurdo.</strong>
-            </p>
-            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "14px" }}>
-              Demoramos anos testando, ligando, pedindo catálogo e filtrando os que realmente entregam. Hoje compramos direto da fonte, com margem que a maioria dos revendedores nem imagina que é possível.
-            </p>
-            <p style={{ fontSize: isMobile ? "14px" : "15px", color: "#444", lineHeight: 1.75, marginBottom: "0" }}>
-              Quando percebemos que todo mundo ao nosso redor travava exatamente nesse mesmo ponto, <strong>não saber onde comprar</strong>, decidimos organizar tudo o que levamos anos para descobrir e entregar por um preço acessível pra quem está começando. <strong>Essa lista é o atalho que a gente queria ter tido no início.</strong>
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* ── FAQ ── */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        details.faq { border: 1.5px solid #e5e7eb; border-radius: 12px; overflow: hidden; background: #fff; }
+        details.faq[open] { border-color: #ea580c; }
+        details.faq summary { display: flex; justify-content: space-between; align-items: center; padding: ${isMobile ? "16px" : "18px 24px"}; font-weight: 700; font-size: ${isMobile ? "13px" : "15px"}; color: #111; gap: 12px; cursor: pointer; list-style: none; font-family: inherit; }
+        details.faq[open] summary { background: #fff7ed; color: #ea580c; }
+        details.faq summary::-webkit-details-marker { display: none; }
+        details.faq summary::after { content: '▼'; font-size: 11px; color: #555; flex-shrink: 0; transition: transform 0.2s; }
+        details.faq[open] summary::after { transform: rotate(180deg); }
+        details.faq .faq-body { padding: ${isMobile ? "0 16px 16px" : "0 24px 20px"}; font-size: ${isMobile ? "13px" : "15px"}; color: #555; line-height: 1.7; }
+      ` }} />
       <div style={{ background: "#f9fafb", padding: `40px 20px ${isMobile ? "100px" : "80px"}` }}>
         <div style={{ maxWidth: isMobile ? 480 : 860, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: "32px" }}>
@@ -858,21 +899,14 @@ export default function FornecedoresPage() {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "40px" }}>
             {faqs.map((f, i) => (
-              <div key={i} style={{ border: `1.5px solid ${openFaq === i ? "#ea580c" : "#e5e7eb"}`, borderRadius: "12px", overflow: "hidden", background: "#fff", transition: "border-color 0.2s" }}>
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", padding: isMobile ? "16px" : "18px 24px", background: openFaq === i ? "#fff7ed" : "none", border: "none", cursor: "pointer", textAlign: "left", fontWeight: 700, fontSize: isMobile ? "13px" : "15px", color: openFaq === i ? "#ea580c" : "#111", gap: "12px", fontFamily: "inherit", transition: "background 0.2s" }}>
-                  <span>{f.q}</span>
-                  <IconChevron open={openFaq === i} />
-                </button>
-                {openFaq === i && (
-                  <div style={{ padding: isMobile ? "0 16px 16px" : "0 24px 20px", fontSize: isMobile ? "13px" : "15px", color: "#555", lineHeight: 1.7 }}>
-                    {f.a}
-                  </div>
-                )}
-              </div>
+              <details key={i} className="faq" open={i === 0}>
+                <summary>{f.q}</summary>
+                <div className="faq-body">{f.a}</div>
+              </details>
             ))}
           </div>
           <div style={{ textAlign: "center" }}>
-            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA • R$9,90</CTAButton>
+            <CTAButton large={!isMobile} fullWidth={isMobile}>QUERO MINHA LISTA AGORA • R$37,90</CTAButton>
             <p style={{ marginTop: "12px", textAlign: "center", fontSize: "11px", color: "#9ca3af" }}>🔒 Compra 100% segura • Acesso imediato • 7 dias de garantia</p>
           </div>
         </div>
@@ -902,10 +936,12 @@ export default function FornecedoresPage() {
         </div>
       </div>
 
+      <ExitIntentPopup isMobile={isMobile} />
+
       {/* ── Barra fixa ── */}
-      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#ea580c", padding: "12px 20px", boxShadow: "0 -2px 12px rgba(0,0,0,0.15)", zIndex: 50 }}>
-        <a href="#cta-principal" style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#fff", color: "#ea580c", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit" }}>
-          ACESSAR FORNECEDORES →
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "#15803d", padding: "10px 16px", boxShadow: "0 -4px 16px rgba(0,0,0,0.25)", zIndex: 50 }}>
+        <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ width: "100%", maxWidth: isMobile ? "480px" : "600px", margin: "0 auto", display: "block", boxSizing: "border-box", textAlign: "center", textDecoration: "none", background: "#22c55e", color: "#fff", border: "none", borderRadius: "8px", padding: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: 800, cursor: "pointer", textTransform: "uppercase", letterSpacing: "0.5px", fontFamily: "inherit", boxShadow: "0 2px 12px rgba(34,197,94,0.4)" }}>
+          QUERO ACESSAR OS 180 FORNECEDORES • R$37,90 →
         </a>
       </div>
     </div>
