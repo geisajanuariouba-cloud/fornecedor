@@ -75,9 +75,9 @@ function goToCheckout(e?: React.MouseEvent) {
 function useCountdown(totalSeconds: number) {
   const [time, setTime] = useState(totalSeconds);
   useEffect(() => {
-    const key = "fv_home_countdown_end";
+    const key = "fv_home_cd2";
     let end = parseInt(localStorage.getItem(key) ?? "0", 10);
-    if (!end) {
+    if (!end || end < Date.now()) {
       end = Date.now() + totalSeconds * 1000;
       localStorage.setItem(key, String(end));
     }
