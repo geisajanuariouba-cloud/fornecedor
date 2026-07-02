@@ -321,13 +321,14 @@ export default function FornecedoresPage() {
                 const btn = e.currentTarget;
                 const video = btn.parentElement?.querySelector("video") as HTMLVideoElement;
                 if (!video) return;
-                video.muted = !video.muted;
-                btn.textContent = video.muted ? "🔇 Ativar som" : "🔊 Som ativado";
+                video.muted = false;
+                btn.style.display = "none";
               }}
-              style={{ position:"absolute", bottom:"60px", right:"12px", background:"rgba(0,0,0,0.7)", color:"#fff", border:"none", borderRadius:"8px", padding:"8px 14px", fontSize:"13px", fontWeight:700, cursor:"pointer", fontFamily:"inherit", zIndex:10 }}
+              style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", background:"rgba(0,0,0,0.82)", color:"#fff", border:"2px solid rgba(255,255,255,0.3)", borderRadius:"12px", padding:"14px 22px", fontSize:"15px", fontWeight:800, cursor:"pointer", fontFamily:"inherit", zIndex:10, display:"flex", alignItems:"center", gap:"10px", whiteSpace:"nowrap", animation:"pulse-btn 1.5s ease-in-out infinite" }}
             >
-              🔇 Ativar som
+              🔊 Clique aqui para ativar o som
             </button>
+            <style>{`@keyframes pulse-btn { 0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)} 50%{opacity:0.85;transform:translate(-50%,-50%) scale(1.04)} }`}</style>
           </div>
 
           {/* Timer na faixa preta */}
