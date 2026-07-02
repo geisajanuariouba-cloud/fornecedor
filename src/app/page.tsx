@@ -43,6 +43,11 @@ function buildCheckoutUrl() {
   return `${CHECKOUT_URL}${CHECKOUT_URL.includes("?") ? "&" : "?"}${qs}`;
 }
 
+function scrollToCTA(e: React.MouseEvent) {
+  e.preventDefault();
+  document.getElementById("cta-principal")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 let redirecting = false;
 function goToCheckout(e?: React.MouseEvent) {
   if (e) e.preventDefault();
@@ -305,7 +310,7 @@ export default function FornecedoresPage() {
             ⏳ Esta oferta encerra em: <UrgencyCountdown />
           </div>
 
-          <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:isMobile?"16px 28px":"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", letterSpacing:"0.5px", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit" }}>
+          <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:isMobile?"16px 28px":"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", letterSpacing:"0.5px", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit" }}>
             QUERO ACESSO AGORA →
           </a>
           <p style={{ fontSize:"12px", color:"#9ca3af", marginTop:"10px" }}>🔒 Acesso imediato • Pagamento único • 7 dias de garantia</p>
@@ -350,7 +355,7 @@ export default function FornecedoresPage() {
           </div>
         </div>
         <div style={{ textAlign:"center" }}>
-          <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
+          <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO ACESSAR ESSAS CATEGORIAS
           </a>
         </div>
@@ -383,7 +388,7 @@ export default function FornecedoresPage() {
               </div>
             </div>
           </div>
-          <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
+          <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO ACESSAR A LISTA AGORA
           </a>
         </div>
@@ -443,7 +448,7 @@ export default function FornecedoresPage() {
             </div>
           </div>
 
-          <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit" }}>
+          <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit" }}>
             QUERO TUDO ISSO AGORA →
           </a>
         </div>
@@ -483,21 +488,21 @@ export default function FornecedoresPage() {
         <div style={{ textAlign:"center" }}>
           <div style={{ color:"#f59e0b", fontSize:"20px", letterSpacing:"2px", marginBottom:"6px" }}>★★★★★</div>
           <p style={{ fontSize:"13px", color:"#555", marginBottom:"20px" }}>+5.000 avaliações de 5 estrelas</p>
-          <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
+          <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO ACESSAR OS 180 FORNECEDORES
           </a>
         </div>
       </div>
 
       {/* ── OFERTA ── */}
-      <div style={{ background:"linear-gradient(160deg,#0a0a0a 0%,#1a1a1a 100%)", padding:secPad }}>
+      <div id="cta-principal" style={{ background:"linear-gradient(160deg,#0a0a0a 0%,#1a1a1a 100%)", padding:secPad, scrollMarginTop:"0px" }}>
         <div style={{ maxWidth:560, margin:"0 auto", textAlign:"center" }}>
           <div style={{ display:"inline-block", border:"1.5px solid #ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:700, color:"#ea580c", letterSpacing:"0.08em", marginBottom:"20px" }}>ACESSO EXCLUSIVO</div>
 
           <div style={{ border:"2px solid #333", borderRadius:"20px", padding:isMobile?"24px 20px":"36px 32px", background:"#111" }}>
             <div style={{ fontSize:"15px", fontWeight:800, color:"#9ca3af", textTransform:"uppercase", marginBottom:"8px", letterSpacing:"0.08em" }}>LISTA VIP DE FORNECEDORES</div>
 
-            <div id="cta-principal" style={{ scrollMarginTop:"20px", marginBottom:"16px" }}>
+            <div style={{ marginBottom:"16px" }}>
               <div style={{ fontSize:"12px", color:"#6b7280", marginBottom:"4px" }}>
                 <span style={{ textDecoration:"line-through" }}>De R${totalGeral},00</span>
                 <span style={{ background:"#ea580c", color:"#fff", fontSize:"10px", fontWeight:800, padding:"2px 8px", borderRadius:"100px", marginLeft:"8px" }}>+90% OFF</span>
@@ -545,7 +550,7 @@ export default function FornecedoresPage() {
             Você tem 7 dias para testar. Se abrir a lista e não ficar satisfeito com o que encontrou, por qualquer motivo, sem precisar explicar nada, é só mandar um e-mail e devolvemos 100% do valor.
           </p>
           <p style={{ fontSize:"13px", fontWeight:700, color:"#ea580c", letterSpacing:"0.05em", marginBottom:"24px" }}>O RISCO É INTEIRAMENTE NOSSO, NÃO SEU.</p>
-          <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:isMobile?"block":"inline-block", boxSizing:"border-box", textAlign:"center", textDecoration:"none", background:"#ea580c", color:"#fff", borderRadius:"12px", padding:"18px 48px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
+          <a href="#cta-principal" onClick={scrollToCTA} style={{ display:isMobile?"block":"inline-block", boxSizing:"border-box", textAlign:"center", textDecoration:"none", background:"#ea580c", color:"#fff", borderRadius:"12px", padding:"18px 48px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO GARANTIR MEU ACESSO →
           </a>
         </div>
@@ -568,7 +573,7 @@ export default function FornecedoresPage() {
           </div>
           <div style={{ textAlign:"center" }}>
             <h3 style={{ fontSize:isMobile?"20px":"26px", fontWeight:900, marginBottom:"20px" }}>Pronto pra começar a lucrar?</h3>
-            <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:isMobile?"block":"inline-block", boxSizing:"border-box", textAlign:"center", textDecoration:"none", background:"#ea580c", color:"#fff", borderRadius:"12px", padding:"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit", marginBottom:"12px" }}>
+            <a href="#cta-principal" onClick={scrollToCTA} style={{ display:isMobile?"block":"inline-block", boxSizing:"border-box", textAlign:"center", textDecoration:"none", background:"#ea580c", color:"#fff", borderRadius:"12px", padding:"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit", marginBottom:"12px" }}>
               QUERO ACESSO AGORA →
             </a>
             <p style={{ marginTop:"12px", fontSize:"11px", color:"#9ca3af" }}>🔒 Compra 100% segura • Acesso imediato • 7 dias de garantia</p>
