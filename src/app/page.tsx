@@ -111,6 +111,8 @@ const categorias = [
   { label: "SUPLEMENTOS", emoji: "💊" },
 ];
 
+const LISTA_VALOR = 197;
+
 const bonuses = [
   { n:"01", emoji:"🏪", title:"GUIA LOJA DE 10", desc:"Aprenda a montar sua loja virtual do zero e faturar seus primeiros R$1.000 na primeira semana, mesmo sem experiência em vendas online.", valor: 37 },
   { n:"02", emoji:"🔥", title:"LISTA DOS PRODUTOS MAIS VENDIDOS", desc:"Os produtos que mais vendem agora no Mercado Livre, Shopee e Amazon, já com o fornecedor certo indicado dentro da lista.", valor: 37 },
@@ -121,6 +123,7 @@ const bonuses = [
 ];
 
 const bonusTotal = bonuses.reduce((s, b) => s + b.valor, 0);
+const totalGeral = LISTA_VALOR + bonusTotal;
 
 const faqs = [
   { q:"O que é a Lista de Fornecedores?", a:"É um arquivo digital com 180 fornecedores verificados, com contato direto, categorias de produtos, condições de compra e forma de pagamento. Tudo que você precisa para começar a revender hoje mesmo." },
@@ -391,26 +394,51 @@ export default function FornecedoresPage() {
           <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900, marginBottom:"6px", textTransform:"uppercase" }}>COMPRANDO HOJE VOCÊ LEVA</h2>
           <h3 style={{ fontSize:isMobile?"22px":"32px", fontWeight:900, color:"#ea580c", marginBottom:"32px" }}>+6 PRESENTES DE BRINDE 🎁</h3>
 
-          <div style={{ display:"flex", flexDirection:"column", gap:"16px", marginBottom:"24px" }}>
+          {/* Item principal: a lista */}
+          <div style={{ display:"flex", alignItems:"flex-start", gap:"16px", background:"#fff7ed", border:"2px solid #ea580c", borderRadius:"16px", padding:isMobile?"14px":"20px 24px", textAlign:"left", marginBottom:"12px" }}>
+            <div style={{ width:isMobile?"48px":"56px", height:isMobile?"48px":"56px", background:"#ea580c", borderRadius:"12px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:isMobile?"28px":"32px" }}>📋</div>
+            <div style={{ flex:1 }}>
+              <div style={{ fontSize:"11px", fontWeight:800, color:"#ea580c", marginBottom:"2px" }}>PRODUTO PRINCIPAL</div>
+              <div style={{ fontSize:isMobile?"14px":"16px", fontWeight:900, color:"#111", marginBottom:"4px", lineHeight:1.3 }}>LISTA VIP DE FORNECEDORES</div>
+              <div style={{ fontSize:"12px", color:"#555", lineHeight:1.5 }}>180 fornecedores verificados em 14 categorias, com contato direto, atacado real e margem de 100% a 400%.</div>
+            </div>
+            <div style={{ textAlign:"right", flexShrink:0 }}>
+              <div style={{ fontSize:"13px", fontWeight:900, color:"#ea580c" }}>R${LISTA_VALOR}</div>
+            </div>
+          </div>
+
+          <div style={{ display:"flex", flexDirection:"column", gap:"10px", marginBottom:"20px" }}>
             {bonuses.map(b => (
-              <div key={b.n} style={{ display:"flex", alignItems:"flex-start", gap:"16px", background:"#fff", border:"1px solid #e5e7eb", borderRadius:"16px", padding:isMobile?"14px":"20px 24px", textAlign:"left", boxShadow:"0 2px 8px rgba(0,0,0,0.05)" }}>
-                <div style={{ width:isMobile?"48px":"56px", height:isMobile?"48px":"56px", background:"#fff7ed", borderRadius:"12px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:isMobile?"28px":"32px" }}>{b.emoji}</div>
+              <div key={b.n} style={{ display:"flex", alignItems:"flex-start", gap:"16px", background:"#fff", border:"1px solid #e5e7eb", borderRadius:"14px", padding:isMobile?"12px":"16px 20px", textAlign:"left" }}>
+                <div style={{ width:isMobile?"40px":"48px", height:isMobile?"40px":"48px", background:"#fff7ed", borderRadius:"10px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:isMobile?"24px":"28px" }}>{b.emoji}</div>
                 <div style={{ flex:1 }}>
-                  <div style={{ fontSize:"11px", fontWeight:800, color:"#ea580c", marginBottom:"2px" }}>BÔNUS {b.n}</div>
-                  <div style={{ fontSize:isMobile?"14px":"16px", fontWeight:900, color:"#111", marginBottom:"4px", lineHeight:1.3 }}>{b.title}</div>
-                  <div style={{ fontSize:"12px", color:"#555", lineHeight:1.5 }}>{b.desc}</div>
+                  <div style={{ fontSize:"10px", fontWeight:800, color:"#ea580c", marginBottom:"1px" }}>BÔNUS {b.n}</div>
+                  <div style={{ fontSize:isMobile?"13px":"15px", fontWeight:800, color:"#111", lineHeight:1.3 }}>{b.title}</div>
                 </div>
                 <div style={{ textAlign:"right", flexShrink:0 }}>
                   <div style={{ fontSize:"10px", color:"#9ca3af", textDecoration:"line-through" }}>R${b.valor}</div>
-                  <div style={{ fontSize:"14px", fontWeight:900, color:"#16a34a" }}>GRÁTIS</div>
+                  <div style={{ fontSize:"12px", fontWeight:900, color:"#16a34a" }}>GRÁTIS</div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div style={{ background:"#ea580c", borderRadius:"14px", padding:"18px 24px", color:"#fff", marginBottom:"24px", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"8px" }}>
-            <span style={{ fontSize:isMobile?"14px":"16px", fontWeight:700 }}>VALOR TOTAL DOS 6 BÔNUS:</span>
-            <span style={{ fontSize:isMobile?"22px":"28px", fontWeight:900 }}>R$ {bonusTotal},00</span>
+          {/* Total geral */}
+          <div style={{ background:"#111", borderRadius:"14px", padding:"18px 24px", marginBottom:"24px" }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"8px", marginBottom:"10px" }}>
+              <span style={{ fontSize:isMobile?"13px":"15px", fontWeight:700, color:"#9ca3af" }}>VALOR TOTAL (lista + 6 bônus):</span>
+              <span style={{ fontSize:isMobile?"20px":"24px", fontWeight:900, color:"#fff", textDecoration:"line-through" }}>R$ {totalGeral},00</span>
+            </div>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"8px", borderTop:"1px solid #333", paddingTop:"10px" }}>
+              <div>
+                <span style={{ fontSize:isMobile?"13px":"15px", fontWeight:800, color:"#ea580c" }}>VOCÊ PAGA HOJE:</span>
+                <div style={{ fontSize:"11px", color:"#6b7280", marginTop:"2px" }}>Mais de 90% de desconto</div>
+              </div>
+              <div style={{ textAlign:"right" }}>
+                <div style={{ fontSize:isMobile?"28px":"34px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$ 37,90</div>
+                <div style={{ fontSize:"12px", color:"#22c55e", fontWeight:700 }}>ou 12x de R$ 3,90</div>
+              </div>
+            </div>
           </div>
 
           <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit" }}>
@@ -468,8 +496,15 @@ export default function FornecedoresPage() {
             <div style={{ fontSize:"15px", fontWeight:800, color:"#9ca3af", textTransform:"uppercase", marginBottom:"8px", letterSpacing:"0.08em" }}>LISTA VIP DE FORNECEDORES</div>
 
             <div id="cta-principal" style={{ scrollMarginTop:"20px", marginBottom:"16px" }}>
-              <div style={{ fontSize:isMobile?"48px":"64px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$37,90</div>
-              <div style={{ fontSize:"13px", color:"#22c55e", fontWeight:700, marginTop:"6px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
+              <div style={{ fontSize:"12px", color:"#6b7280", marginBottom:"4px" }}>
+                <span style={{ textDecoration:"line-through" }}>De R${totalGeral},00</span>
+                <span style={{ background:"#ea580c", color:"#fff", fontSize:"10px", fontWeight:800, padding:"2px 8px", borderRadius:"100px", marginLeft:"8px" }}>+90% OFF</span>
+              </div>
+              <div style={{ fontSize:isMobile?"44px":"58px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$37,90</div>
+              <div style={{ fontSize:isMobile?"22px":"26px", fontWeight:900, color:"#fff", marginTop:"6px", background:"#15803d", borderRadius:"8px", padding:"8px 16px", display:"inline-block" }}>
+                12x de <span style={{ color:"#22c55e" }}>R$ 3,90</span>
+              </div>
+              <div style={{ fontSize:"12px", color:"#6b7280", fontWeight:600, marginTop:"8px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
             </div>
 
             <div style={{ display:"flex", flexDirection:"column", gap:"8px", marginBottom:"24px", textAlign:"left" }}>
