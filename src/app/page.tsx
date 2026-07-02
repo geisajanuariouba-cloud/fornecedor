@@ -92,7 +92,7 @@ function useIsMobile() {
 
 /* ── dados ── */
 
-const COUNTDOWN_SECONDS = 2 * 3600 + 47 * 60 + 33;
+const COUNTDOWN_SECONDS = 15 * 60;
 
 const categorias = [
   { label: "ROUPAS", emoji: "👗" },
@@ -267,7 +267,7 @@ export default function FornecedoresPage() {
       </div>
 
       {/* ── HERO ── */}
-      <div style={{ background:"linear-gradient(160deg,#fff7ed 0%,#fff 70%)", padding: isMobile ? "32px 20px 28px" : "48px 40px 40px" }}>
+      <div style={{ background:"#fff7ed", padding: isMobile ? "32px 20px 28px" : "48px 40px 40px" }}>
         <div style={{ maxWidth:maxW, margin:"0 auto", textAlign:"center" }}>
 
           {/* Logo */}
@@ -276,15 +276,15 @@ export default function FornecedoresPage() {
           </div>
 
           {/* Headline */}
-          <h1 style={{ fontSize:isMobile?"28px":"46px", fontWeight:900, lineHeight:1.15, marginBottom:"16px", color:"#111" }}>
-            Descubra os{" "}
-            <span style={{ color:"#ea580c" }}>180+ fornecedores</span>{" "}
-            que vendedores de sucesso usam pra faturar até{" "}
-            <span style={{ color:"#ea580c" }}>R$10k/mês</span>
+          <h1 style={{ fontSize:isMobile?"26px":"42px", fontWeight:900, lineHeight:1.2, marginBottom:"16px", color:"#111" }}>
+            Assista o vídeo abaixo e descubra como{" "}
+            <span style={{ color:"#ea580c" }}>começar hoje</span>{" "}
+            com menos de{" "}
+            <span style={{ color:"#ea580c" }}>R$100 no bolso</span>
           </h1>
 
           <p style={{ fontSize:isMobile?"15px":"18px", color:"#555", lineHeight:1.6, marginBottom:"28px", maxWidth:"640px", margin:"0 auto 28px" }}>
-            Acesse a lista com menos de R$100 no bolso, sem CNPJ, sem experiência e sem risco.
+            Sem CNPJ, sem experiência e com 7 dias de garantia total.
           </p>
 
           {/* Video player */}
@@ -294,7 +294,7 @@ export default function FornecedoresPage() {
               playsInline
               preload="metadata"
               style={{ width:"100%", display:"block" }}
-              poster=""
+              poster="/og.png"
             >
               <source src="/vsl/vsl.mp4" type="video/mp4" />
             </video>
