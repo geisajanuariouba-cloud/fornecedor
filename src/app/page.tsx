@@ -292,43 +292,38 @@ export default function FornecedoresPage() {
             <span style={{ color:"#ea580c" }}>R$100 no bolso</span>
           </h1>
 
-          <p style={{ fontSize:isMobile?"15px":"18px", color:"#555", lineHeight:1.6, marginBottom:"28px", maxWidth:"640px", margin:"0 auto 28px" }}>
+          <p style={{ fontSize:isMobile?"15px":"18px", color:"#555", lineHeight:1.6, marginBottom:"20px", maxWidth:"640px", margin:"0 auto 20px" }}>
             Sem CNPJ, sem experiência e com 7 dias de garantia total.
           </p>
 
+          <button
+            id="vsl-play-btn"
+            onClick={() => {
+              const video = document.getElementById("vsl-video") as HTMLVideoElement;
+              const btn = document.getElementById("vsl-play-btn");
+              if (!video) return;
+              video.muted = false;
+              video.play().catch(() => {});
+              if (btn) btn.style.display = "none";
+            }}
+            style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:"12px", background:"#ea580c", color:"#fff", border:"none", borderRadius:"12px", padding:isMobile?"16px 28px":"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", letterSpacing:"0.5px", boxShadow:"0 4px 24px rgba(234,88,12,0.5)", fontFamily:"inherit", cursor:"pointer", margin:"0 auto 20px", animation:"pulse-cta 1.8s ease-in-out infinite" }}
+          >
+            <span style={{ fontSize:"22px" }}>▶</span> Clique aqui e comece a assistir
+          </button>
+          <style>{`@keyframes pulse-cta { 0%,100%{box-shadow:0 4px 24px rgba(234,88,12,0.5)} 50%{box-shadow:0 4px 40px rgba(234,88,12,0.85)} }`}</style>
+
           {/* Video player */}
-          <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000", position:"relative" }}>
+          <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000" }}>
             <video
-              ref={(el) => {
-                if (el) {
-                  el.muted = true;
-                  el.play().catch(() => {});
-                }
-              }}
+              id="vsl-video"
               controls
               playsInline
-              autoPlay
-              muted
-              preload="auto"
+              preload="none"
               style={{ width:"100%", display:"block" }}
               poster="/vsl/cover.jpg"
-              onCanPlay={(e) => { (e.target as HTMLVideoElement).play().catch(() => {}); }}
             >
               <source src="/vsl/vsl.mp4" type="video/mp4" />
             </video>
-            <button
-              onClick={(e) => {
-                const btn = e.currentTarget;
-                const video = btn.parentElement?.querySelector("video") as HTMLVideoElement;
-                if (!video) return;
-                video.muted = false;
-                btn.style.display = "none";
-              }}
-              style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", background:"rgba(0,0,0,0.82)", color:"#fff", border:"2px solid rgba(255,255,255,0.3)", borderRadius:"12px", padding:"14px 22px", fontSize:"15px", fontWeight:800, cursor:"pointer", fontFamily:"inherit", zIndex:10, display:"flex", alignItems:"center", gap:"10px", whiteSpace:"nowrap", animation:"pulse-btn 1.5s ease-in-out infinite" }}
-            >
-              🔊 Clique aqui para ativar o som
-            </button>
-            <style>{`@keyframes pulse-btn { 0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)} 50%{opacity:0.85;transform:translate(-50%,-50%) scale(1.04)} }`}</style>
           </div>
 
           {/* Timer na faixa preta */}
