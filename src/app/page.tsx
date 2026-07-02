@@ -288,14 +288,16 @@ export default function FornecedoresPage() {
           </p>
 
           {/* Video player */}
-          <div style={{ background:"#111", borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", position:"relative", aspectRatio:"16/9", display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", boxShadow:"0 8px 40px rgba(0,0,0,0.3)" }}
-            onClick={() => { /* add video URL here */ }}>
-            <div style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 100%)" }} />
-            <div style={{ position:"relative", zIndex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:"12px" }}>
-              <div style={{ width:isMobile?"64px":"80px", height:isMobile?"64px":"80px", background:"#ea580c", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 0 0 12px rgba(234,88,12,0.2)", transition:"transform 0.2s" }}>
-                <svg width={isMobile?"28":"36"} height={isMobile?"28":"36"} viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>
-            </div>
+          <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000" }}>
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              style={{ width:"100%", display:"block" }}
+              poster=""
+            >
+              <source src="/vsl/vsl.mp4" type="video/mp4" />
+            </video>
           </div>
 
           {/* Timer na faixa preta */}
