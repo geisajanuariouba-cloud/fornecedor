@@ -55,7 +55,7 @@ function goToCheckout(e?: React.MouseEvent) {
   redirecting = true;
   const eventId = `ic_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
   const dest = buildCheckoutUrl();
-  try { window.fbq?.("track","InitiateCheckout",PRODUCT_DATA,{ eventID: eventId }); } catch { /**/ }
+  // Não disparamos fbq aqui — o Utmify já dispara InitiateCheckout ao detectar a navegação para o checkout
   const fbp = document.cookie.split(";").find(c=>c.trim().startsWith("_fbp="))?.split("=")[1] ?? "";
   const fbc = document.cookie.split(";").find(c=>c.trim().startsWith("_fbc="))?.split("=")[1] ?? "";
   fetch("/api/capi",{ method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ fbp, fbc, url: window.location.href, event_id: eventId, value: PRICE_VALUE }), keepalive: true }).catch(()=>{});
