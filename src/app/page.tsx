@@ -439,12 +439,11 @@ export default function FornecedoresPage() {
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"8px", borderTop:"1px solid #333", paddingTop:"10px" }}>
               <div>
                 <span style={{ fontSize:isMobile?"13px":"15px", fontWeight:800, color:"#ea580c" }}>VOCÊ PAGA HOJE:</span>
-                <div style={{ fontSize:"11px", color:"#6b7280", marginTop:"2px" }}>Mais de 90% de desconto</div>
+                <div style={{ display:"inline-flex", alignItems:"center", gap:"6px", marginTop:"6px", background:"#22c55e", borderRadius:"6px", padding:"4px 10px" }}>
+                  <span style={{ fontSize:"13px", fontWeight:900, color:"#fff" }}>-90% de desconto</span>
+                </div>
               </div>
-              <div style={{ textAlign:"right" }}>
-                <div style={{ fontSize:isMobile?"28px":"34px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$ 37,90</div>
-                <div style={{ fontSize:"12px", color:"#22c55e", fontWeight:700 }}>ou 12x de R$ 3,90</div>
-              </div>
+              <div style={{ fontSize:isMobile?"32px":"38px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$ 37,90</div>
             </div>
           </div>
 
@@ -508,8 +507,8 @@ export default function FornecedoresPage() {
                 <span style={{ background:"#ea580c", color:"#fff", fontSize:"10px", fontWeight:800, padding:"2px 8px", borderRadius:"100px", marginLeft:"8px" }}>+90% OFF</span>
               </div>
               <div style={{ fontSize:isMobile?"44px":"58px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$37,90</div>
-              <div style={{ fontSize:isMobile?"22px":"26px", fontWeight:900, color:"#fff", marginTop:"6px", background:"#15803d", borderRadius:"8px", padding:"8px 16px", display:"inline-block" }}>
-                12x de <span style={{ color:"#22c55e" }}>R$ 3,90</span>
+              <div style={{ display:"inline-flex", alignItems:"center", gap:"6px", marginTop:"8px", background:"#15803d", borderRadius:"8px", padding:"8px 16px" }}>
+                <span style={{ fontSize:isMobile?"16px":"18px", fontWeight:900, color:"#fff" }}>-90% de desconto</span>
               </div>
               <div style={{ fontSize:"12px", color:"#6b7280", fontWeight:600, marginTop:"8px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
             </div>
