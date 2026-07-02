@@ -361,23 +361,23 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth:maxW, margin:"0 auto", textAlign:"center" }}>
           <div style={{ display:"inline-block", border:"1.5px solid #ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:700, color:"#ea580c", letterSpacing:"0.08em", marginBottom:"14px" }}>POR QUE A LISTA VIP?</div>
           <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900, marginBottom:"28px", textTransform:"uppercase" }}>A DIFERENÇA É <span style={{color:"#ea580c"}}>GRITANTE</span></h2>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:isMobile?"12px":"24px", maxWidth:"700px", margin:"0 auto 28px" }}>
-            <div style={{ border:"2px solid #fecaca", borderRadius:"12px", overflow:"hidden" }}>
-              <div style={{ background:"#fee2e2", padding:"12px", fontWeight:800, fontSize:isMobile?"12px":"14px", color:"#dc2626" }}>❌ SEM A LISTA</div>
-              <div style={{ padding:"14px", display:"flex", flexDirection:"column", gap:"10px" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:isMobile?"14px":"32px", maxWidth:"860px", margin:"0 auto 36px" }}>
+            <div style={{ border:"2px solid #fecaca", borderRadius:"16px", overflow:"hidden" }}>
+              <div style={{ background:"#fee2e2", padding:isMobile?"14px":"18px 24px", fontWeight:800, fontSize:isMobile?"13px":"16px", color:"#dc2626" }}>❌ SEM A LISTA</div>
+              <div style={{ padding:isMobile?"14px":"20px 24px", display:"flex", flexDirection:"column", gap:isMobile?"12px":"16px" }}>
                 {["Compra no varejo e perde margem","Não sabe onde achar fornecedor confiável","Risco de cair em golpe","Acha que precisa de muito capital","Fica travado sem saber por onde começar"].map(item => (
-                  <div key={item} style={{ display:"flex", alignItems:"flex-start", gap:"6px", textAlign:"left" }}>
-                    <IconX size={isMobile?14:16}/><span style={{ fontSize:isMobile?"11px":"13px", color:"#555" }}>{item}</span>
+                  <div key={item} style={{ display:"flex", alignItems:"flex-start", gap:"8px", textAlign:"left" }}>
+                    <IconX size={isMobile?16:20}/><span style={{ fontSize:isMobile?"13px":"15px", color:"#555", lineHeight:1.4 }}>{item}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div style={{ border:"2px solid #86efac", borderRadius:"12px", overflow:"hidden" }}>
-              <div style={{ background:"#dcfce7", padding:"12px", fontWeight:800, fontSize:isMobile?"12px":"14px", color:"#16a34a" }}>✅ COM A LISTA VIP</div>
-              <div style={{ padding:"14px", display:"flex", flexDirection:"column", gap:"10px" }}>
+            <div style={{ border:"2px solid #86efac", borderRadius:"16px", overflow:"hidden" }}>
+              <div style={{ background:"#dcfce7", padding:isMobile?"14px":"18px 24px", fontWeight:800, fontSize:isMobile?"13px":"16px", color:"#16a34a" }}>✅ COM A LISTA VIP</div>
+              <div style={{ padding:isMobile?"14px":"20px 24px", display:"flex", flexDirection:"column", gap:isMobile?"12px":"16px" }}>
                 {["Compra no atacado com 100%+ de margem","180 fornecedores verificados no bolso","Todos testados e aprovados","Começa com menos de R$100","Começa hoje mesmo, sem enrolação"].map(item => (
-                  <div key={item} style={{ display:"flex", alignItems:"flex-start", gap:"6px", textAlign:"left" }}>
-                    <IconCheck size={isMobile?14:16}/><span style={{ fontSize:isMobile?"11px":"13px", color:"#555" }}>{item}</span>
+                  <div key={item} style={{ display:"flex", alignItems:"flex-start", gap:"8px", textAlign:"left" }}>
+                    <IconCheck size={isMobile?16:20}/><span style={{ fontSize:isMobile?"13px":"15px", color:"#555", lineHeight:1.4 }}>{item}</span>
                   </div>
                 ))}
               </div>
@@ -594,13 +594,6 @@ export default function FornecedoresPage() {
       </div>
 
       <ExitIntentPopup isMobile={isMobile} />
-
-      {/* ── BARRA FIXA ── */}
-      <div style={{ position:"fixed", bottom:0, left:0, right:0, background:"#15803d", padding:"10px 16px", boxShadow:"0 -4px 16px rgba(0,0,0,0.25)", zIndex:50 }}>
-        <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ width:"100%", maxWidth:isMobile?"480px":"600px", margin:"0 auto", display:"block", boxSizing:"border-box", textAlign:"center", textDecoration:"none", background:"#22c55e", color:"#fff", borderRadius:"8px", padding:"14px", fontSize:isMobile?"15px":"16px", fontWeight:800, textTransform:"uppercase", letterSpacing:"0.5px", fontFamily:"inherit", boxShadow:"0 2px 12px rgba(34,197,94,0.4)" }}>
-          QUERO ACESSAR OS 180 FORNECEDORES • R$37,90 →
-        </a>
-      </div>
     </div>
   );
 }
