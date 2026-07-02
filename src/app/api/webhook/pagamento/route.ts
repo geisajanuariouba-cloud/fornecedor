@@ -143,7 +143,19 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "";
+    const ua = req.headers.get("user-agent") ?? "";
+
     after(async () => {
+      // Dispara Purchase via CAPI
+      try {
+        await sendCapiPurchase({ email, value, ip, ua });
+        console.log("[webhook/pagamento] capi purchase enviado para", email);
+      } catch (e) {
+        console.error("[webhook/pagamento] falha no capi purchase:", e);
+      }
+
+      // Envia emails
       for (const kind of kinds) {
         try {
           if (kind === "main") await sendDeliveryEmail(email, name);
@@ -160,6 +172,43 @@ export async function POST(req: NextRequest) {
     console.error("[webhook/pagamento]", e);
     return NextResponse.json({ ok: false, error: String(e) });
   }
+}
+
+async function sendCapiPurchase({ email, value, ip, ua }: { email: string; value: number; ip: string; ua: string }) {
+  const PIXEL_ID = "1274073178133799";
+  const token = process.env.META_CAPI_TOKEN ?? "";
+  if (!token) { console.warn("[webhook/pagamento] META_CAPI_TOKEN não definido, pulando CAPI"); return; }
+
+  const hashedEmail = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(email.toLowerCase().trim()))
+    .then(buf => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join(""));
+
+  const payload = {
+    data: [{
+      event_name: "Purchase",
+      event_time: Math.floor(Date.now() / 1000),
+      action_source: "website",
+      event_source_url: "https://fornecedorvip.shop",
+      user_data: {
+        em: [hashedEmail],
+        ...(ip ? { client_ip_address: ip } : {}),
+        ...(ua ? { client_user_agent: ua } : {}),
+      },
+      custom_data: {
+        currency: "BRL",
+        value,
+        content_name: "Lista de Fornecedores VIP",
+        content_category: "Digital Product",
+      },
+    }],
+  };
+
+  const res = await fetch(
+    `https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${token}`,
+    { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(JSON.stringify(data));
+  console.log("[webhook/pagamento] capi purchase ok:", data?.events_received);
 }
 
 async function sendDeliveryEmail(email: string, name: string) {
