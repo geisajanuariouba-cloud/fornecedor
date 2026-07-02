@@ -284,7 +284,7 @@ export default function FornecedoresOfertaPage() {
 
           {/* Video player */}
           <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000" }}>
-            <video controls playsInline preload="metadata" style={{ width:"100%", display:"block" }} poster="/og.png">
+            <video controls playsInline preload="metadata" style={{ width:"100%", display:"block" }} poster="/vsl/cover.jpg">
               <source src="/vsl/vsl.mp4" type="video/mp4" />
             </video>
           </div>

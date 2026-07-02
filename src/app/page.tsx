@@ -294,7 +294,7 @@ export default function FornecedoresPage() {
               playsInline
               preload="metadata"
               style={{ width:"100%", display:"block" }}
-              poster="/og.png"
+              poster="/vsl/cover.jpg"
             >
               <source src="/vsl/vsl.mp4" type="video/mp4" />
             </video>
