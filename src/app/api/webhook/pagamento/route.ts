@@ -5,20 +5,13 @@ import path from "path";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Permite que o envio em segundo plano tenha tempo de concluir
 export const maxDuration = 60;
-
-// OBS: o evento Purchase NÃO é mais enviado daqui. A Wiapy dispara o Purchase
-// pelo navegador + API de Conversões (mesmo event_id) ao aprovar o pagamento,
-// o que garante a deduplicação e a cobertura na Meta. Enviar daqui também
-// criaria um Purchase paralelo com event_id diferente (duplicidade / cobertura 0%).
 
 function readPdf(filename: string) {
   const filePath = path.join(process.cwd(), "private", "pdfs", filename);
   return fs.readFileSync(filePath);
 }
 
-// Identifica o produto pelo nome (a Kiwify dispara 1 webhook por produto/bump)
 type ProductKind = "planilha" | "calendario" | "main";
 function detectProduct(name: string): ProductKind {
   const n = (name || "").toLowerCase();
@@ -44,7 +37,6 @@ const BUMP = {
   },
 } as const;
 
-// Busca recursiva por uma chave em qualquer nível do payload (Kiwify aninha em order/Customer)
 function deepFind(obj: unknown, keys: string[]): string | undefined {
   if (!obj || typeof obj !== "object") return undefined;
   for (const [k, v] of Object.entries(obj as Record<string, unknown>)) {
@@ -61,32 +53,49 @@ function deepFind(obj: unknown, keys: string[]): string | undefined {
   return undefined;
 }
 
+// Status aceitos — inclui variações do Mercado Pago (PIX), Zyro e Wiapy
+const APPROVED_STATUSES = [
+  "paid", "approved", "completed", "accredited",
+  "order_approved", "payment_approved", "payment_confirmed",
+  "aprovado", "pago", "confirmado", "venda_aprovada",
+  "pix_received", "authorized",
+];
+
 export async function POST(req: NextRequest) {
   try {
     const token = req.nextUrl.searchParams.get("token") ?? "";
-    if (process.env.KIWIFY_WEBHOOK_TOKEN && token !== process.env.KIWIFY_WEBHOOK_TOKEN) {
+    if (process.env.WEBHOOK_TOKEN && token !== process.env.WEBHOOK_TOKEN) {
       return NextResponse.json({ ok: false }, { status: 401 });
     }
 
     const body = await req.json().catch(() => ({}));
-    // Wiapy envia tudo dentro de "data"; Kiwify no nível raiz — funciona pros dois
     const order = (body?.data ?? body) as Record<string, unknown>;
 
-    const customer = (order?.customer ?? {}) as Record<string, unknown>;
-    const payment = (order?.payment ?? {}) as Record<string, unknown>;
+    const customer = (order?.customer ?? order?.buyer ?? order?.payer ?? {}) as Record<string, unknown>;
+    const payment = (order?.payment ?? order?.transaction ?? {}) as Record<string, unknown>;
     const checkout = (order?.checkout ?? {}) as Record<string, unknown>;
 
-    const email = String(customer?.email ?? deepFind(body, ["email"]) ?? "").toLowerCase().trim();
-    const name = String(customer?.name ?? deepFind(body, ["full_name", "name"]) ?? "Cliente");
+    // Busca email em múltiplos campos comuns de gateways diferentes
+    const email = String(
+      customer?.email ??
+      deepFind(body, ["email", "buyer_email", "payer_email", "customer_email", "user_email"]) ?? ""
+    ).toLowerCase().trim();
+
+    const name = String(
+      customer?.name ?? customer?.full_name ??
+      deepFind(body, ["full_name", "name", "buyer_name", "payer_name", "customer_name"]) ?? "Cliente"
+    );
+
     const rawStatus = String(
-      payment?.status ?? deepFind(body, ["order_status", "status", "webhook_event_type", "event"]) ?? "unknown"
+      payment?.status ?? order?.status ??
+      deepFind(body, ["order_status", "status", "payment_status", "webhook_event_type", "event", "type"]) ?? "unknown"
     ).toLowerCase();
 
-    // Coleta TODOS os produtos do pedido (Wiapy manda um webhook só com principal + bumps)
     const titles: string[] = [];
     if (Array.isArray(order?.products)) {
       for (const p of order.products as Array<Record<string, unknown>>) {
         if (p?.title) titles.push(String(p.title));
+        if (p?.name) titles.push(String(p.name));
       }
     }
     if (titles.length === 0) {
@@ -98,14 +107,13 @@ export async function POST(req: NextRequest) {
       }
     }
     if (titles.length === 0) {
-      const pn = deepFind(body, ["product_name"]);
+      const pn = deepFind(body, ["product_name", "item_title", "description"]);
       if (pn) titles.push(pn);
     }
     const kinds = Array.from(new Set(titles.map(detectProduct)));
     if (kinds.length === 0) kinds.push("main");
 
-    // Valor do pedido (centavos -> reais). Usa o cobrado; se 0 (cupom), soma os produtos.
-    let cents = Number(payment?.amount ?? 0);
+    let cents = Number(payment?.amount ?? order?.amount ?? 0);
     if (!cents) {
       cents += Number(checkout?.amount ?? 0);
       if (Array.isArray(checkout?.orderbump)) {
@@ -116,11 +124,9 @@ export async function POST(req: NextRequest) {
     }
     const value = cents > 0 ? cents / 100 : 9.9;
 
-    const isApproval = ["paid", "approved", "completed", "order_approved", "aprovado", "pago", "venda_aprovada"].some((s) =>
-      rawStatus.includes(s)
-    );
+    const isApproval = APPROVED_STATUSES.some((s) => rawStatus.includes(s));
 
-    console.log("[webhook/kiwify] received", {
+    console.log("[webhook/pagamento] received", {
       email: email || "(empty)",
       status: rawStatus,
       kinds,
@@ -137,22 +143,21 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Responde IMEDIATAMENTE; a entrega de cada produto roda em segundo plano
     after(async () => {
       for (const kind of kinds) {
         try {
           if (kind === "main") await sendDeliveryEmail(email, name);
           else await sendBumpEmail(email, name, kind);
-          console.log("[webhook/kiwify] email enviado:", kind, "->", email);
+          console.log("[webhook/pagamento] email enviado:", kind, "->", email);
         } catch (e) {
-          console.error("[webhook/kiwify] falha no envio de email:", kind, e);
+          console.error("[webhook/pagamento] falha no envio de email:", kind, e);
         }
       }
     });
 
     return NextResponse.json({ ok: true, queued: true, kinds });
   } catch (e) {
-    console.error("[webhook/kiwify]", e);
+    console.error("[webhook/pagamento]", e);
     return NextResponse.json({ ok: false, error: String(e) });
   }
 }
@@ -190,41 +195,41 @@ Equipe FornecedorVip
 fornecedorvip.shop`;
 
   const sendResult = await resend.emails.send({
-      from: "Equipe FornecedorVip <contato@fornecedorvip.shop>",
-      to: email,
-      replyTo: "contato@fornecedorvip.shop",
-      subject: `${firstName}, seu acesso à Lista de Fornecedores`,
-      text,
-      html: `
-        <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#222;font-size:15px;line-height:1.6;">
-          <p>Olá, ${firstName}!</p>
-          <p>Seu pagamento foi confirmado. Já anexei neste email a <strong>Lista de Fornecedores VIP</strong> e os <strong>6 bônus</strong> (todos em PDF).</p>
-          <p>Para acompanhar novidades e falar direto com fornecedores, entre nos grupos:</p>
-          <p>
-            • <a href="https://chat.whatsapp.com/IQiT9q9pC1CIe06TXwUEIy">Grupo VIP Revendedores</a><br/>
-            • <a href="https://whatsapp.com/channel/0029Vb7gouR5q08XX9EtgW24">Canal BossStore Vencedor</a><br/>
-            • <a href="https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l">Canal João Cleber JC Atacado</a><br/>
-            • <a href="https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq">Grupo Exclusivo</a>
-          </p>
-          <p>Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:</p>
-          <p>
-            ✉️ E-mail: <a href="mailto:contato@fornecedorvip.shop">contato@fornecedorvip.shop</a><br/>
-            💬 WhatsApp: <a href="https://wa.me/5532998425801">(32) 99842-5801</a>
-          </p>
-          <p>Abraço,<br/>Equipe FornecedorVip<br/>
-          <span style="color:#9ca3af;font-size:13px;">fornecedorvip.shop</span></p>
-        </div>
-      `,
-      attachments: attachments.map((a) => ({
-        filename: a.filename,
-        content: a.content,
-      })),
-    });
+    from: "Equipe FornecedorVip <contato@fornecedorvip.shop>",
+    to: email,
+    replyTo: "contato@fornecedorvip.shop",
+    subject: `${firstName}, seu acesso à Lista de Fornecedores`,
+    text,
+    html: `
+      <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px;margin:0 auto;color:#222;font-size:15px;line-height:1.6;">
+        <p>Olá, ${firstName}!</p>
+        <p>Seu pagamento foi confirmado. Já anexei neste email a <strong>Lista de Fornecedores VIP</strong> e os <strong>6 bônus</strong> (todos em PDF).</p>
+        <p>Para acompanhar novidades e falar direto com fornecedores, entre nos grupos:</p>
+        <p>
+          • <a href="https://chat.whatsapp.com/IQiT9q9pC1CIe06TXwUEIy">Grupo VIP Revendedores</a><br/>
+          • <a href="https://whatsapp.com/channel/0029Vb7gouR5q08XX9EtgW24">Canal BossStore Vencedor</a><br/>
+          • <a href="https://whatsapp.com/channel/0029Vb74Fd7BPzjUsaXWlC0l">Canal João Cleber JC Atacado</a><br/>
+          • <a href="https://chat.whatsapp.com/DGtBNPpdJYpFvcP0ADJmGq">Grupo Exclusivo</a>
+        </p>
+        <p>Qualquer dúvida, é só responder este e-mail ou falar com o nosso suporte:</p>
+        <p>
+          ✉️ E-mail: <a href="mailto:contato@fornecedorvip.shop">contato@fornecedorvip.shop</a><br/>
+          💬 WhatsApp: <a href="https://wa.me/5532998425801">(32) 99842-5801</a>
+        </p>
+        <p>Abraço,<br/>Equipe FornecedorVip<br/>
+        <span style="color:#9ca3af;font-size:13px;">fornecedorvip.shop</span></p>
+      </div>
+    `,
+    attachments: attachments.map((a) => ({
+      filename: a.filename,
+      content: a.content,
+    })),
+  });
 
   if (sendResult.error) {
     throw new Error(JSON.stringify(sendResult.error));
   }
-  console.log("[webhook/kiwify] resend id=", sendResult.data?.id);
+  console.log("[webhook/pagamento] resend id=", sendResult.data?.id);
 }
 
 async function sendBumpEmail(email: string, name: string, kind: "planilha" | "calendario") {
@@ -275,5 +280,5 @@ fornecedorvip.shop`;
   if (sendResult.error) {
     throw new Error(JSON.stringify(sendResult.error));
   }
-  console.log("[webhook/kiwify] bump enviado:", kind, sendResult.data?.id);
+  console.log("[webhook/pagamento] bump enviado:", kind, sendResult.data?.id);
 }
