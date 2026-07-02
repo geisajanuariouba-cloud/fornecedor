@@ -297,16 +297,37 @@ export default function FornecedoresPage() {
           </p>
 
           {/* Video player */}
-          <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000" }}>
+          <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000", position:"relative" }}>
             <video
+              ref={(el) => {
+                if (el) {
+                  el.muted = true;
+                  el.play().catch(() => {});
+                }
+              }}
               controls
               playsInline
-              preload="none"
+              autoPlay
+              muted
+              preload="auto"
               style={{ width:"100%", display:"block" }}
               poster="/vsl/cover.jpg"
+              onCanPlay={(e) => { (e.target as HTMLVideoElement).play().catch(() => {}); }}
             >
               <source src="/vsl/vsl.mp4" type="video/mp4" />
             </video>
+            <button
+              onClick={(e) => {
+                const btn = e.currentTarget;
+                const video = btn.parentElement?.querySelector("video") as HTMLVideoElement;
+                if (!video) return;
+                video.muted = !video.muted;
+                btn.textContent = video.muted ? "🔇 Ativar som" : "🔊 Som ativado";
+              }}
+              style={{ position:"absolute", bottom:"60px", right:"12px", background:"rgba(0,0,0,0.7)", color:"#fff", border:"none", borderRadius:"8px", padding:"8px 14px", fontSize:"13px", fontWeight:700, cursor:"pointer", fontFamily:"inherit", zIndex:10 }}
+            >
+              🔇 Ativar som
+            </button>
           </div>
 
           {/* Timer na faixa preta */}
