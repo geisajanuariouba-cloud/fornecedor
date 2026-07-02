@@ -215,7 +215,7 @@ function ExitIntentPopup({ isMobile }: { isMobile:boolean }) {
         <p style={{ fontSize:"14px", color:"#555", lineHeight:1.6, marginBottom:"20px" }}>
           Você ainda não garantiu acesso aos <strong>180 fornecedores</strong> e aos <strong>6 bônus exclusivos</strong>. Por <strong style={{color:"#ea580c"}}>R$37,90</strong> você começa a revender ainda hoje.
         </p>
-        <a href={CHECKOUT_URL} onClick={goToCheckout} style={{ display:"block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", fontFamily:"inherit", boxShadow:"0 4px 16px rgba(234,88,12,0.35)", marginBottom:"10px" }}>
+        <a href="#cta-principal" onClick={(e) => { scrollToCTA(e); setVisible(false); }} style={{ display:"block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", fontFamily:"inherit", boxShadow:"0 4px 16px rgba(234,88,12,0.35)", marginBottom:"10px" }}>
           QUERO GARANTIR MEU ACESSO
         </a>
         <button onClick={() => setVisible(false)} style={{ background:"none", border:"none", fontSize:"12px", color:"#9ca3af", cursor:"pointer", fontFamily:"inherit" }}>
