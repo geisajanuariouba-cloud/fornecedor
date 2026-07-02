@@ -258,12 +258,16 @@ export default function FornecedoresOfertaPage() {
         .dep-track:hover { animation-play-state:paused; }
         details.faq { border:1.5px solid #e5e7eb; border-radius:12px; overflow:hidden; background:#fff; }
         details.faq[open] { border-color:#ea580c; }
-        details.faq summary { display:flex; justify-content:space-between; align-items:center; padding:${isMobile?"16px":"18px 24px"}; font-weight:700; font-size:${isMobile?"13px":"15px"}; color:#111; gap:12px; cursor:pointer; list-style:none; font-family:inherit; }
+        details.faq summary { display:flex; justify-content:space-between; align-items:center; padding:18px 24px; font-weight:700; font-size:15px; color:#111; gap:12px; cursor:pointer; list-style:none; font-family:inherit; }
         details.faq[open] summary { background:#fff7ed; color:#ea580c; }
         details.faq summary::-webkit-details-marker { display:none; }
         details.faq summary::after { content:'▼'; font-size:11px; color:#555; flex-shrink:0; transition:transform 0.2s; }
         details.faq[open] summary::after { transform:rotate(180deg); }
-        details.faq .faq-body { padding:${isMobile?"0 16px 16px":"0 24px 20px"}; font-size:${isMobile?"13px":"15px"}; color:#555; line-height:1.7; }
+        details.faq .faq-body { padding:0 24px 20px; font-size:15px; color:#555; line-height:1.7; }
+        @media (max-width:767px) {
+          details.faq summary { padding:16px; font-size:13px; }
+          details.faq .faq-body { padding:0 16px 16px; font-size:13px; }
+        }
       ` }} />
 
       {/* ── URGENCY BAR ── */}
@@ -289,7 +293,7 @@ export default function FornecedoresOfertaPage() {
 
           {/* Video player */}
           <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000" }}>
-            <video controls playsInline preload="metadata" style={{ width:"100%", display:"block" }} poster="/vsl/cover.jpg">
+            <video controls playsInline preload="none" style={{ width:"100%", display:"block" }} poster="/vsl/cover.jpg">
               <source src="/vsl/vsl.mp4" type="video/mp4" />
             </video>
           </div>

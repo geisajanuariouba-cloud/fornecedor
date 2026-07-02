@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "700", "800", "900"],
   display: "swap",
   variable: "--font-inter",
 });
@@ -42,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='85'>🏪</text></svg>"
         />
         <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preload" as="image" href="/vsl/cover.jpg" fetchPriority="high" />
         <style>{`
           *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
           body { font-family: var(--font-inter), -apple-system, sans-serif; background: #fff; color: #111; }
