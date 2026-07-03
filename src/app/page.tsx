@@ -286,19 +286,19 @@ export default function FornecedoresPage() {
 
           {/* Headline */}
           <div style={{ display:"inline-block", background:"#111", color:"#ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:800, letterSpacing:"0.08em", marginBottom:"16px" }}>
-            CHEGA DE PAGAR PREÇO DE VAREJO
+            CHEGA DE PERDER MARGEM COMPRANDO NO LUGAR ERRADO
           </div>
 
           <h1 style={{ fontSize:isMobile?"26px":"42px", fontWeight:900, lineHeight:1.2, marginBottom:"16px", color:"#111" }}>
-            Veja como começar a comprar{" "}
+            Como comprar{" "}
             <span style={{ color:"#ea580c" }}>direto no atacado</span>{" "}
             e lucrar{" "}
-            <span style={{ color:"#ea580c" }}>100% ou mais</span>{" "}
-            — ainda hoje
+            <span style={{ color:"#ea580c" }}>100% ou mais</span>
+            {" "}— mesmo que você já tenha tentado e encontrado lista ruim, fornecedor que não responde ou pedido mínimo absurdo
           </h1>
 
           <p style={{ fontSize:isMobile?"15px":"18px", color:"#555", lineHeight:1.6, marginBottom:"20px", maxWidth:"640px", margin:"0 auto 20px" }}>
-            Sem CNPJ, sem experiência e com menos de R$100 no bolso.
+            Sem CNPJ, sem experiência e com menos de R$100 no bolso. 180 fornecedores verificados — contato ativo e pedido mínimo confirmado.
           </p>
 
           <button
@@ -396,7 +396,7 @@ export default function FornecedoresPage() {
             <div style={{ border:"2px solid #fecaca", borderRadius:"16px", overflow:"hidden" }}>
               <div style={{ background:"#fee2e2", padding:isMobile?"14px":"18px 24px", fontWeight:800, fontSize:isMobile?"13px":"16px", color:"#dc2626" }}>❌ SEM A LISTA</div>
               <div style={{ padding:isMobile?"14px":"20px 24px", display:"flex", flexDirection:"column", gap:isMobile?"12px":"16px" }}>
-                {["Compra no varejo e perde margem","Não sabe onde achar fornecedor confiável","Risco de cair em golpe","Acha que precisa de muito capital","Fica travado sem saber por onde começar"].map(item => (
+                {["Compra no varejo e perde metade da margem","Pesquisa no Google e o fornecedor não responde","Compra lista genérica com metade dos contatos mortos","Acha que precisa de CNPJ ou muito capital","Perde tempo testando fornecedor ruim um por um"].map(item => (
                   <div key={item} style={{ display:"flex", alignItems:"flex-start", gap:"8px", textAlign:"left" }}>
                     <IconX size={isMobile?16:20}/><span style={{ fontSize:isMobile?"13px":"15px", color:"#555", lineHeight:1.4 }}>{item}</span>
                   </div>
@@ -602,9 +602,12 @@ export default function FornecedoresPage() {
           </div>
           <h2 style={{ fontSize:isMobile?"22px":"28px", fontWeight:900, marginBottom:"10px", color:"#ea580c" }}>Garantia Incondicional de 7 dias</h2>
           <p style={{ fontSize:isMobile?"14px":"16px", color:"#555", lineHeight:1.6, marginBottom:"12px" }}>
-            Você tem 7 dias para testar. Se abrir a lista e não ficar satisfeito com o que encontrou, por qualquer motivo, sem precisar explicar nada, é só mandar um e-mail e devolvemos 100% do valor.
+            Compre. Abra a lista. Entre em contato com os fornecedores. Se em 7 dias você achar que não valeu cada centavo dos R$37,90 — manda um e-mail e devolvemos tudo. Sem perguntas. Sem precisar justificar. Sem burocracia nenhuma.
           </p>
-          <p style={{ fontSize:"13px", fontWeight:700, color:"#ea580c", letterSpacing:"0.05em", marginBottom:"24px" }}>O RISCO É INTEIRAMENTE NOSSO, NÃO SEU.</p>
+          <p style={{ fontSize:isMobile?"14px":"15px", color:"#555", lineHeight:1.6, marginBottom:"16px" }}>
+            Eu fico com o risco. Você fica com o resultado. Se a lista não mostrar o caminho pra recuperar o investimento já no primeiro pedido, não mereço o seu dinheiro — simples assim.
+          </p>
+          <p style={{ fontSize:"13px", fontWeight:700, color:"#ea580c", letterSpacing:"0.05em", marginBottom:"24px" }}>VOCÊ É O INTELIGENTE AQUI. TODO O RISCO É MEU.</p>
           <a href="#cta-principal" onClick={scrollToCTA} style={{ display:isMobile?"block":"inline-block", boxSizing:"border-box", textAlign:"center", textDecoration:"none", background:"#ea580c", color:"#fff", borderRadius:"12px", padding:"18px 48px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO GARANTIR MEU ACESSO →
           </a>
