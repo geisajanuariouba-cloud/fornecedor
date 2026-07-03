@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://zyrocheckout.space/checkout/v5/high/fornecedorvip";
+const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.wiapy.com/gTiNVrOtMoj";
 const PRICE_VALUE = 37.9;
 
 declare global {
