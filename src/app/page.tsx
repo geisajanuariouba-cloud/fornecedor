@@ -436,7 +436,7 @@ export default function FornecedoresPage() {
             {[
               { n:"01", title:"Testamos o contato", desc:"Ligamos e mandamos mensagem. Se não respondeu dentro do prazo, não entrou na lista. Você não vai encontrar número morto aqui." },
               { n:"02", title:"Confirmamos que vende pra PF", desc:"Sem CNPJ, sem burocracia. Verificamos que você consegue comprar com CPF mesmo — igual a qualquer pessoa física." },
-              { n:"03", title:"Checamos o pedido mínimo real", desc:"Nada de "mínimo R$5.000" escondido. Só entrou quem aceita pedido pequeno, ideal pra quem está começando." },
+              { n:"03", title:"Checamos o pedido mínimo real", desc:"Nada de 'mínimo R$5.000' escondido. Só entrou quem aceita pedido pequeno, ideal pra quem está começando." },
             ].map(item => (
               <div key={item.n} style={{ background:"#1a1a1a", border:"1px solid #333", borderRadius:"16px", padding:"24px 20px", textAlign:"left" }}>
                 <div style={{ fontSize:"11px", fontWeight:800, color:"#ea580c", marginBottom:"8px" }}>FILTRO {item.n}</div>
