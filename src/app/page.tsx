@@ -291,11 +291,10 @@ export default function FornecedoresPage() {
           </div>
 
           <h1 style={{ fontSize:isMobile?"26px":"42px", fontWeight:900, lineHeight:1.2, marginBottom:"16px", color:"#111" }}>
-            Como comprar{" "}
+            Compre{" "}
             <span style={{ color:"#ea580c" }}>direto no atacado</span>{" "}
-            e lucrar{" "}
+            e lucre{" "}
             <span style={{ color:"#ea580c" }}>100% ou mais</span>
-            {" "}— mesmo que você já tenha tentado e encontrado lista ruim, fornecedor que não responde ou pedido mínimo absurdo
           </h1>
 
           <p style={{ fontSize:isMobile?"15px":"18px", color:"#555", lineHeight:1.6, marginBottom:"20px", maxWidth:"640px", margin:"0 auto 20px" }}>
