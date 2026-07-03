@@ -436,7 +436,7 @@ export default function FornecedoresOfertaPage() {
             ))}
           </div>
           <p style={{ fontSize:"12px", color:"#555", marginTop:"24px", marginBottom:"8px" }}>
-            Lista atualizada em <strong style={{color:"#ea580c"}}>Julho/2025</strong> · revisada a cada 3 meses
+            Lista atualizada em <strong style={{color:"#ea580c"}}>Julho/2026</strong> · revisada a cada 3 meses
           </p>
           <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO ACESSO À LISTA VERIFICADA
