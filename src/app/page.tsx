@@ -116,15 +116,15 @@ const categorias = [
   { label: "SUPLEMENTOS", emoji: "💊" },
 ];
 
-const LISTA_VALOR = 197;
+const LISTA_VALOR = 97;
 
 const bonuses = [
-  { n:"01", emoji:"🏪", title:"GUIA LOJA DE 10", desc:"Aprenda a montar sua loja virtual do zero e faturar seus primeiros R$1.000 na primeira semana, mesmo sem experiência em vendas online.", valor: 37 },
-  { n:"02", emoji:"🔥", title:"LISTA DOS PRODUTOS MAIS VENDIDOS", desc:"Os produtos que mais vendem agora no Mercado Livre, Shopee e Amazon, já com o fornecedor certo indicado dentro da lista.", valor: 37 },
-  { n:"03", emoji:"📸", title:"PACOTE INFLUENCER PARA INSTAGRAM", desc:"Templates prontos para vender no Instagram sem precisar aparecer. Artes, legendas e estratégias para iniciantes conseguirem suas primeiras vendas.", valor: 57 },
-  { n:"04", emoji:"📊", title:"CATÁLOGO DE TENDÊNCIAS", desc:"As tendências da próxima temporada para você comprar do fornecedor antes de todo mundo e vender com margem muito maior.", valor: 47 },
-  { n:"05", emoji:"🤖", title:"COMO GERAR IMAGENS COM IA", desc:"Crie fotos profissionais dos seus produtos usando inteligência artificial, sem fotógrafo, sem modelo e sem gastar nada.", valor: 37 },
-  { n:"06", emoji:"💬", title:"GRUPOS E COMUNIDADES NO WHATSAPP", desc:"Acesso a grupos e comunidades no WhatsApp com contato direto de fornecedores. Tire dúvidas, negocie preços e receba novidades dos atacadistas em tempo real.", valor: 67 },
+  { n:"01", emoji:"🔥", title:"LISTA DOS PRODUTOS MAIS VENDIDOS", desc:"Antes de ir atrás do fornecedor, saiba o que vender: os produtos que mais giram hoje no Mercado Livre, Shopee e Amazon — com margem confirmada.", valor: 37 },
+  { n:"02", emoji:"📊", title:"CATÁLOGO DE TENDÊNCIAS", desc:"As tendências da próxima temporada para comprar do fornecedor antes de todo mundo e chegar na frente quando a demanda explodir.", valor: 47 },
+  { n:"03", emoji:"🏪", title:"GUIA LOJA DE 10", desc:"Monte sua operação de revenda do zero e chegue às primeiras vendas — sem loja física, sem experiência e sem complicar.", valor: 37 },
+  { n:"04", emoji:"📸", title:"PACOTE INFLUENCER PARA INSTAGRAM", desc:"Templates prontos para vender no Instagram sem precisar aparecer. Artes, legendas e estratégias para iniciantes conseguirem as primeiras vendas.", valor: 57 },
+  { n:"05", emoji:"🤖", title:"COMO GERAR IMAGENS COM IA", desc:"Crie fotos profissionais dos seus produtos com inteligência artificial — sem fotógrafo, sem modelo, sem gastar nada a mais.", valor: 37 },
+  { n:"06", emoji:"💬", title:"GRUPOS E COMUNIDADES NO WHATSAPP", desc:"Acesso direto a grupos com fornecedores ativos. Negocie preços, tire dúvidas e receba lançamentos antes de todo mundo.", valor: 67 },
 ];
 
 const bonusTotal = bonuses.reduce((s, b) => s + b.valor, 0);
@@ -140,8 +140,9 @@ const faqs = [
   { q:"Quais categorias têm na lista?", a:"Roupas, Lingerie, Eletrônicos e Celulares, Maquiagem e Cosméticos, Perfumes, Bijuterias e Semijoias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 14 categorias." },
   { q:"Como recebo o acesso após a compra?", a:"Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício, compre agora e abra quando quiser, sem prazo." },
   { q:"Tem garantia?", a:"Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia. O risco é inteiramente nosso." },
-  { q:"O preço vai aumentar?", a:"Esse valor de R$37,90 é promocional de lançamento. Não temos data definida para encerrar, mas quando encerrar o preço sobe. Garantir agora é a forma mais segura de pagar o menor valor." },
+  { q:"O preço vai aumentar?", a:"Sim. Esse valor de R$37,90 é promocional e encerra quando o contador zerar. Após isso, o preço sobe. Garantir agora é a única forma de pagar o menor valor." },
   { q:"Posso vender nos marketplaces (Mercado Livre, Shopee, Amazon)?", a:"Com certeza! Os fornecedores da lista foram selecionados pensando nos marketplaces. Você consegue margem suficiente para cobrir taxas e ainda lucrar bem." },
+  { q:"Já comprei uma lista de fornecedores antes e não funcionou. Por que essa é diferente?", a:"Porque a maioria das listas que circulam por aí foi copiada do Google ou montada sem qualquer verificação real. Nós verificamos mais de 500 fornecedores, ligamos, mandamos mensagem e checamos as condições — e aprovamos apenas 180. Fornecedor que não responde não entra. Quem exige CNPJ não entra. Pedido mínimo alto não entra. É exatamente isso que faz a diferença quando outra lista falhou." },
 ];
 
 /* ── componentes ── */
@@ -331,10 +332,7 @@ export default function FornecedoresPage() {
             </video>
           </div>
 
-          {/* Timer na faixa preta */}
-          <div style={{ background:"#111", color:"#fff", borderRadius:"0 0 12px 12px", maxWidth:"640px", margin:"0 auto 28px", padding:"10px 16px", display:"flex", alignItems:"center", justifyContent:"center", gap:"8px", fontSize:"13px", fontWeight:700 }}>
-            ⏳ Esta oferta encerra em: <UrgencyCountdown />
-          </div>
+          <div style={{ maxWidth:"640px", margin:"0 auto 28px" }} />
 
           <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:isMobile?"16px 28px":"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", letterSpacing:"0.5px", boxShadow:"0 4px 24px rgba(234,88,12,0.4)", fontFamily:"inherit" }}>
             QUERO ACESSO AGORA →
@@ -344,8 +342,8 @@ export default function FornecedoresPage() {
           {/* Stats */}
           <div style={{ display:"flex", justifyContent:"center", gap:isMobile?"16px":"40px", marginTop:"32px", flexWrap:"wrap" }}>
             {[
-              { v:"4.9/5", l:"Avaliação" },
               { v:"180+", l:"Fornecedores" },
+              { v:"500+", l:"Verificados" },
               { v:"7 dias", l:"Garantia" },
             ].map(s => (
               <div key={s.l} style={{ textAlign:"center" }}>
@@ -391,7 +389,10 @@ export default function FornecedoresPage() {
       <div style={{ background:"#f9fafb", padding:secPad }}>
         <div style={{ maxWidth:maxW, margin:"0 auto", textAlign:"center" }}>
           <div style={{ display:"inline-block", border:"1.5px solid #ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:700, color:"#ea580c", letterSpacing:"0.08em", marginBottom:"14px" }}>POR QUE A LISTA VIP?</div>
-          <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900, marginBottom:"28px", textTransform:"uppercase" }}>A DIFERENÇA É <span style={{color:"#ea580c"}}>GRITANTE</span></h2>
+          <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900, marginBottom:"12px", textTransform:"uppercase" }}>A DIFERENÇA É <span style={{color:"#ea580c"}}>GRITANTE</span></h2>
+          <p style={{ fontSize:isMobile?"13px":"15px", color:"#555", lineHeight:1.7, maxWidth:"640px", margin:"0 auto 28px" }}>
+            Você pesquisa no Google. Manda mensagem. Silêncio. Acha uma lista barata. Metade dos contatos está morta. O outro exige CNPJ ou pedido mínimo de R$2.000. Você desiste e compra no varejo de novo — com margem de 20% quando tem sorte. É exatamente isso que a Lista VIP resolve.
+          </p>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:isMobile?"14px":"32px", maxWidth:"860px", margin:"0 auto 36px" }}>
             <div style={{ border:"2px solid #fecaca", borderRadius:"16px", overflow:"hidden" }}>
               <div style={{ background:"#fee2e2", padding:isMobile?"14px":"18px 24px", fontWeight:800, fontSize:isMobile?"13px":"16px", color:"#dc2626" }}>❌ SEM A LISTA</div>
@@ -425,11 +426,11 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth:maxW, margin:"0 auto", textAlign:"center" }}>
           <div style={{ display:"inline-block", border:"1.5px solid #ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:700, color:"#ea580c", letterSpacing:"0.08em", marginBottom:"14px" }}>POR QUE ESSA LISTA É DIFERENTE?</div>
           <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900, color:"#fff", marginBottom:"10px", textTransform:"uppercase" }}>
-            Qualquer um joga um nome no Google.<br/>
-            <span style={{ color:"#ea580c" }}>A nossa foi verificada fornecedor por fornecedor.</span>
+            Tem gente vendendo "lista de fornecedores" no Telegram por R$9,90.<br/>
+            <span style={{ color:"#ea580c" }}>Com 800 contatos que ninguém responde há 2 anos.</span>
           </h2>
           <p style={{ fontSize:isMobile?"13px":"15px", color:"#9ca3af", marginBottom:"32px", maxWidth:"560px", margin:"0 auto 32px" }}>
-            Antes de entrar na lista, cada fornecedor passou por 3 filtros que a maioria das pessoas nunca aplica:
+            Essa não é essa. Verificamos mais de 500 fornecedores. 180 passaram. Cada um passou por 3 filtros antes de entrar:
           </p>
           <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:"16px", marginBottom:"32px" }}>
             {[
@@ -444,6 +445,9 @@ export default function FornecedoresPage() {
               </div>
             ))}
           </div>
+          <p style={{ fontSize:"12px", color:"#555", marginTop:"24px", marginBottom:"8px" }}>
+            Lista atualizada em <strong style={{color:"#ea580c"}}>Julho/2025</strong> · revisada a cada 3 meses
+          </p>
           <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO ACESSO À LISTA VERIFICADA
           </a>
@@ -514,7 +518,7 @@ export default function FornecedoresPage() {
         <div style={{ maxWidth:maxW, margin:"0 auto", textAlign:"center", marginBottom:"28px" }}>
           <div style={{ display:"inline-block", border:"1.5px solid #ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:700, color:"#ea580c", letterSpacing:"0.08em", marginBottom:"14px" }}>QUEM USA</div>
           <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900 }}>RESULTADOS <span style={{color:"#ea580c"}}>REAIS</span></h2>
-          <p style={{ fontSize:"14px", color:"#555", marginTop:"8px" }}>Mais de <strong>5.000 pessoas</strong> já transformaram seus negócios com a lista.</p>
+          <p style={{ fontSize:"14px", color:"#555", marginTop:"8px" }}>Clientes em todo o Brasil já transformaram seus negócios com a lista.</p>
         </div>
 
         {/* Carrossel prints */}
@@ -542,7 +546,7 @@ export default function FornecedoresPage() {
 
         <div style={{ textAlign:"center" }}>
           <div style={{ color:"#f59e0b", fontSize:"20px", letterSpacing:"2px", marginBottom:"6px" }}>★★★★★</div>
-          <p style={{ fontSize:"13px", color:"#555", marginBottom:"20px" }}>+5.000 avaliações de 5 estrelas</p>
+          <p style={{ fontSize:"13px", color:"#555", marginBottom:"20px" }}>Resultados reais de clientes reais</p>
           <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO ACESSAR OS 180 FORNECEDORES
           </a>
@@ -567,6 +571,9 @@ export default function FornecedoresPage() {
                 <span style={{ fontSize:isMobile?"16px":"18px", fontWeight:900, color:"#fff" }}>-90% de desconto</span>
               </div>
               <div style={{ fontSize:"12px", color:"#6b7280", fontWeight:600, marginTop:"8px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
+              <div style={{ fontSize:"11px", color:"#555", marginTop:"10px", lineHeight:1.5, padding:"10px", background:"#1a1a1a", borderRadius:"8px", border:"1px solid #2a2a2a" }}>
+                Uma hora de consultoria com especialista em fornecedores custa R$250+. Você leva 180 contatos verificados por R$37,90 — porque o produto é digital e nosso objetivo é crescer a base de clientes antes de ajustar o preço.
+              </div>
             </div>
 
             <div style={{ display:"flex", flexDirection:"column", gap:"8px", marginBottom:"24px", textAlign:"left" }}>
@@ -606,6 +613,9 @@ export default function FornecedoresPage() {
           </p>
           <p style={{ fontSize:isMobile?"14px":"15px", color:"#555", lineHeight:1.6, marginBottom:"16px" }}>
             Eu fico com o risco. Você fica com o resultado. Se a lista não mostrar o caminho pra recuperar o investimento já no primeiro pedido, não mereço o seu dinheiro — simples assim.
+          </p>
+          <p style={{ fontSize:"12px", color:"#6b7280", lineHeight:1.6, marginBottom:"16px" }}>
+            Para reembolso: manda e-mail para <strong style={{color:"#ea580c"}}>contato@fornecedorvip.shop</strong> com assunto "Reembolso". O valor retorna em até 5 dias úteis, sem questionamento. O CDC (Código de Defesa do Consumidor) já garante esse direito em qualquer compra digital — nós só tornamos o processo mais simples.
           </p>
           <p style={{ fontSize:"13px", fontWeight:700, color:"#ea580c", letterSpacing:"0.05em", marginBottom:"24px" }}>VOCÊ É O INTELIGENTE AQUI. TODO O RISCO É MEU.</p>
           <a href="#cta-principal" onClick={scrollToCTA} style={{ display:isMobile?"block":"inline-block", boxSizing:"border-box", textAlign:"center", textDecoration:"none", background:"#ea580c", color:"#fff", borderRadius:"12px", padding:"18px 48px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
