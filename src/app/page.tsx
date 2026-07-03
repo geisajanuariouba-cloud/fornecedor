@@ -285,15 +285,20 @@ export default function FornecedoresPage() {
           </div>
 
           {/* Headline */}
+          <div style={{ display:"inline-block", background:"#111", color:"#ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:800, letterSpacing:"0.08em", marginBottom:"16px" }}>
+            CHEGA DE PAGAR PREÇO DE VAREJO
+          </div>
+
           <h1 style={{ fontSize:isMobile?"26px":"42px", fontWeight:900, lineHeight:1.2, marginBottom:"16px", color:"#111" }}>
-            Assista o vídeo abaixo e descubra como{" "}
-            <span style={{ color:"#ea580c" }}>começar hoje</span>{" "}
-            com menos de{" "}
-            <span style={{ color:"#ea580c" }}>R$100 no bolso</span>
+            Veja como começar a comprar{" "}
+            <span style={{ color:"#ea580c" }}>direto no atacado</span>{" "}
+            e lucrar{" "}
+            <span style={{ color:"#ea580c" }}>100% ou mais</span>{" "}
+            — ainda hoje
           </h1>
 
           <p style={{ fontSize:isMobile?"15px":"18px", color:"#555", lineHeight:1.6, marginBottom:"20px", maxWidth:"640px", margin:"0 auto 20px" }}>
-            Sem CNPJ, sem experiência e com 7 dias de garantia total.
+            Sem CNPJ, sem experiência e com menos de R$100 no bolso.
           </p>
 
           <button
@@ -411,6 +416,36 @@ export default function FornecedoresPage() {
           </div>
           <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
             QUERO ACESSAR A LISTA AGORA
+          </a>
+        </div>
+      </div>
+
+      {/* ── MECANISMO ÚNICO ── */}
+      <div style={{ background:"#111", padding:secPad }}>
+        <div style={{ maxWidth:maxW, margin:"0 auto", textAlign:"center" }}>
+          <div style={{ display:"inline-block", border:"1.5px solid #ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:700, color:"#ea580c", letterSpacing:"0.08em", marginBottom:"14px" }}>POR QUE ESSA LISTA É DIFERENTE?</div>
+          <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900, color:"#fff", marginBottom:"10px", textTransform:"uppercase" }}>
+            Qualquer um joga um nome no Google.<br/>
+            <span style={{ color:"#ea580c" }}>A nossa foi verificada fornecedor por fornecedor.</span>
+          </h2>
+          <p style={{ fontSize:isMobile?"13px":"15px", color:"#9ca3af", marginBottom:"32px", maxWidth:"560px", margin:"0 auto 32px" }}>
+            Antes de entrar na lista, cada fornecedor passou por 3 filtros que a maioria das pessoas nunca aplica:
+          </p>
+          <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr", gap:"16px", marginBottom:"32px" }}>
+            {[
+              { n:"01", title:"Testamos o contato", desc:"Ligamos e mandamos mensagem. Se não respondeu dentro do prazo, não entrou na lista. Você não vai encontrar número morto aqui." },
+              { n:"02", title:"Confirmamos que vende pra PF", desc:"Sem CNPJ, sem burocracia. Verificamos que você consegue comprar com CPF mesmo — igual a qualquer pessoa física." },
+              { n:"03", title:"Checamos o pedido mínimo real", desc:"Nada de "mínimo R$5.000" escondido. Só entrou quem aceita pedido pequeno, ideal pra quem está começando." },
+            ].map(item => (
+              <div key={item.n} style={{ background:"#1a1a1a", border:"1px solid #333", borderRadius:"16px", padding:"24px 20px", textAlign:"left" }}>
+                <div style={{ fontSize:"11px", fontWeight:800, color:"#ea580c", marginBottom:"8px" }}>FILTRO {item.n}</div>
+                <div style={{ fontSize:isMobile?"15px":"17px", fontWeight:900, color:"#fff", marginBottom:"10px", lineHeight:1.3 }}>✅ {item.title}</div>
+                <div style={{ fontSize:"13px", color:"#9ca3af", lineHeight:1.6 }}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+          <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px 32px", fontSize:"15px", fontWeight:800, textTransform:"uppercase", boxShadow:"0 4px 20px rgba(234,88,12,0.35)", fontFamily:"inherit" }}>
+            QUERO ACESSO À LISTA VERIFICADA
           </a>
         </div>
       </div>
