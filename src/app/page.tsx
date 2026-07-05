@@ -454,6 +454,49 @@ export default function FornecedoresPage() {
         </div>
       </div>
 
+      {/* ── O QUE VEM DE CADA FORNECEDOR ── */}
+      <div style={{ background:"#fff", padding:secPad, borderTop:"1px solid #f3f4f6" }}>
+        <div style={{ maxWidth:maxW, margin:"0 auto" }}>
+          <div style={{ textAlign:"center", marginBottom:"28px" }}>
+            <div style={{ display:"inline-block", border:"1.5px solid #ea580c", borderRadius:"100px", padding:"6px 18px", fontSize:"12px", fontWeight:700, color:"#ea580c", letterSpacing:"0.08em", marginBottom:"14px" }}>O QUE VOCÊ RECEBE</div>
+            <h2 style={{ fontSize:isMobile?"20px":"28px", fontWeight:900, marginBottom:"8px", textTransform:"uppercase" }}>Cada fornecedor vem com <span style={{color:"#ea580c"}}>tudo pronto</span></h2>
+            <p style={{ fontSize:isMobile?"13px":"15px", color:"#555", maxWidth:"540px", margin:"0 auto" }}>
+              Você não recebe só um nome. Para cada um dos 180 fornecedores, a lista entrega:
+            </p>
+          </div>
+
+          <div style={{ display:"grid", gridTemplateColumns:isMobile?"1fr 1fr":"repeat(4,1fr)", gap:"12px", marginBottom:"28px" }}>
+            {[
+              { emoji:"📞", label:"Contato direto", desc:"WhatsApp ou telefone para falar na hora" },
+              { emoji:"🌐", label:"Site oficial", desc:"Endereço do site para acessar o catálogo" },
+              { emoji:"✉️", label:"E-mail", desc:"Para fazer pedidos e tirar dúvidas" },
+              { emoji:"📍", label:"Localização", desc:"Estado e cidade do fornecedor" },
+              { emoji:"📦", label:"Pedido mínimo real", desc:"Quanto você precisa ter pra começar" },
+              { emoji:"💳", label:"Formas de pagamento", desc:"Pix, boleto, cartão — o que aceita" },
+              { emoji:"🪪", label:"Vende pra CPF", desc:"Confirmado que não exige CNPJ" },
+              { emoji:"🏷️", label:"Categoria do produto", desc:"O segmento exato que esse fornecedor atende" },
+            ].map(item => (
+              <div key={item.label} style={{ background:"#fff7ed", border:"1.5px solid #fed7aa", borderRadius:"14px", padding:"16px 14px", textAlign:"center" }}>
+                <div style={{ fontSize:"28px", marginBottom:"8px" }}>{item.emoji}</div>
+                <div style={{ fontSize:isMobile?"12px":"13px", fontWeight:800, color:"#111", marginBottom:"4px", lineHeight:1.3 }}>{item.label}</div>
+                <div style={{ fontSize:"11px", color:"#6b7280", lineHeight:1.4 }}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ background:"#111", borderRadius:"14px", padding:isMobile?"16px":"20px 28px", display:"flex", alignItems:"center", gap:"16px", flexWrap:"wrap" }}>
+            <div style={{ fontSize:"36px", flexShrink:0 }}>📋</div>
+            <div style={{ flex:1, minWidth:"200px" }}>
+              <div style={{ fontSize:isMobile?"14px":"16px", fontWeight:800, color:"#fff", marginBottom:"4px" }}>Tudo em um único arquivo, organizado por categoria</div>
+              <div style={{ fontSize:isMobile?"12px":"13px", color:"#9ca3af", lineHeight:1.5 }}>Você abre, escolhe a categoria, vê o fornecedor, já tem o contato e entra em conversa na hora. Sem pesquisar, sem filtrar, sem perder tempo.</div>
+            </div>
+            <a href="#cta-principal" onClick={scrollToCTA} style={{ display:"inline-block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"10px", padding:"14px 24px", fontSize:"14px", fontWeight:800, textTransform:"uppercase", fontFamily:"inherit", flexShrink:0 }}>
+              QUERO A LISTA →
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* ── BÔNUS ── */}
       <div style={{ background:"linear-gradient(160deg,#fff7ed 0%,#fff 100%)", padding:secPad }}>
         <div style={{ maxWidth:maxW, margin:"0 auto", textAlign:"center" }}>
