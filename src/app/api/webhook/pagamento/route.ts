@@ -155,16 +155,7 @@ export async function POST(req: NextRequest) {
         console.error("[webhook/pagamento] falha no capi purchase:", e);
       }
 
-      // Envia emails
-      for (const kind of kinds) {
-        try {
-          if (kind === "main") await sendDeliveryEmail(email, name);
-          else await sendBumpEmail(email, name, kind);
-          console.log("[webhook/pagamento] email enviado:", kind, "->", email);
-        } catch (e) {
-          console.error("[webhook/pagamento] falha no envio de email:", kind, e);
-        }
-      }
+      // Entrega desativada — Wiapy entrega diretamente ao comprador
     });
 
     return NextResponse.json({ ok: true, queued: true, kinds });
