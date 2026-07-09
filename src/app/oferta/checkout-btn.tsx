@@ -11,7 +11,7 @@ const PRODUCT_DATA = {
   content_category: "Digital Product",
   content_ids: ["fornecedorvip"],
   content_type: "product",
-  value: 37.9,
+  value: 67.9,
   currency: "BRL",
 };
 

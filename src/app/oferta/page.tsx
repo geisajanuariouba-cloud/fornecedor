@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "https://pay.wiapy.com/gTiNVrOtMoj";
-const PRICE_VALUE = 37.9;
+const PRICE_VALUE = 67.9;
 
 declare global {
   interface Window { fbq?: (...args: unknown[]) => void; }
@@ -116,7 +116,7 @@ const categorias = [
   { label: "SUPLEMENTOS", emoji: "💊" },
 ];
 
-const LISTA_VALOR = 97;
+const LISTA_VALOR = 397;
 
 const bonuses = [
   { n:"01", emoji:"🔥", title:"LISTA DOS PRODUTOS MAIS VENDIDOS", desc:"Antes de ir atrás do fornecedor, saiba o que vender: os produtos que mais giram hoje no Mercado Livre, Shopee e Amazon — com margem confirmada.", valor: 37 },
@@ -140,7 +140,7 @@ const faqs = [
   { q:"Quais categorias têm na lista?", a:"Roupas, Lingerie, Eletrônicos e Celulares, Maquiagem e Cosméticos, Perfumes, Bijuterias e Semijoias, Brinquedos, Embalagens, Games, Papelaria, Alimentos, Bebidas, Produtos de Limpeza e Suplementos. 180 fornecedores em 14 categorias." },
   { q:"Como recebo o acesso após a compra?", a:"Imediatamente após a confirmação do pagamento, você recebe o link de acesso no seu e-mail. O acesso é vitalício, compre agora e abra quando quiser, sem prazo." },
   { q:"Tem garantia?", a:"Sim. Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu dinheiro sem perguntas e sem burocracia. O risco é inteiramente nosso." },
-  { q:"O preço vai aumentar?", a:"Sim. Esse valor de R$37,90 é promocional e encerra quando o contador zerar. Após isso, o preço sobe. Garantir agora é a única forma de pagar o menor valor." },
+  { q:"O preço vai aumentar?", a:"Sim. Esse valor de R$67,90 é promocional e encerra quando o contador zerar. Após isso, o preço sobe. Garantir agora é a única forma de pagar o menor valor." },
   { q:"Posso vender nos marketplaces (Mercado Livre, Shopee, Amazon)?", a:"Com certeza! Os fornecedores da lista foram selecionados pensando nos marketplaces. Você consegue margem suficiente para cobrir taxas e ainda lucrar bem." },
   { q:"Já comprei uma lista de fornecedores antes e não funcionou. Por que essa é diferente?", a:"Porque a maioria das listas que circulam por aí foi copiada do Google ou montada sem qualquer verificação real. Nós verificamos mais de 500 fornecedores, ligamos, mandamos mensagem e checamos as condições — e aprovamos apenas 180. Fornecedor que não responde não entra. Quem exige CNPJ não entra. Pedido mínimo alto não entra. É exatamente isso que faz a diferença quando outra lista falhou." },
 ];
@@ -214,7 +214,7 @@ function ExitIntentPopup({ isMobile }: { isMobile:boolean }) {
         <div style={{ fontSize:"44px", marginBottom:"12px" }}>⏳</div>
         <h3 style={{ fontSize:"20px", fontWeight:900, color:"#111", marginBottom:"8px", lineHeight:1.3 }}>Espera — você vai deixar os 6 bônus pra trás?</h3>
         <p style={{ fontSize:"14px", color:"#555", lineHeight:1.6, marginBottom:"20px" }}>
-          Você ainda não garantiu acesso aos <strong>180 fornecedores</strong> e aos <strong>6 bônus exclusivos</strong>. Por <strong style={{color:"#ea580c"}}>R$37,90</strong> você começa a revender ainda hoje.
+          Você ainda não garantiu acesso aos <strong>180 fornecedores</strong> e aos <strong>6 bônus exclusivos</strong>. Por <strong style={{color:"#ea580c"}}>R$67,90</strong> você começa a revender ainda hoje.
         </p>
         <a href="#cta-principal" onClick={(e) => { scrollToCTA(e); setVisible(false); }} style={{ display:"block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", fontFamily:"inherit", boxShadow:"0 4px 16px rgba(234,88,12,0.35)", marginBottom:"10px" }}>
           QUERO GARANTIR MEU ACESSO
@@ -534,7 +534,7 @@ export default function FornecedoresOfertaPage() {
                   <span style={{ fontSize:"13px", fontWeight:900, color:"#fff" }}>-90% de desconto</span>
                 </div>
               </div>
-              <div style={{ fontSize:isMobile?"32px":"38px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$ 37,90</div>
+              <div style={{ fontSize:isMobile?"32px":"38px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$ 67,90</div>
             </div>
           </div>
 
@@ -593,13 +593,13 @@ export default function FornecedoresOfertaPage() {
                 <span style={{ textDecoration:"line-through" }}>De R${totalGeral},00</span>
                 <span style={{ background:"#ea580c", color:"#fff", fontSize:"10px", fontWeight:800, padding:"2px 8px", borderRadius:"100px", marginLeft:"8px" }}>+90% OFF</span>
               </div>
-              <div style={{ fontSize:isMobile?"44px":"58px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$37,90</div>
+              <div style={{ fontSize:isMobile?"44px":"58px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$67,90</div>
               <div style={{ display:"inline-flex", alignItems:"center", gap:"6px", marginTop:"8px", background:"#15803d", borderRadius:"8px", padding:"8px 16px" }}>
                 <span style={{ fontSize:isMobile?"16px":"18px", fontWeight:900, color:"#fff" }}>-90% de desconto</span>
               </div>
               <div style={{ fontSize:"12px", color:"#6b7280", fontWeight:600, marginTop:"8px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
               <div style={{ fontSize:"11px", color:"#555", marginTop:"10px", lineHeight:1.5, padding:"10px", background:"#1a1a1a", borderRadius:"8px", border:"1px solid #2a2a2a" }}>
-                Uma hora de consultoria com especialista em fornecedores custa R$250+. Você leva 180 contatos verificados por R$37,90 — porque o produto é digital e nosso objetivo é crescer a base de clientes antes de ajustar o preço.
+                Uma hora de consultoria com especialista em fornecedores custa R$250+. Você leva 180 contatos verificados por R$67,90 — porque o produto é digital e nosso objetivo é crescer a base de clientes antes de ajustar o preço.
               </div>
             </div>
             <div style={{ display:"flex", flexDirection:"column", gap:"8px", marginBottom:"24px", textAlign:"left" }}>
@@ -632,7 +632,7 @@ export default function FornecedoresOfertaPage() {
           </div>
           <h2 style={{ fontSize:isMobile?"22px":"28px", fontWeight:900, marginBottom:"10px", color:"#ea580c" }}>Garantia Incondicional de 7 dias</h2>
           <p style={{ fontSize:isMobile?"14px":"16px", color:"#555", lineHeight:1.6, marginBottom:"12px" }}>
-            Compre. Abra a lista. Entre em contato com os fornecedores. Se em 7 dias você achar que não valeu cada centavo dos R$37,90 — manda um e-mail e devolvemos tudo. Sem perguntas. Sem precisar justificar. Sem burocracia nenhuma.
+            Compre. Abra a lista. Entre em contato com os fornecedores. Se em 7 dias você achar que não valeu cada centavo dos R$67,90 — manda um e-mail e devolvemos tudo. Sem perguntas. Sem precisar justificar. Sem burocracia nenhuma.
           </p>
           <p style={{ fontSize:isMobile?"14px":"15px", color:"#555", lineHeight:1.6, marginBottom:"16px" }}>
             Eu fico com o risco. Você fica com o resultado. Se a lista não mostrar o caminho pra recuperar o investimento já no primeiro pedido, não mereço o seu dinheiro — simples assim.
