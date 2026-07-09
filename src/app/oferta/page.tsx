@@ -214,7 +214,7 @@ function ExitIntentPopup({ isMobile }: { isMobile:boolean }) {
         <div style={{ fontSize:"44px", marginBottom:"12px" }}>⏳</div>
         <h3 style={{ fontSize:"20px", fontWeight:900, color:"#111", marginBottom:"8px", lineHeight:1.3 }}>Espera — você vai deixar os 6 bônus pra trás?</h3>
         <p style={{ fontSize:"14px", color:"#555", lineHeight:1.6, marginBottom:"20px" }}>
-          Você ainda não garantiu acesso aos <strong>180 fornecedores</strong> e aos <strong>6 bônus exclusivos</strong>. Por <strong style={{color:"#ea580c"}}>R$67,90</strong> você começa a revender ainda hoje.
+          Você ainda não garantiu acesso aos <strong>180 fornecedores</strong> e aos <strong>6 bônus exclusivos</strong>. Por <strong style={{color:"#ea580c"}}>R$67,90</strong> à vista ou <strong style={{color:"#ea580c"}}>12x de R$5,66</strong> no cartão.
         </p>
         <a href="#cta-principal" onClick={(e) => { scrollToCTA(e); setVisible(false); }} style={{ display:"block", background:"#ea580c", color:"#fff", textDecoration:"none", borderRadius:"12px", padding:"16px", fontSize:"16px", fontWeight:800, textTransform:"uppercase", fontFamily:"inherit", boxShadow:"0 4px 16px rgba(234,88,12,0.35)", marginBottom:"10px" }}>
           QUERO GARANTIR MEU ACESSO
@@ -535,6 +535,7 @@ export default function FornecedoresOfertaPage() {
                 </div>
               </div>
               <div style={{ fontSize:isMobile?"32px":"38px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$ 67,90</div>
+              <div style={{ fontSize:"12px", color:"#9ca3af", marginTop:"4px" }}>ou 12x de <strong style={{color:"#fff"}}>R$5,66</strong> no cartão</div>
             </div>
           </div>
 
@@ -594,10 +595,11 @@ export default function FornecedoresOfertaPage() {
                 <span style={{ background:"#ea580c", color:"#fff", fontSize:"10px", fontWeight:800, padding:"2px 8px", borderRadius:"100px", marginLeft:"8px" }}>+90% OFF</span>
               </div>
               <div style={{ fontSize:isMobile?"44px":"58px", fontWeight:900, color:"#ea580c", lineHeight:1 }}>R$67,90</div>
+              <div style={{ fontSize:"14px", color:"#9ca3af", marginTop:"4px" }}>ou 12x de <strong style={{color:"#fff"}}>R$5,66</strong> no cartão</div>
               <div style={{ display:"inline-flex", alignItems:"center", gap:"6px", marginTop:"8px", background:"#15803d", borderRadius:"8px", padding:"8px 16px" }}>
                 <span style={{ fontSize:isMobile?"16px":"18px", fontWeight:900, color:"#fff" }}>-90% de desconto</span>
               </div>
-              <div style={{ fontSize:"12px", color:"#6b7280", fontWeight:600, marginTop:"8px" }}>PAGAMENTO ÚNICO • ACESSO VITALÍCIO</div>
+              <div style={{ fontSize:"12px", color:"#6b7280", fontWeight:600, marginTop:"8px" }}>ACESSO VITALÍCIO • CARTÃO OU PIX</div>
               <div style={{ fontSize:"11px", color:"#555", marginTop:"10px", lineHeight:1.5, padding:"10px", background:"#1a1a1a", borderRadius:"8px", border:"1px solid #2a2a2a" }}>
                 Uma hora de consultoria com especialista em fornecedores custa R$250+. Você leva 180 contatos verificados por R$67,90 — porque o produto é digital e nosso objetivo é crescer a base de clientes antes de ajustar o preço.
               </div>
