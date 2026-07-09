@@ -25,7 +25,7 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://connect.facebook.net https://cdn.utmify.com.br https://www.googletagmanager.com",
               "img-src 'self' data: https://www.facebook.com https://www.google.com",
               "connect-src 'self' https://graph.facebook.com https://www.facebook.com",
-              "frame-src 'none'",
+              "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' https://fonts.gstatic.com",
             ].join("; "),

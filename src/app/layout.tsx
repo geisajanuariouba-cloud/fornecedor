@@ -42,6 +42,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='85'>🏪</text></svg>"
         />
         <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://cdn.utmify.com.br" />
+        <link rel="preconnect" href="https://www.youtube.com" />
         <link rel="preload" as="image" href="/vsl/cover.jpg" fetchPriority="high" />
         <style>{`
           *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

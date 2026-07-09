@@ -147,6 +147,32 @@ const faqs = [
 
 /* ── componentes ── */
 
+function VslPlayer({ isMobile }: { isMobile: boolean }) {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 20px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000", position:"relative", cursor: playing ? "default" : "pointer" }}
+      onClick={() => { if (!playing) setPlaying(true); }}
+    >
+      {playing ? (
+        <video autoPlay controls playsInline style={{ width:"100%", display:"block" }}>
+          <source src="/vsl/vsl.mp4" type="video/mp4" />
+        </video>
+      ) : (
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/vsl/cover.jpg" alt="Assistir apresentação" fetchPriority="high" style={{ width:"100%", display:"block" }} />
+          <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:"12px" }}>
+            <div style={{ width:isMobile?64:80, height:isMobile?64:80, background:"rgba(234,88,12,0.92)", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 0 0 12px rgba(234,88,12,0.25)" }}>
+              <span style={{ fontSize:isMobile?"28px":"34px", color:"#fff", marginLeft:"5px" }}>▶</span>
+            </div>
+            <span style={{ background:"rgba(0,0,0,0.6)", color:"#fff", fontSize:"13px", fontWeight:700, padding:"6px 16px", borderRadius:"100px" }}>Clique para assistir</span>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function IconCheck({ size=20, color="#22c55e" }: { size?:number; color?:string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0}}>
@@ -297,35 +323,7 @@ export default function FornecedoresOfertaPage() {
             Sem CNPJ, sem experiência e com menos de R$100 no bolso. 180 fornecedores verificados — contato ativo e pedido mínimo confirmado.
           </p>
 
-          <button
-            id="vsl-play-btn"
-            onClick={() => {
-              const video = document.getElementById("vsl-video") as HTMLVideoElement;
-              const btn = document.getElementById("vsl-play-btn");
-              if (!video) return;
-              video.muted = false;
-              video.play().catch(() => {});
-              if (btn) btn.style.display = "none";
-            }}
-            style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:"12px", background:"#ea580c", color:"#fff", border:"none", borderRadius:"12px", padding:isMobile?"16px 28px":"18px 48px", fontSize:isMobile?"16px":"18px", fontWeight:800, textTransform:"uppercase", letterSpacing:"0.5px", boxShadow:"0 4px 24px rgba(234,88,12,0.5)", fontFamily:"inherit", cursor:"pointer", margin:"0 auto 20px", animation:"pulse-cta 1.8s ease-in-out infinite" }}
-          >
-            <span style={{ fontSize:"22px" }}>▶</span> Clique aqui e comece a assistir
-          </button>
-          <style>{`@keyframes pulse-cta { 0%,100%{box-shadow:0 4px 24px rgba(234,88,12,0.5)} 50%{box-shadow:0 4px 40px rgba(234,88,12,0.85)} }`}</style>
-
-          {/* Video player */}
-          <div style={{ borderRadius:"16px", overflow:"hidden", maxWidth:"640px", margin:"0 auto 12px", boxShadow:"0 8px 40px rgba(0,0,0,0.3)", background:"#000" }}>
-            <video
-              id="vsl-video"
-              controls
-              playsInline
-              preload="none"
-              style={{ width:"100%", display:"block" }}
-              poster="/vsl/cover.jpg"
-            >
-              <source src="/vsl/vsl.mp4" type="video/mp4" />
-            </video>
-          </div>
+          <VslPlayer isMobile={isMobile} />
 
           <div style={{ maxWidth:"640px", margin:"0 auto 28px" }} />
 
